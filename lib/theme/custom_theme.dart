@@ -19,7 +19,7 @@ class CustomTheme {
   AVTheme theme;
 
   Never init(AVTheme initialTheme) {
-    theme = initialTheme ?? defaultTheme;
+    theme = initialTheme ?? darkTheme;
   }
 
   Never setNewTheme(AVTheme thm) {

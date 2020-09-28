@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
 
 import 'package:pictures_view/ui/layouts/main_layout/main_layout.dart';
+import 'package:pictures_view/ui/widgets/image_card.dart';
 import 'package:pictures_view/widgets/cashed_network_image.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,6 @@ class HomePage extends StatelessWidget {
       ...[
       'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
       'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
-      'https://deep-image.ai/extra/slider-3-a.a21f311c.jpg',
       'https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg',
       'https://i.insider.com/5eb031e1e3c3fb77d21c342e?width=1100&format=jpeg&auto=webp',
       'https://handluggageonly.co.uk/wp-content/uploads/2018/05/The-12-Best-Markets-In-Paris-You-Have-To-Visit-3.jpg',
@@ -27,15 +27,24 @@ class HomePage extends StatelessWidget {
       child: GridView.builder(
         key: Key('Grid'),
         itemCount: urlImages.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        padding: EdgeInsets.zero,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.82,
+        ),
+        padding: EdgeInsets.all(8.0),
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: CachedImage(
-              height: 200.0,
-              width: 200.0,
-              imageUrl: urlImages[index],
+            padding: const EdgeInsets.all(8.0),
+            child: ImageCard(
+              key: Key('image_card_$index'),
+              card: CardDTO(
+                id: index.toString(),
+                title: 'Test card $index',
+                content: 'Some text here for testing some things',
+                imageUrl: urlImages[index],
+                isLiked: index % 2 == 0 ? true : false,
+                likesCount: index * index,
+              ),
             ),
           );
         },
