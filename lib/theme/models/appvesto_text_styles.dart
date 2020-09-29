@@ -28,7 +28,12 @@ class AVTextStyles implements IAVTextStyles {
 
   @override
   TextStyle primaryTextStyle({double size, double height}) {
-    // TODO: implement primaryTextStyle
-    throw UnimplementedError();
+    return TextStyle(
+      fontFamily: textFontFamily,
+      height: height,
+      fontSize: size,
+      color: mainTextColor,
+      fontWeight: FontWeight.w700,
+    );
   }
 }

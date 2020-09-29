@@ -19,6 +19,21 @@ class CachedImage extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  factory CachedImage.squared({
+    String imageUrl,
+    double size,
+    BoxFit fit,
+    Key key,
+  }) {
+    return CachedImage(
+      imageUrl: imageUrl,
+      height: size,
+      width: size,
+      fit: fit,
+      key: key,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(

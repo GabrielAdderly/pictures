@@ -7,8 +7,9 @@ import 'package:pictures_view/widgets/cashed_network_image.dart';
 import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
 import 'package:pictures_view/ui/layouts/main_layout/main_layout.dart';
 
-// ignore: use_key_in_widget_constructors
 class HomePage extends StatelessWidget {
+  HomePage() : super(key: Key('SettingsPage'));
+
   final List<String> urlImages = [
     for (int i = 0; i < 20; i++) ...[
       'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
@@ -37,9 +38,8 @@ class HomePage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(4.0),
-              child: CachedImage(
-                height: 200.0,
-                width: 200.0,
+              child: CachedImage.squared(
+                size: 200.0,
                 imageUrl: urlImages[index],
               ),
             );

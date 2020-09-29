@@ -41,5 +41,4 @@ class CustomTheme {
   static IAVColors get colors => instance._theme.colors;
 
   static IAVTextStyles get textStyles => instance._theme.textStyles;
-
 }
