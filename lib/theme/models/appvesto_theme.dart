@@ -22,8 +22,8 @@ class AVTheme {
     AVTextStyles edgeInsets,
   }) {
     return AVTheme(
-      themeName: themeName ?? this.themeName,
       colors: colors ?? this.colors,
+      themeName: themeName ?? this.themeName,
       textStyles: textStyles ?? this.textStyles,
       edgeInsets: textStyles ?? this.edgeInsets,
     );

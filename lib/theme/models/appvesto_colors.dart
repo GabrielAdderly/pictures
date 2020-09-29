@@ -14,6 +14,10 @@ class AVColors implements IAVColors {
   Color headerTextColor;
   Color textColor;
   Color secondTitleColor;
+  @override
+  Color activeColor;
+  @override
+  Color inActiveColor;
 
   AVColors({
     this.primaryColor,
@@ -25,5 +29,7 @@ class AVColors implements IAVColors {
     this.headerTextColor,
     this.textColor,
     this.secondTitleColor,
+    this.activeColor,
+    this.inActiveColor,
   });
 }

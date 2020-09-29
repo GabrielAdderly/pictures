@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pictures_view/ui/extensions/widget_extensions.dart';
 
-class ImageCard extends StatelessWidget {
+class ImageCard extends StatefulWidget {
   ImageCard({
     @required Key key,
     @required this.card,
-    @required this.onTap,
+    this.onTap,
+    this.likeCallback,
   }) :  assert(key != null, 'Key must be not null'),
         assert(card != null, 'Card (key: $key) must be not null'),
         assert(card.imageUrl != null && card.imageUrl.startsWith('http'),
@@ -15,7 +16,13 @@ class ImageCard extends StatelessWidget {
 
   final CardDTO card;
   final Function onTap;
+  final Function likeCallback;
 
+  @override
+  _ImageCardState createState() => _ImageCardState();
+}
+
+class _ImageCardState extends State<ImageCard> {
   @override
   Widget build(BuildContext context) {
     final double _width = double.infinity;
@@ -41,7 +48,7 @@ class ImageCard extends StatelessWidget {
               ),
               image: DecorationImage(
                 image: NetworkImage(
-                  card.imageUrl,
+                  widget.card.imageUrl,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -51,7 +58,7 @@ class ImageCard extends StatelessWidget {
             height: 10.0,
           ),
           Text(
-            card.title,
+            widget.card.title,
             style: TextStyle(
               color: Color(0xFFFFFFFF),
               fontWeight: FontWeight.w700,
@@ -65,7 +72,7 @@ class ImageCard extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              card.content,
+              widget.card.content,
               style: TextStyle(
                 color: Color(0xFF979797),
                 fontWeight: FontWeight.w400,
@@ -83,15 +90,32 @@ class ImageCard extends StatelessWidget {
               Icon(
                 Icons.favorite,
                 size: 16,
-                color: card.isLiked
+                color: widget.card.isLiked
                     ? Color(0xFFE51A1A)
                     : Color(0xFF979797),
-              ),
+              ).onTap(() {
+                setState(() {
+                  if (widget.likeCallback != null) {
+                    widget.likeCallback();
+                  }
+
+                  widget.card.isLiked = !widget.card.isLiked;
+
+                  if (widget.card.isLiked) {
+                    print(widget.card.likesCount);
+                    widget.card.incrementLikes();
+                    print(widget.card.likesCount);
+                    return;
+                  }
+
+                  widget.card.decrementLikes();
+                });
+              }),
               SizedBox(
                 width: 8.0,
               ),
               Text(
-                getLikesCount(card.likesCount.toString()),
+                getLikesCount(widget.card.likesCount.toString()),
                 style: TextStyle(
                   color: Color(0xFF979797),
                   fontWeight: FontWeight.w400,
@@ -105,7 +129,7 @@ class ImageCard extends StatelessWidget {
         ],
       ),
     ).aspectRatio(0.82)
-     .onTap(onTap ?? () {});
+     .onTap(widget.onTap ?? () {});
   }
 }
 
@@ -144,8 +168,23 @@ class CardDTO implements ICard {
 
   final List<String> tags;
 
-  final bool isLiked;
-  final int likesCount;
+  bool isLiked;
+  int likesCount;
+
+  void incrementLikes() {
+    print('1' + likesCount.toString());
+    likesCount++;
+    print('2' + likesCount.toString());
+  }
+
+  void decrementLikes() {
+    if (likesCount <= 0) {
+      likesCount = 0;
+      return;
+    }
+    
+    likesCount--;
+  }
 
   Card fromJson() {}
   Card toJson() {}

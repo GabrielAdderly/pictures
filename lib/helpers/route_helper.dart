@@ -5,6 +5,7 @@ import 'package:pictures_view/res/routes.dart';
 
 import 'package:pictures_view/ui/pages/home_page/home_page.dart';
 import 'package:pictures_view/ui/pages/next_button_page/next_button_page.dart';
+import 'package:pictures_view/ui/pages/splash_screen/splash_screen.dart';
 import 'package:pictures_view/ui/pages/unknown_page/unknown_page.dart';
 import 'package:pictures_view/ui/pages/settings_page/settings_page.dart';
 
@@ -13,6 +14,12 @@ class RouteHelper {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.splash:
+        return _defaultRoute(
+          settings: settings,
+          page: SplashScreen(),
+        );
+
       case Routes.home:
         return _defaultRoute(
           settings: settings,

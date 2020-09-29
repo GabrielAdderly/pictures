@@ -1,16 +1,18 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:http/http.dart' as http;
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
+import 'package:pictures_view/services/network_service/interfaces/i_base_request.dart';
 import 'package:pictures_view/services/network_service/models/base_error.dart';
 import 'package:pictures_view/services/network_service/res/typedef.dart';
 
-import 'interfaces/base_http_requset.dart';
 import 'models/base_http_error.dart';
 import 'models/base_http_response.dart';
 import 'res/consts.dart';
 
-class NetworkService implements IBaseHttpRequest {
+class NetworkService {
   static const tag = '[NetworkService]';
 
   NetworkService._privateConstructor();
@@ -19,33 +21,31 @@ class NetworkService implements IBaseHttpRequest {
 
   static NetworkService get instance => _instance;
 
+  String baseUrl;
   List<BaseError> _errors = [];
 
-  void init(List<BaseError> errors) {
+  void overrideBaseUrl(String url) => baseUrl = baseUrl;
+
+  void init({
+    @required String baseUrl,
+    @required List<BaseError> errors,
+  }) {
+    baseUrl = baseUrl;
     _errors = errors;
   }
 
-  @override
-  Future<BaseHttpResponse> request(HttpRequestFunction req) async {
-    final bool hasInternet = await DataConnectionChecker().hasConnection;
+  Future<BaseHttpResponse> request(IBaseRequest request) async {
+    final BaseHttpResponse checkConnection = await _checkInternetConnection();
+    if (checkConnection != null) return checkConnection;
 
-    if (!hasInternet) {
-      return BaseHttpResponse(
-        error: BaseHttpError(
-          error: NO_INTERNET_CONNECTION,
-          statusCode: BAD_GATEWAY_STATUS_CODE,
-        ),
-      );
-    }
+    final http.Response response = await request();
 
-    final http.Response response = await req();
+    print('response: ${response.body}');
 
     return _getCheckedForErrorResponse(response);
   }
 
-  // region [Check response for error]
   BaseHttpResponse _getCheckedForErrorResponse(http.Response response) {
-
     if (response.statusCode < HTTP_OK || response.statusCode > HTTP_MAX_OK) {
       return BaseHttpResponse(
         error: BaseHttpError(
@@ -91,7 +91,21 @@ class NetworkService implements IBaseHttpRequest {
       response: jsonDecode(response.body),
     );
   }
-  // endregion
+
+  Future<BaseHttpResponse> _checkInternetConnection() async {
+    final bool hasInternet = await DataConnectionChecker().hasConnection;
+
+    if (!hasInternet) {
+      return BaseHttpResponse(
+        error: BaseHttpError(
+          error: NO_INTERNET_CONNECTION,
+          statusCode: BAD_GATEWAY_STATUS_CODE,
+        ),
+      );
+    }
+
+    return null;
+  }
 
   String _getErrorByCode(int code) {
     for (BaseError error in _errors) {
@@ -103,4 +117,3 @@ class NetworkService implements IBaseHttpRequest {
     return null;
   }
 }
-
