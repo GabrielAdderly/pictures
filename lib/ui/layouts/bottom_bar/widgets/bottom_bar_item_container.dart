@@ -31,6 +31,10 @@ class BottomBarItemContainer extends StatelessWidget {
               ? CustomTheme.colors.accentColor
               : CustomTheme.colors.primaryColor,
           borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            width: 1.0,
+            color: isSelected ? CustomTheme.colors.activeColor : CustomTheme.colors.primaryColor,
+          ),
           boxShadow: isSelected ? AppShadows.bottomBarItemShadow : [],
         ),
         child: child,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pictures_view/theme/interfaces/i_appvesto_text_theme.dart';
 
-class AVTextStyles implements IAVTextStyles {
+class AVTextStyles {
   final String titleFontFamily;
   final String textFontFamily;
   final Color mainTextColor;
@@ -15,7 +15,6 @@ class AVTextStyles implements IAVTextStyles {
     this.additionalTextColor,
   });
 
-  @override
   TextStyle titleTextStyle({double size = 20.0, double height = 1.0}) {
     return TextStyle(
       fontFamily: titleFontFamily,
@@ -26,7 +25,6 @@ class AVTextStyles implements IAVTextStyles {
     );
   }
 
-  @override
   TextStyle primaryTextStyle({double size, double height}) {
     return TextStyle(
       fontFamily: textFontFamily,
@@ -34,6 +32,17 @@ class AVTextStyles implements IAVTextStyles {
       fontSize: size,
       color: mainTextColor,
       fontWeight: FontWeight.w700,
+    );
+  }
+
+
+  TextStyle w400TextStyle({double size, double height}) {
+    return TextStyle(
+      fontFamily: textFontFamily,
+      height: height,
+      fontSize: size,
+      color: additionalTextColor,
+      fontWeight: FontWeight.w400,
     );
   }
 }

@@ -1,0 +1,56 @@
+import 'package:flutter/foundation.dart';
+
+import 'package:pictures_view/models/interfaces/i_card.dart';
+
+class CardDTO implements ICard {
+  CardDTO({
+    @required this.id,
+    @required this.title,
+    @required this.content,
+    @required this.imageUrl,
+
+    this.isLiked = false,
+    this.likesCount = 0,
+    this.tags = const [],
+  });
+
+  @override
+  final String id;
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  final String imageUrl;
+
+  final List<String> tags;
+
+  bool isLiked;
+  int likesCount;
+
+  void updateLikes() {
+    if (isLiked) {
+      incrementLikes();
+    } else {
+      decrementLikes();
+    }
+  }
+
+  void incrementLikes() {
+    likesCount++;
+  }
+
+  void decrementLikes() {
+    if (likesCount <= 0) {
+      likesCount = 0;
+      return;
+    }
+
+    likesCount--;
+  }
+
+  // ignore: missing_return
+  CardDTO fromJson() {}
+  // ignore: missing_return
+  CardDTO toJson() {}
+}

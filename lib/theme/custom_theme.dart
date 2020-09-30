@@ -8,9 +8,6 @@ import 'package:pictures_view/theme/models/appvesto_theme.dart';
 import 'package:pictures_view/theme/models/appvesto_colors.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
-import 'package:pictures_view/theme/interfaces/i_appvesto_colors.dart';
-import 'package:pictures_view/theme/interfaces/i_appvesto_text_theme.dart';
-
 class CustomTheme {
   static const String tag = '[CustomTheme]';
 
@@ -38,7 +35,14 @@ class CustomTheme {
     );
   }
 
-  static IAVColors get colors => instance._theme.colors;
+  static bool isCurrentTheme(AVTheme theme) {
+    return theme == instance._theme;
+  }
 
-  static IAVTextStyles get textStyles => instance._theme.textStyles;
+  static AVTheme get getCurrentTheme => instance._theme;
+
+  static AVColors get colors => instance._theme.colors;
+
+  static AVTextStyles get textStyles => instance._theme.textStyles;
+
 }

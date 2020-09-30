@@ -1,19 +1,12 @@
 import 'package:pictures_view/theme/models/appvesto_colors.dart';
+import 'package:pictures_view/theme/models/appvesto_edge_insets.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
-import 'package:pictures_view/theme/interfaces/i_appvesto_theme.dart';
-import 'package:pictures_view/theme/interfaces/i_appvesto_colors.dart';
-import 'package:pictures_view/theme/interfaces/i_appvesto_text_theme.dart';
-import 'package:pictures_view/theme/interfaces/i_appvesto_edge_insets.dart';
-
-class AVTheme implements IAVTheme {
+class AVTheme {
   final String themeName;
-  @override
-  IAVColors colors;
-  @override
-  IAVTextStyles textStyles;
-  @override
-  IAVEdgeInsets edgeInsets;
+  AVColors colors;
+  AVTextStyles textStyles;
+  AVEdgeInsets edgeInsets;
 
   AVTheme({
     this.themeName,
@@ -22,7 +15,6 @@ class AVTheme implements IAVTheme {
     this.edgeInsets,
   });
 
-  @override
   AVTheme copyWith({
     String themeName,
     AVColors colors,

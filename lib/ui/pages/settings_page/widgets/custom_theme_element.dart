@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+import 'package:pictures_view/ui/widgets/builder_widgets/theme_stateless_widget.dart';
+
+class CustomThemeElement extends ThemeStatelessWidget {
+  final AVTheme customTheme;
+
+  const CustomThemeElement({
+    @required this.customTheme,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget buildWidget(BuildContext context, AVTheme theme) {
+    return Container(
+      decoration: BoxDecoration(
+        color: customTheme.colors.accentColor,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          width: CustomTheme.isCurrentTheme(customTheme) ? 1.0 : 0.0,
+          color: theme.colors.inActiveColor,
+        ),
+      ),
+      constraints: BoxConstraints(
+        minHeight: 0.0,
+        minWidth: 0.0,
+        maxHeight: 50.0,
+        maxWidth: 110.0,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 7.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(child: Container(color: customTheme.colors.primaryColor)),
+            const SizedBox(width: 16.0,),
+            Expanded(child: Container(color: customTheme.colors.primaryColor)),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -8,7 +8,7 @@ import 'package:pictures_view/theme/models/appvesto_edge_insets.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
 AVTheme darkTheme = AVTheme(
-  themeName: 'default_theme',
+  themeName: 'Dark',
   colors: AVColors(
     primaryColor: AppColors.kBlack,
     accentColor: AppColors.kBlackLight,
@@ -19,6 +19,7 @@ AVTheme darkTheme = AVTheme(
     titleFontFamily: 'EXIL71',
     textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kWhite,
+    additionalTextColor: AppColors.kGreyTwo,
   ),
   edgeInsets: AVEdgeInsets(
     primaryEdgeInsets: EdgeInsets.all(16.0),
@@ -26,7 +27,7 @@ AVTheme darkTheme = AVTheme(
 );
 
 AVTheme lightTheme = AVTheme(
-  themeName: 'default_theme',
+  themeName: 'Light',
   colors: AVColors(
     primaryColor: AppColors.kWhite,
     accentColor: AppColors.kWhiteDark,

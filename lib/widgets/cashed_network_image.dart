@@ -10,11 +10,13 @@ class CachedImage extends StatelessWidget {
   final double height;
   final double width;
   final BoxFit fit;
+  final BorderRadius borderRadius;
 
   const CachedImage({
     @required this.imageUrl,
-    @required this.height,
-    @required this.width,
+    this.height,
+    this.width,
+    this.borderRadius,
     this.fit = BoxFit.cover,
     Key key,
   }) : super(key: key);
@@ -36,21 +38,24 @@ class CachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      width: width,
-      duration: MILLISECONDS_300,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        height: height,
-        fit: BoxFit.cover,
-        placeholder: (BuildContext context, String url) {
-          return Image.asset(
-            ImageAssets.LOADING,
-            height: height,
-            width: width,
-            fit: BoxFit.cover,
-          );
-        },
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.circular(0.0),
+      child: AnimatedContainer(
+        width: width,
+        duration: MILLISECONDS_300,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          height: height,
+          fit: fit,
+          placeholder: (BuildContext context, String url) {
+            return Image.asset(
+              ImageAssets.LOADING,
+              height: height,
+              width: width,
+              fit: fit,
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/widgets/cashed_network_image.dart';
+
+import 'package:pictures_view/dummy_classes/dummy_image_list.dart';
+
+import 'package:pictures_view/ui/widgets/image_card/image_card.dart';
 
 class ImageExamples extends StatelessWidget {
   ImageExamples() : super(key: Key('Examples Images Key'));
@@ -8,25 +11,28 @@ class ImageExamples extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 15,
         vertical: 20.0,
+        horizontal: 15.0,
       ),
       child: Row(
-        children: exampleImages,
+        children: [
+          Expanded(
+            child: ImageCard(
+              key: Key('test 1'),
+              height: 250.0,
+              card: dummyImageList[0],
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: ImageCard(
+              key: Key('test 2'),
+              height: 250.0,
+              card: dummyImageList[1],
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  List<CachedImage> get exampleImages {
-    return [
-      CachedImage.squared(
-        size: 200.0,
-        imageUrl: 'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
-      ),
-      CachedImage.squared(
-        size: 200.0,
-        imageUrl: 'https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg',
-      ),
-    ];
   }
 }

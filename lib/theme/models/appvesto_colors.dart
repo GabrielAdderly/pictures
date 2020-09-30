@@ -6,6 +6,14 @@ class AVColors implements IAVColors {
   Color primaryColor;
   @override
   Color accentColor;
+  Color backgroundColor;
+  Color likeColor;
+  Color unlikeColor;
+
+  Color titleTextColor;
+  Color headerTextColor;
+  Color textColor;
+  Color secondTitleColor;
   @override
   Color activeColor;
   @override
@@ -14,6 +22,13 @@ class AVColors implements IAVColors {
   AVColors({
     this.primaryColor,
     this.accentColor,
+    this.backgroundColor,
+    this.likeColor,
+    this.unlikeColor,
+    this.titleTextColor,
+    this.headerTextColor,
+    this.textColor,
+    this.secondTitleColor,
     this.activeColor,
     this.inActiveColor,
   });
