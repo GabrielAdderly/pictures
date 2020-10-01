@@ -12,7 +12,6 @@ import 'package:pictures_view/widgets/grid_image_item.dart';
 import 'package:pictures_view/ui/layouts/appbars/search_appbar.dart';
 
 import 'package:pictures_view/ui/widgets/categories_list.dart';
-import 'package:pictures_view/ui/widgets/image_card/image_card.dart';
 import 'package:pictures_view/ui/widgets/builder_widgets/page_widget.dart';
 
 class HomePage extends PageWidget {
@@ -40,7 +39,7 @@ class HomePage extends PageWidget {
 
   @override
   Widget buildBody(BuildContext context, AVTheme theme, Language dictionary) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: ScrollConfiguration(
         behavior: CleanBehavior(),
@@ -50,17 +49,12 @@ class HomePage extends PageWidget {
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.86,
+            childAspectRatio: 0.75,
           ),
           itemBuilder: (BuildContext context, int index) {
             return GridImageItem(
               aspectRatio: 1,
-              child: ImageCard(
-                key: Key('image_card_$index'),
-                card: imageCards[index],
-                onTap: () {},
-                likeCallback: (bool isLiked) => imageCards[index].updateLikes(),
-              ),
+              card: imageCards[index],
             );
           },
         ),

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 
 import 'package:pictures_view/res/const.dart';

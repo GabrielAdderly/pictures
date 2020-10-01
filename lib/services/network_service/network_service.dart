@@ -1,16 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:pictures_view/services/network_service/interfaces/i_base_request.dart';
-import 'package:pictures_view/services/network_service/models/base_error.dart';
-import 'package:pictures_view/services/network_service/res/typedef.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 
-import 'models/base_http_error.dart';
-import 'models/base_http_response.dart';
-import 'res/consts.dart';
+import 'package:pictures_view/services/network_service/res/consts.dart';
+
+import 'package:pictures_view/services/network_service/interfaces/i_base_request.dart';
+
+import 'package:pictures_view/services/network_service/models/base_error.dart';
+import 'package:pictures_view/services/network_service/models/base_http_error.dart';
+import 'package:pictures_view/services/network_service/models/base_http_response.dart';
 
 class NetworkService {
   static const tag = '[NetworkService]';
@@ -57,10 +57,10 @@ class NetworkService {
 
     if (response.statusCode == HTTP_UNPROCESSABLE) {
       try {
-        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
-        int code = responseBody[DATA];
-        String error = _getErrorByCode(code);
+        final int code = responseBody[DATA];
+        final String error = _getErrorByCode(code);
 
         if (error == null) {
           return BaseHttpResponse(

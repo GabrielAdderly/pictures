@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:pictures_view/models/dtos/card_dto.dart';
+
+import 'package:pictures_view/ui/widgets/image_card/image_card.dart';
+
 class GridImageItem extends StatelessWidget {
   final double aspectRatio;
-  final Widget child;
+  final CardDTO card;
 
   const GridImageItem({
+    @required this.card,
+    @required this.aspectRatio,
     Key key,
-    this.aspectRatio,
-    this.child,
   }) : super(key: key);
 
   @override
@@ -16,7 +20,12 @@ class GridImageItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: AspectRatio(
         aspectRatio: aspectRatio,
-        child: child,
+        child: ImageCard(
+          key: Key('image_card_${card.id}'),
+          card: card,
+          onTap: () {},
+          likeCallback: (bool isLiked) => card.updateLikes(),
+        ),
       ),
     );
   }

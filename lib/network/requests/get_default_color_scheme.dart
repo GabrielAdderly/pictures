@@ -7,14 +7,14 @@ import 'package:pictures_view/services/network_service/shared/request_builders.d
 class GetDefaultColorScheme implements IRequest<GetColorSchemeResponseDto> {
   @override
   Future<GetColorSchemeResponseDto> call() async {
-    final BaseHttpResponse respose = await NetworkService.instance.request(
+    final BaseHttpResponse response = await NetworkService.instance.request(
       RequestBuilders.get(
         url: 'http://colormind.io/api/',
         functionName: '',
       ),
     );
 
-    final Map<String, dynamic> map = {};
+    final Map<String, dynamic> map = response.response;
 
     return GetColorSchemeResponseDto.fromMap(map);
   }
