@@ -10,6 +10,6 @@ export 'package:pictures_view/dictionary/models/language.dart';
 export 'package:pictures_view/dictionary/flutter_dictionary.dart';
 
 export 'package:pictures_view/ui/widgets/builder_widgets/page_widget.dart';
-export 'package:pictures_view/ui/widgets/builder_widgets/theme_stateless_widget.dart';
+export 'package:pictures_view/ui/widgets/builder_widgets/theme_widget.dart';
 export 'package:pictures_view/ui/widgets/builder_widgets/pikcha_stateless_widget.dart';
 export 'package:pictures_view/ui/widgets/builder_widgets/additional_stateless_widget.dart';

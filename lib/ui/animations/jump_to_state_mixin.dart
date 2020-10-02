@@ -4,13 +4,19 @@ import 'package:meta/meta.dart';
 
 mixin JumpToStateMixin<T extends StatefulWidget> on State<T> {
   Curve _curve = Curves.easeOutQuint;
-  ScrollController controller = ScrollController();
+  ScrollController _controller;
+
+  ScrollController get controller {
+    if (_controller == null) initController();
+
+    return _controller;
+  }
 
   @nonVirtual
-  void initController() => controller = ScrollController();
+  void initController() => _controller = ScrollController();
 
   @nonVirtual
-  void disposeController() => controller.dispose();
+  void disposeController() => _controller.dispose();
 
   @nonVirtual
   void changeCurve(Curve curve) => _curve = curve;
@@ -19,8 +25,8 @@ mixin JumpToStateMixin<T extends StatefulWidget> on State<T> {
   void jumpTo(RenderBox box) {
     final Offset position = box.localToGlobal(Offset.zero);
     final double x = position.dx;
-    controller.animateTo(
-      x + controller.offset - 16.0,
+    _controller.animateTo(
+      x + _controller.offset - 16.0,
       duration: Duration(milliseconds: 500),
       curve: _curve,
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pictures_view/pikcha_main_lib.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/active_color_picker/active_color_picker.dart';
 
+import 'package:pictures_view/widgets/divider.dart';
 import 'package:pictures_view/widgets/cleaned_scroll_view.dart';
 
 import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
@@ -12,8 +13,6 @@ import 'package:pictures_view/ui/pages/settings_page/widgets/settings_header.dar
 import 'package:pictures_view/ui/pages/settings_page/widgets/custom_theme_picker/custom_theme_picker.dart';
 
 class SettingsPage extends PageWidget {
-  static const Widget DIVIDER = Divider(height: 1.0, color: AppColors.kDivider);
-
   SettingsPage() : super(key: Key('SettingsPage'));
 
   final List<String> list = ['Color theme'];
@@ -33,11 +32,11 @@ class SettingsPage extends PageWidget {
   Widget buildBody(BuildContext context, AVTheme theme, Language dictionary) {
     return CleanedScrollView(
       children: <Widget>[
-        DIVIDER,
+        AppDivider(),
         ImageExamples(),
-        DIVIDER,
+        AppDivider(),
         CustomThemePicker(),
-        DIVIDER,
+        AppDivider(),
         ActiveColorPicker(),
       ],
     );

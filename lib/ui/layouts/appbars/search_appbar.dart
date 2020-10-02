@@ -47,12 +47,12 @@ class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
                 title,
                 style: theme.textStyles.titleTextStyle(height: 1.3),
               ),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 24.0),
               Container(
                 height: 48.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xFF16191D),
+                  color: theme.colors.primaryColor,
                   borderRadius: BorderRadius.circular(100.0),
                 ),
                 padding: EdgeInsets.only(
@@ -70,12 +70,12 @@ class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
                   keyboardType: TextInputType.text,
                   textAlignVertical: TextAlignVertical.center,
                   textInputAction: TextInputAction.search,
-                  style: TextStyle(color: Color(0xFFFFFFFF)),
+                  style: theme.textStyles.w400TextStyle(),
                   maxLines: 1,
-                  cursorColor: Color(0xFFF06500),
+                  cursorColor: theme.colors.activeColor,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintStyle: TextStyle(color: Color(0xFF979797)),
+                    hintStyle: theme.textStyles.w400TextStyle(size: 16.0, height: 1.2),
                     alignLabelWithHint: true,
                     hintText: 'Search',
                   ),

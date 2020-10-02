@@ -30,7 +30,7 @@ abstract class PageWidget extends StatelessWidget {
       converter: MainLayoutViewModel.fromStore,
       builder: (BuildContext context, MainLayoutViewModel viewModel) {
         return MainLayout(
-          bgColor: CustomTheme.colors.accentColor,
+          bgColor: CustomTheme.getCurrentTheme.colors.accentColor,
           appBar: buildAppBar(),
           child: buildBody(context, CustomTheme.getCurrentTheme, FlutterDictionary.instance.language),
         );

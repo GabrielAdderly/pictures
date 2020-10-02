@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/models/dtos/card_dto.dart';
+import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/res/typedef.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/models/dtos/card_dto.dart';
 
 import 'package:pictures_view/ui/widgets/image_card/image_card_info_sector.dart';
 import 'package:pictures_view/ui/widgets/image_card/image_card_picture_sector.dart';
 import 'package:pictures_view/ui/widgets/image_card/image_card_favorite_sector.dart';
 
-class ImageCard extends StatelessWidget {
+class ImageCard extends ThemeStatelessWidget {
   ImageCard({
     @required Key key,
     @required this.card,
@@ -30,12 +30,12 @@ class ImageCard extends StatelessWidget {
   final BooleanCallback likeCallback;
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme theme) {
     return Container(
       height: height,
       width: width ?? double.infinity,
       decoration: BoxDecoration(
-        color: CustomTheme.colors.primaryColor,
+        color: theme.colors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       padding: EdgeInsets.all(12.0),

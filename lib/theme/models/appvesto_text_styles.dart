@@ -33,7 +33,6 @@ class AVTextStyles {
     );
   }
 
-
   TextStyle w400TextStyle({double size, double height}) {
     return TextStyle(
       fontFamily: textFontFamily,
@@ -43,7 +42,6 @@ class AVTextStyles {
       fontWeight: FontWeight.w400,
     );
   }
-
 
   TextStyle boldTextStyle({double size, double height}) {
     return TextStyle(

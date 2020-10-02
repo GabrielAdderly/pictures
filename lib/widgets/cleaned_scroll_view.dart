@@ -11,8 +11,8 @@ class CleanedScrollView extends StatelessWidget {
 
   const CleanedScrollView({
     @required this.children,
-    this.controller,
     Key key,
+    this.controller,
     this.scrollDirection = Axis.vertical,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,

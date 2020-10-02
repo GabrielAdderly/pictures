@@ -25,10 +25,6 @@ class CustomTheme {
 
   static AVTheme get getCurrentTheme => instance._theme;
 
-  static AVColors get colors => instance._theme.colors;
-
-  static AVTextStyles get textStyles => instance._theme.textStyles;
-
   static bool isCurrentTheme(AVTheme theme) => theme == instance._theme;
 
   static bool isActiveColor(Color color) => color == instance._theme.colors.activeColor;

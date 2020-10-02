@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:pictures_view/pikcha_main_lib.dart';
+
 import 'package:pictures_view/res/typedef.dart';
 import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
-
-class ImageCardFavoriteSector extends StatefulWidget {
+class ImageCardFavoriteSector extends ThemeStatefulWidget {
   final bool isLiked;
   final int countOfLikes;
   final BooleanCallback likeCallback;
@@ -21,7 +21,7 @@ class ImageCardFavoriteSector extends StatefulWidget {
   _ImageCardFavoriteSectorState createState() => _ImageCardFavoriteSectorState();
 }
 
-class _ImageCardFavoriteSectorState extends State<ImageCardFavoriteSector> {
+class _ImageCardFavoriteSectorState extends ThemeState<ImageCardFavoriteSector> {
   bool isLiked;
 
   @override
@@ -31,7 +31,7 @@ class _ImageCardFavoriteSectorState extends State<ImageCardFavoriteSector> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme theme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -42,14 +42,14 @@ class _ImageCardFavoriteSectorState extends State<ImageCardFavoriteSector> {
             child: Icon(
               BottomBarIcons.favorites,
               size: 12.0,
-              color: isLiked ? Color(0xFFE51A1A) : Color(0xFF979797),
+              color: isLiked ? AppColors.kLikeColor : AppColors.kGrey,
             ),
           ),
         ),
         SizedBox(width: 6.0),
         Text(
           _getLikesCount(widget.countOfLikes.toString()),
-          style: CustomTheme.textStyles.w400TextStyle(size: 14.0, height: 1.3),
+          style: theme.textStyles.w400TextStyle(size: 14.0, height: 1.3),
           overflow: TextOverflow.ellipsis,
         ),
       ],

@@ -5,6 +5,7 @@ class AppColors {
 
   static const Color kWhite = Color(0xFFFFFFFF);
   static const Color kWhiteDark = Color(0xFFEFEFEF);
+  static const Color kWhiteDark2 = Color(0xFFE5E5E5);
   static const Color kBlack = Color(0xFF16191D);
   static const Color kBlackLight = Color(0xFF262B2F);
 
@@ -28,4 +29,6 @@ class AppColors {
   static const Color kYellowLight = Color(0xFFFFE9B7);
   static const Color kPinkLight = Color(0xFFF3B5AD);
   static const Color kRedLight = Color(0xFFFE4948);
+
+  static const Color kLikeColor = Color(0xFFE51A1A);
 }

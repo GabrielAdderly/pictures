@@ -18,3 +18,21 @@ abstract class ThemeStatelessWidget extends StatelessWidget {
     return buildWidget(context, CustomTheme.getCurrentTheme);
   }
 }
+
+abstract class ThemeStatefulWidget extends StatefulWidget {
+  const ThemeStatefulWidget({Key key}) : super(key: key);
+}
+
+abstract class ThemeState<T extends ThemeStatefulWidget> extends State<T> {
+  @protected
+  Widget buildWidget(BuildContext context, AVTheme theme);
+
+  @override
+  @nonVirtual
+  Widget build(BuildContext context) {
+    return buildWidget(
+      context,
+      CustomTheme.getCurrentTheme,
+    );
+  }
+}

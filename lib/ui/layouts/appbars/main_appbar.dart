@@ -18,6 +18,7 @@ class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
     this.additionalAppBarElement = const NonAdditionalStatelessWidget(),
   })  : preferredSize = Size.fromHeight(height + additionalAppBarElement.getHeight),
         assert(title != null, throw ('You forgot filled title!')),
+        assert(additionalAppBarElement != null, throw ('additionalAppBarElement is null!')),
         super(key: const Key('MainAppBar'));
 
   @override

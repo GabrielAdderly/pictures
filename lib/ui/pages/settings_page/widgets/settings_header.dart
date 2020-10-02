@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pictures_view/pikcha_main_lib.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
 import 'package:pictures_view/widgets/clean_behavior.dart';
 
 import 'package:pictures_view/ui/animations/jump_to_state_mixin.dart';
@@ -56,7 +55,7 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
                 padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
                 child: Text(
                   widget.titles[index],
-                  style: CustomTheme.textStyles.primaryTextStyle(
+                  style: theme.textStyles.primaryTextStyle(
                     size: 24.0,
                     height: 1.2,
                   ),
@@ -74,5 +73,3 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
     widget.callback(index);
   }
 }
-
-

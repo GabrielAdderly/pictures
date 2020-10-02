@@ -23,11 +23,13 @@ class CategoriesList extends AdditionalStatefulWidget {
 
 class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToStateMixin {
   int _selectedCategoryIndex = 0;
+  List<GlobalKey> _globalKeys;
 
   @override
   void initState() {
     super.initState();
     initController();
+    createKeys();
   }
 
   @override
@@ -43,20 +45,19 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         vertical: 8.0,
-        horizontal: 16.0,
       ),
       child: ListView.builder(
         controller: controller,
         scrollDirection: Axis.horizontal,
         itemCount: widget.categories.length,
         itemBuilder: (BuildContext context, int index) {
-          final GlobalKey categoryWidgetKey = GlobalKey();
+          print(index);
           return InkWell(
-            onTap: () => _onTextTap(categoryWidgetKey, index),
+            onTap: () => _onTextTap(index),
             child: Container(
-              key: categoryWidgetKey,
+              key: _globalKeys[index],
               margin: EdgeInsets.only(right: 55.0),
-              height: 22.0,
+              height: 26.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -67,7 +68,7 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
                   Container(
                     height: 2.0,
                     width: 15.0,
-                    color: index == _selectedCategoryIndex ? theme.colors.accentColor : AppColors.kTransparent,
+                    color: index == _selectedCategoryIndex ? theme.colors.activeColor : AppColors.kTransparent,
                   ),
                 ],
               ),
@@ -78,11 +79,18 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
     );
   }
 
-  void _onTextTap(GlobalKey key, int index) {
-    setState(() {
-      _selectedCategoryIndex = index;
-    });
-    jumpTo(key.currentContext.findRenderObject());
+  void createKeys() {
+    _globalKeys = [];
+
+    for (int i = 0; i < widget.categories.length; i++) {
+      _globalKeys.add(GlobalKey(debugLabel: widget.categories[i].text));
+    }
+  }
+
+  void _onTextTap(int index) {
+    _selectedCategoryIndex = index;
+    setState(() {});
+    jumpTo(_globalKeys[index].currentContext.findRenderObject());
     widget.selectCallback(index);
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
 
-class ImageCardInfoSector extends StatelessWidget {
+import 'package:pictures_view/pikcha_main_lib.dart';
+
+class ImageCardInfoSector extends ThemeStatelessWidget {
   final String title;
   final String content;
 
@@ -12,7 +13,7 @@ class ImageCardInfoSector extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme theme) {
     return Flexible(
       fit: FlexFit.loose,
       child: Column(
@@ -21,14 +22,14 @@ class ImageCardInfoSector extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: CustomTheme.textStyles.primaryTextStyle(size: 16.0, height: 1.1),
+            style: theme.textStyles.primaryTextStyle(size: 16.0, height: 1.1),
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: 2.0),
           Text(
             content,
-            style: CustomTheme.textStyles.w400TextStyle(size: 12.0, height: 1.2),
+            style: theme.textStyles.w400TextStyle(size: 12.0, height: 1.2),
             overflow: TextOverflow.ellipsis,
           ),
         ],

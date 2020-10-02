@@ -50,23 +50,20 @@ class NonAdditionalStatelessWidget extends AdditionalStatelessWidget {
   }
 }
 
-abstract class AdditionalStatefulWidget extends StatefulWidget
-    implements AdditionalAppbarWidget {
-
+abstract class AdditionalStatefulWidget extends StatefulWidget implements AdditionalAppbarWidget {
   final double height;
 
   @mustCallSuper
-  const AdditionalStatefulWidget({Key key, this.height}) : super (key: key);
+  const AdditionalStatefulWidget({Key key, this.height}) : super(key: key);
 
   @override
   bool get isNotEmpty => height > 0;
 
   @override
   double get getHeight => height;
-
 }
 
-class AdditionalState <T extends AdditionalStatefulWidget> extends State<T> {
+abstract class AdditionalState<T extends AdditionalStatefulWidget> extends State<T> {
   @protected
   Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) => SizedBox();
 
