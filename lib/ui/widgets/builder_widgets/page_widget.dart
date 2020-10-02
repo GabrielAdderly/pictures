@@ -1,15 +1,3 @@
-/// Here All packages for build pages
-library page_widget;
-
-export 'package:pictures_view/res/app_styles/app_colors.dart';
-
-export 'package:pictures_view/theme/data/default_theme.dart';
-export 'package:pictures_view/theme/models/appvesto_theme.dart';
-
-export 'package:pictures_view/dictionary/models/language.dart';
-export 'package:pictures_view/dictionary/flutter_dictionary.dart';
-
-///region [imports]
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 

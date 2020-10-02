@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pictures_view/res/const.dart';
 
-import 'package:pictures_view/ui/widgets/builder_widgets/theme_stateless_widget.dart';
+import 'package:pictures_view/pikcha_main_lib.dart';
 
 class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
   @override
@@ -10,11 +10,13 @@ class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
 
   final double height;
   final String title;
+  final AdditionalAppbarWidget additionalAppBarElement;
 
   MainAppBar({
     @required this.title,
     this.height = 88.0,
-  })  : preferredSize = Size.fromHeight(height),
+    this.additionalAppBarElement = const NonAdditionalStatelessWidget(),
+  })  : preferredSize = Size.fromHeight(height + additionalAppBarElement.getHeight),
         assert(title != null, throw ('You forgot filled title!')),
         super(key: const Key('MainAppBar'));
 
@@ -26,11 +28,17 @@ class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
       child: SafeArea(
         top: true,
         child: Container(
-          height: height,
+          height: height + additionalAppBarElement.getHeight,
           alignment: Alignment.bottomCenter,
-          child: Text(
-            title,
-            style: theme.textStyles.titleTextStyle(height: 1.3),
+          child: Column(
+            children: <Widget>[
+              Spacer(),
+              Text(
+                title,
+                style: theme.textStyles.titleTextStyle(height: 1.3),
+              ),
+              additionalAppBarElement,
+            ],
           ),
         ),
       ),

@@ -1,8 +1,5 @@
 library theme_stateless_widget;
 
-export 'package:pictures_view/theme/custom_theme.dart';
-export 'package:pictures_view/theme/models/appvesto_theme.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 

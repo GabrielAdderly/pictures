@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/ui/widgets/builder_widgets/theme_stateless_widget.dart';
+import 'package:pictures_view/pikcha_main_lib.dart';
 
 class CustomThemeElement extends ThemeStatelessWidget {
   final AVTheme customTheme;
@@ -22,8 +22,6 @@ class CustomThemeElement extends ThemeStatelessWidget {
         ),
       ),
       constraints: BoxConstraints(
-        minHeight: 0.0,
-        minWidth: 0.0,
         maxHeight: 50.0,
         maxWidth: 110.0,
       ),
@@ -34,7 +32,7 @@ class CustomThemeElement extends ThemeStatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(child: Container(color: customTheme.colors.primaryColor)),
-            const SizedBox(width: 16.0,),
+            const SizedBox(width: 16.0),
             Expanded(child: Container(color: customTheme.colors.primaryColor)),
           ],
         ),

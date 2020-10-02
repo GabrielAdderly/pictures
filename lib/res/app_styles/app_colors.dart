@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static const Color kTransparent = Color(0x00000000);
+
   static const Color kWhite = Color(0xFFFFFFFF);
   static const Color kWhiteDark = Color(0xFFEFEFEF);
   static const Color kBlack = Color(0xFF16191D);
@@ -21,9 +23,9 @@ class AppColors {
   static const Color kBlue = Color(0xFF5F70FF);
   static const Color kYellow = Color(0xFFFFCD53);
 
+  //region gradient colors
   static const Color kPeach = Color(0xFFFDB796);
   static const Color kYellowLight = Color(0xFFFFE9B7);
   static const Color kPinkLight = Color(0xFFF3B5AD);
   static const Color kRedLight = Color(0xFFFE4948);
-
 }

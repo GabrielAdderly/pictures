@@ -19,7 +19,7 @@ class AVTheme {
     String themeName,
     AVColors colors,
     AVTextStyles textStyles,
-    AVTextStyles edgeInsets,
+    AVEdgeInsets edgeInsets,
   }) {
     return AVTheme(
       colors: colors ?? this.colors,

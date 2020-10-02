@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:pictures_view/res/app_styles/app_gradient.dart';
 
-// ignore: use_key_in_widget_constructors
+
 class SplashLoader extends StatefulWidget {
+
+  const SplashLoader({Key key}) : super (key: key);
+
   @override
   _SplashLoaderState createState() => _SplashLoaderState();
 }

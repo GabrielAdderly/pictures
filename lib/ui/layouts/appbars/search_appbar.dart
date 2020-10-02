@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/pikcha_main_lib.dart';
 
-class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
   final double height;
-  final double additionalAppBarHeight;
+
   final String title;
-  final Widget additionalAppBarElement;
+  final AdditionalAppbarWidget additionalAppBarElement;
 
   final FocusNode focusNode;
   final TextEditingController controller;
@@ -19,25 +18,20 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
     @required this.title,
     this.controller,
     this.focusNode,
-    this.additionalAppBarElement,
-    this.additionalAppBarHeight,
     this.height = 160.0,
-  })  : preferredSize = Size.fromHeight(
-          additionalAppBarElement != null && additionalAppBarHeight != null
-              ? height + additionalAppBarHeight
-              : height,
-        ),
+    this.additionalAppBarElement = const NonAdditionalStatelessWidget(),
+  })  : preferredSize = Size.fromHeight(height + additionalAppBarElement.getHeight),
         assert(title != null, throw ('You forgot filled title!')),
         super(key: const Key('MainAppBar'));
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme theme) {
     return Container(
-      color: CustomTheme.colors.accentColor,
+      color: theme.colors.accentColor,
       child: SafeArea(
         top: true,
         child: Container(
-          height: additionalAppBarHeight != null ? additionalAppBarHeight + height : height,
+          height: height + additionalAppBarElement.getHeight,
           alignment: Alignment.bottomCenter,
           padding: const EdgeInsets.only(
             left: 16.0,
@@ -51,7 +45,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
               Spacer(),
               Text(
                 title,
-                style: CustomTheme.textStyles.titleTextStyle(height: 1.3),
+                style: theme.textStyles.titleTextStyle(height: 1.3),
               ),
               SizedBox(height: 24.0),
               Container(
@@ -87,8 +81,8 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              if (additionalAppBarElement != null) SizedBox(height: 8.0),
-              if (additionalAppBarElement != null) additionalAppBarElement,
+              if (additionalAppBarElement.isNotEmpty) SizedBox(height: 8.0),
+              additionalAppBarElement,
             ],
           ),
         ),

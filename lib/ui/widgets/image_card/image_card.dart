@@ -38,7 +38,7 @@ class ImageCard extends StatelessWidget {
         color: CustomTheme.colors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -52,6 +52,7 @@ class ImageCard extends StatelessWidget {
           SizedBox(height: 10.0),
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ImageCardInfoSector(

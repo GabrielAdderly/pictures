@@ -1,48 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/theme/custom_theme.dart';
 import 'package:pictures_view/widgets/clean_behavior.dart';
 
-class SettingsHeader extends StatefulWidget {
+import 'package:pictures_view/ui/animations/jump_to_state_mixin.dart';
+
+class SettingsHeader extends AdditionalStatefulWidget {
   final List<String> titles;
   final void Function(int) callback;
 
   const SettingsHeader({
     @required this.titles,
     @required this.callback,
+    double height = 70.0,
     Key key,
-  }) : super(key: key);
+  }) : super(key: key, height: height);
 
   @override
   _SettingsHeaderState createState() => _SettingsHeaderState();
 }
 
-class _SettingsHeaderState extends State<SettingsHeader> {
-  ScrollController _controller;
-
+class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = ScrollController();
+    initController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    disposeController();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) {
     return SizedBox(
-      height: 70.0,
+      height: widget.getHeight,
       width: double.infinity,
       child: ScrollConfiguration(
         behavior: CleanBehavior(),
         child: ListView.builder(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
-          controller: _controller,
+          controller: controller,
           scrollDirection: Axis.horizontal,
           itemCount: widget.titles.length,
           itemBuilder: (BuildContext context, int index) {
@@ -68,14 +70,7 @@ class _SettingsHeaderState extends State<SettingsHeader> {
   }
 
   void _onTextTap(GlobalKey key, int index) {
-    final RenderBox box = key.currentContext.findRenderObject();
-    final Offset position = box.localToGlobal(Offset.zero);
-    final double x = position.dx;
-    _controller.animateTo(
-      x + _controller.offset,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOutQuint,
-    );
+    jumpTo(key.currentContext.findRenderObject());
     widget.callback(index);
   }
 }

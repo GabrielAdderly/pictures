@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 
+import 'package:pictures_view/pikcha_main_lib.dart';
+
 import 'package:pictures_view/store/application/app_state.dart';
 
-import 'package:pictures_view/ui/widgets/builder_widgets/theme_stateless_widget.dart';
-
-import 'package:pictures_view/ui/pages/settings_page/widgets/custom_theme_element.dart';
+import 'package:pictures_view/ui/pages/settings_page/widgets/custom_theme_picker/custom_theme_element.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/custom_theme_picker/custom_theme_picker_view_model.dart';
 
 class CustomThemePicker extends ThemeStatelessWidget {
-  final List<AVTheme> themes;
 
-  const CustomThemePicker({
-    @required this.themes,
-    Key key,
-  }) : super(key: key);
+  const CustomThemePicker({Key key}) : super(key: key);
 
   @override
   Widget buildWidget(BuildContext context, AVTheme theme) {
@@ -26,7 +22,7 @@ class CustomThemePicker extends ThemeStatelessWidget {
           color: theme.colors.primaryColor,
           padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 6.0),
           child: Row(
-            children: themes.map((AVTheme customTheme) {
+            children: CustomTheme.mainThemes.map((AVTheme customTheme) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0),
                 child: InkWell(

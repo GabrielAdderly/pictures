@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:pictures_view/pikcha_main_lib.dart';
+
 import 'package:pictures_view/models/dtos/card_dto.dart';
 import 'package:pictures_view/models/dtos/category_dto.dart';
 
@@ -9,10 +11,8 @@ import 'package:pictures_view/dummy_classes/dummy_categories.dart';
 import 'package:pictures_view/widgets/clean_behavior.dart';
 import 'package:pictures_view/widgets/grid_image_item.dart';
 
-import 'package:pictures_view/ui/layouts/appbars/search_appbar.dart';
-
 import 'package:pictures_view/ui/widgets/categories_list.dart';
-import 'package:pictures_view/ui/widgets/builder_widgets/page_widget.dart';
+import 'package:pictures_view/ui/layouts/appbars/search_appbar.dart';
 
 class HomePage extends PageWidget {
   HomePage() : super(key: Key('HomePage'));
@@ -33,7 +33,6 @@ class HomePage extends PageWidget {
         categories: _categories,
         selectCallback: (int index) {},
       ),
-      additionalAppBarHeight: 36.0,
     );
   }
 
