@@ -21,13 +21,9 @@ class ThemeAdapter {
 
     ThemeDTO themeDTO = theme.toDTO();
 
-    print(themeDTO.toString());
-
     Map<String, dynamic> map = themeDTO.toJson();
 
     value = json.encode(map);
-
-    print(value);
 
     await StorageRepository.instance.addThemeToStorage(value);
   }

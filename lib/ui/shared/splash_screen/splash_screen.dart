@@ -36,7 +36,8 @@ class _SplashScreenState extends ThemeState<SplashScreen> {
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, AVTheme avTheme) {
+    AVTheme theme = avTheme ?? darkTheme;
     return Scaffold(
       backgroundColor: theme.colors.accentColor,
       body: Directionality(

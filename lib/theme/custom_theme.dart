@@ -47,6 +47,7 @@ class CustomTheme {
     List<AVTheme> themes = await ThemeAdapter.instance.getThemes();
     _theme = theme ?? darkTheme;
     mainThemes = themes ?? _kMainThemes;
+    logger.i('Current theme => ${_theme.themeName}');
   }
 
   Future<void> setNewTheme(AVTheme thm) async {

@@ -15,8 +15,6 @@ class ColorConverter {
   }
 
   static String colorToHex(Color color) {
-    print(color.toString());
-
     return '#' + Color(color.value).toString().split('0xff')[1].split(')')[0];
   }
 }

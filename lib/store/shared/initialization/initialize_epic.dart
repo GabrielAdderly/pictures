@@ -22,7 +22,6 @@ class InitializeEpics {
       yield* await Future.delayed(Duration(seconds: 5)).then((_) {
         return Stream.fromIterable([
           RouteHandler.instance.navigateTo(ROUTE_INFO_HOME_PAGE),
-          GetThemeAction(theme: CustomTheme.getCurrentTheme),
           GetDictionaryAction(dictionary: FlutterDictionary.instance.dictionary),
         ]);
       });
@@ -30,8 +29,9 @@ class InitializeEpics {
   }
 
   static Stream<dynamic> initializationThemeEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
-    return actions.whereType<StartInitialization>().switchMap((action) {
-      return Stream.fromFuture(CustomTheme.instance.init());
+    return actions.whereType<StartInitialization>().switchMap((action) async* {
+      await CustomTheme.instance.init();
+      yield* Stream.value(GetThemeAction(theme: CustomTheme.getCurrentTheme));
     });
   }
 }
