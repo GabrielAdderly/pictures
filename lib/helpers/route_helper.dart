@@ -4,8 +4,10 @@ import 'package:pictures_view/handler/route_handler.dart';
 import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/res/routes.dart';
 import 'package:pictures_view/ui/layouts/bottom_bar/bottom_bar.dart';
+import 'package:pictures_view/ui/pages/custom_color_picker_page/custom_color_picker_page.dart';
 
 import 'package:pictures_view/ui/pages/home_page/home_page.dart';
+import 'package:pictures_view/ui/pages/image_info_page/image_info_page.dart';
 import 'package:pictures_view/ui/pages/settings_page/settings_page.dart';
 import 'package:pictures_view/ui/pages/next_button_page/next_button_page.dart';
 
@@ -51,6 +53,18 @@ class RouteHelper {
         return _defaultRoute(
           settings: settings,
           page: SettingsPage(),
+        );
+
+      case Routes.customColorPickerPage:
+        return _defaultRoute(
+          settings: settings,
+          page: CustomColorPickerPage(),
+        );
+
+      case Routes.imageInfoPage:
+        return _defaultRoute(
+          settings: settings,
+          page: ImageInfoPage(),
         );
 
       default:

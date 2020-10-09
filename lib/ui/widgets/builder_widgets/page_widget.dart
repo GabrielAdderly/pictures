@@ -4,9 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:pictures_view/dictionary/models/language.dart';
-import 'package:pictures_view/dictionary/flutter_dictionary.dart';
-
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/theme/models/appvesto_colors.dart';
 import 'package:pictures_view/theme/models/appvesto_theme.dart';
 
 import 'package:pictures_view/store/application/app_state.dart';
@@ -18,21 +16,31 @@ abstract class PageWidget extends StatelessWidget {
   const PageWidget({Key key}) : super(key: key);
 
   @protected
-  PreferredSizeWidget buildAppBar();
+  PreferredSizeWidget buildAppBar(Dictionary dictionary);
 
   @protected
-  Widget buildBody(BuildContext context, AVTheme theme, Language dictionary);
+  Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary);
+
+  @protected
+  bool get resizeToAvoidBottomBarPadding => false;
+
+  @protected
+  Color backgroundColor(AVColors colors) => colors.accentColor;
 
   @override
   @nonVirtual
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, MainLayoutViewModel>(
-      converter: MainLayoutViewModel.fromStore,
-      builder: (BuildContext context, MainLayoutViewModel viewModel) {
+    return StoreConnector<AppState, LayoutViewModel>(
+      distinct: true,
+      converter: LayoutViewModel.fromStore,
+      builder: (BuildContext context, LayoutViewModel viewModel) {
+        print('rebuild');
         return MainLayout(
-          bgColor: CustomTheme.getCurrentTheme.colors.accentColor,
-          appBar: buildAppBar(),
-          child: buildBody(context, CustomTheme.getCurrentTheme, FlutterDictionary.instance.language),
+          key: key,
+          bgColor: backgroundColor(viewModel.theme.colors),
+          resizeToAvoidBottomPadding: resizeToAvoidBottomBarPadding,
+          appBar: buildAppBar(viewModel.dictionary),
+          child: buildBody(context, viewModel.theme, viewModel.dictionary),
         );
       },
     );

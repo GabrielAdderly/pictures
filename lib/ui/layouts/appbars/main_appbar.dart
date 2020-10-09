@@ -33,11 +33,12 @@ class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
           alignment: Alignment.bottomCenter,
           child: Column(
             children: <Widget>[
-              Spacer(),
+              Spacer(flex: 2),
               Text(
                 title,
                 style: theme.textStyles.titleTextStyle(height: 1.3),
               ),
+              Spacer(),
               additionalAppBarElement,
             ],
           ),

@@ -18,7 +18,8 @@ class CustomThemePicker extends ThemeStatelessWidget {
     return StoreConnector<AppState, CustomThemePickerViewModel>(
       converter: CustomThemePickerViewModel.fromStore,
       builder: (BuildContext context, CustomThemePickerViewModel viewModel) {
-        return Container(
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 1000),
           color: theme.colors.primaryColor,
           padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 6.0),
           child: Row(

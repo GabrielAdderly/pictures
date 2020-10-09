@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+import 'package:pictures_view/adapters/theme_adapter.dart';
 import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/res/const.dart';
@@ -12,7 +13,6 @@ import 'package:pictures_view/theme/models/appvesto_colors.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
 class CustomTheme {
-
   CustomTheme._privateConstructor() {
     _theme = darkTheme;
   }
@@ -27,9 +27,11 @@ class CustomTheme {
 
   static bool isCurrentTheme(AVTheme theme) => theme == instance._theme;
 
-  static bool isActiveColor(Color color) => color == instance._theme.colors.activeColor;
+  static bool isActiveColor(Color color) => color == instance._theme.colors.iconColor;
 
-  static List<AVTheme> mainThemes = [darkTheme, lightTheme];
+  static List<AVTheme> _kMainThemes = [darkTheme, lightTheme];
+
+  static List<AVTheme> mainThemes;
 
   static List<Color> mainActiveColors = [
     AppColors.kOrange,
@@ -40,19 +42,31 @@ class CustomTheme {
 
   AVTheme _theme;
 
-  Never setNewTheme(AVTheme thm) {
+  Future<void> init() async {
+    AVTheme theme = await ThemeAdapter.instance.getTheme();
+    List<AVTheme> themes = await ThemeAdapter.instance.getThemes();
+    _theme = theme ?? darkTheme;
+    mainThemes = themes ?? _kMainThemes;
+  }
+
+  Future<void> setNewTheme(AVTheme thm) async {
     logger.i('$tag => setNewTheme() => theme => ${thm.themeName}');
     _theme = thm;
+
+    await ThemeAdapter.instance.addThemeToStorage(thm);
   }
 
-  Never setActiveColor(Color activeColor) {
-    for(AVTheme theme in mainThemes) {
-      theme.colors.activeColor = activeColor;
+  Future<void> setColorWithColorType(Color activeColor, ColorType type) async {
+    for (AVTheme theme in mainThemes) {
+      _changeColor(theme, type, activeColor);
     }
-    _theme.colors.activeColor = activeColor;
+    _changeColor(_theme, type, activeColor);
+
+    await ThemeAdapter.instance.addThemeToStorage(_theme);
+    await ThemeAdapter.instance.addThemesToStorage(mainThemes);
   }
 
-  Never setCustomTheme({@required String themeName, AVColors colors, AVTextStyles textStyles}) {
+  Future<void> setCustomTheme({@required String themeName, AVColors colors, AVTextStyles textStyles}) async {
     logger.i('$tag => setCustomTheme() => themeName => $themeName}');
     _theme.copyWith(
       themeName: themeName,
@@ -60,4 +74,21 @@ class CustomTheme {
       textStyles: textStyles,
     );
   }
+
+  void _changeColor(AVTheme theme, ColorType type, Color color) {
+    switch (type) {
+      case ColorType.icon:
+        theme.colors.iconColor = color;
+        break;
+      case ColorType.button:
+        theme.colors.buttonColor = color;
+        break;
+    }
+  }
+
+}
+
+enum ColorType {
+  icon,
+  button,
 }

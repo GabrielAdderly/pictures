@@ -22,8 +22,8 @@ class CachedImage extends StatelessWidget {
   }) : super(key: key);
 
   factory CachedImage.squared({
-    String imageUrl,
-    double size,
+    @required String imageUrl,
+    @required double size,
     BoxFit fit,
     Key key,
   }) {

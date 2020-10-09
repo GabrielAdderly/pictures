@@ -29,14 +29,14 @@ abstract class AdditionalStatelessWidget extends StatelessWidget implements Addi
   const AdditionalStatelessWidget({Key key, this.height}) : super(key: key);
 
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary);
+  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary);
 
   @override
   Widget build(BuildContext context) {
     return buildWidget(
       context,
       CustomTheme.getCurrentTheme,
-      FlutterDictionary.instance.language,
+      FlutterDictionary.instance.dictionary,
     );
   }
 }
@@ -45,7 +45,7 @@ class NonAdditionalStatelessWidget extends AdditionalStatelessWidget {
   const NonAdditionalStatelessWidget({Key key}) : super(key: key, height: 0.0);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) {
+  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
     return const SizedBox();
   }
 }
@@ -65,7 +65,7 @@ abstract class AdditionalStatefulWidget extends StatefulWidget implements Additi
 
 abstract class AdditionalState<T extends AdditionalStatefulWidget> extends State<T> {
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) => SizedBox();
+  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) => SizedBox();
 
   @override
   @nonVirtual
@@ -73,7 +73,7 @@ abstract class AdditionalState<T extends AdditionalStatefulWidget> extends State
     return buildWidget(
       context,
       CustomTheme.getCurrentTheme,
-      FlutterDictionary.instance.language,
+      FlutterDictionary.instance.dictionary,
     );
   }
 }

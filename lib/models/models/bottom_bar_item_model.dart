@@ -7,8 +7,8 @@ class BottomBarItemModel {
 
   String _id;
   bool isSelected;
-  final IconData iconData;
-  final RouteInfo route;
+  IconData iconData;
+  RouteInfo route;
 
   BottomBarItemModel({
     @required this.iconData,
@@ -18,6 +18,8 @@ class BottomBarItemModel {
     _id = idCounter.toString();
     idCounter++;
   }
+
+  BottomBarItemModel.empty();
 
   String get id => _id;
 

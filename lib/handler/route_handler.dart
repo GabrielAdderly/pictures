@@ -46,16 +46,6 @@ class RouteHandler {
 
   bool get isNotEmptyPages => !_pages.isPagesEmpty;
 
-  List<BottomBarItem> barItemWidgets (NavigateToFunction navigateTo) {
-    return barItems.map((BottomBarItemModel bottomBarItemModel) {
-      return BottomBarItem(
-        onTap: () => navigateTo(bottomBarItemModel.route),
-        iconData: bottomBarItemModel.iconData,
-        isSelected: bottomBarItemModel.isSelected,
-      );
-    }).toList();
-  }
-
   NavigateToAction navigateTo(RouteInfo routeInfo) {
     logger.i('$TAG => navigateTo() => routeName: ${routeInfo.route}');
 
@@ -76,8 +66,10 @@ class RouteHandler {
   }
 
   void _changeBar(RouteInfo routeInfo) {
-    barItems?.firstWhere((barItem) => barItem.isSelected)?.discard();
-    barItems?.firstWhere((barItem) => routeInfo == barItem.route)?.choose();
+    if(!routeInfo.isFirstLevel) return;
+
+    barItems.firstWhere((barItem) => barItem.isSelected, orElse: () => BottomBarItemModel.empty()).discard();
+    barItems.firstWhere((barItem) => routeInfo == barItem.route, orElse: () => BottomBarItemModel.empty()).choose();
   }
 
   NavigateToAction _getAction(RouteInfo routeInfo) {

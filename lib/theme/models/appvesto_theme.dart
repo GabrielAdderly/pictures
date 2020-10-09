@@ -1,31 +1,64 @@
+import 'package:pictures_view/theme/dto/theme_dto.dart';
+
 import 'package:pictures_view/theme/models/appvesto_colors.dart';
-import 'package:pictures_view/theme/models/appvesto_edge_insets.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
 class AVTheme {
-  final String themeName;
+  String themeName;
   AVColors colors;
   AVTextStyles textStyles;
-  AVEdgeInsets edgeInsets;
 
   AVTheme({
     this.themeName,
     this.colors,
     this.textStyles,
-    this.edgeInsets,
   });
+
+  AVTheme.empty() {
+    themeName = '';
+    colors = AVColors.empty();
+    textStyles = AVTextStyles.empty();
+  }
+
+  factory AVTheme.fromDTO(ThemeDTO dto) {
+    return AVTheme(
+      themeName: dto.themeName,
+      colors: AVColors.fromDTO(dto.colors),
+      textStyles: AVTextStyles.fromDTO(dto.textStyles),
+    );
+  }
+
+  ThemeDTO toDTO() {
+    return ThemeDTO(
+      themeName: themeName,
+      colors: colors.toDTO(),
+      textStyles: textStyles.toDTO(),
+    );
+  }
 
   AVTheme copyWith({
     String themeName,
     AVColors colors,
     AVTextStyles textStyles,
-    AVEdgeInsets edgeInsets,
   }) {
     return AVTheme(
       colors: colors ?? this.colors,
       themeName: themeName ?? this.themeName,
       textStyles: textStyles ?? this.textStyles,
-      edgeInsets: textStyles ?? this.edgeInsets,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    bool isIdentical = identical(this, other);
+
+    if (other is AVTheme) {
+      return isIdentical || themeName == other.themeName;
+    }
+
+    return false;
+  }
+
+  @override
+  int get hashCode => themeName.hashCode;
 }

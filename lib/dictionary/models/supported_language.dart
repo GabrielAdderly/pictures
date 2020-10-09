@@ -5,7 +5,7 @@ import 'package:pictures_view/dictionary/models/language.dart';
 class SupportedLanguage {
 
   final String languageCode;
-  final Language language;
+  final Dictionary language;
   bool _isSelected;
 
   SupportedLanguage({

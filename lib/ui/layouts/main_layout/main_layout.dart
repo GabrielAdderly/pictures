@@ -13,7 +13,7 @@ class MainLayout extends StatelessWidget {
     this.appBar,
     this.bgColor,
     this.child,
-    this.resizeToAvoidBottomPadding = false,
+    this.resizeToAvoidBottomPadding,
   }) : super(key: key);
 
   @override

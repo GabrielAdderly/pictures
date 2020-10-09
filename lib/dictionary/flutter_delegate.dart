@@ -22,9 +22,9 @@ class FlutterDictionaryDelegate extends LocalizationsDelegate<FlutterDictionary>
 
   static void changeLocaleWithLanguageCode(String languageCode) => SupportedLocales.instance.changeLocale(languageCode);
 
-  static Language getLanguageByLocale(Locale locale) => SupportedLocales.instance.getSupportedLanguage(locale).language;
+  static Dictionary getLanguageByLocale(Locale locale) => SupportedLocales.instance.getSupportedLanguage(locale).language;
 
-  static Language getLanguageByLanguageCode(String locale) => SupportedLocales.instance.getSupportedLanguage(Locale(locale)).language;
+  static Dictionary getLanguageByLanguageCode(String locale) => SupportedLocales.instance.getSupportedLanguage(Locale(locale)).language;
 
   ///locales added here are supported by the dictionary, but not yet by the app
   @override

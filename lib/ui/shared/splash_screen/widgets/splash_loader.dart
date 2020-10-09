@@ -3,7 +3,6 @@ import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/res/app_styles/app_gradient.dart';
 
-
 class SplashLoader extends StatefulWidget {
 
   const SplashLoader({Key key}) : super (key: key);

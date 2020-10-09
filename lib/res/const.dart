@@ -7,6 +7,7 @@ final Logger logger = Logger();
 const Duration MILLISECONDS_300 = Duration(milliseconds: 300);
 
 const String LOCALE_EN = 'en';
+const String DATA = 'data';
 
 const String BASE_LOCALE = LOCALE_EN;
 
@@ -31,6 +32,16 @@ const RouteInfo ROUTE_INFO_SETTINGS_PAGE = RouteInfo(
 const RouteInfo ROUTE_INFO_FAVORITES_PAGE = RouteInfo(
   route: Routes.favorites,
   level: RouteInfo.FIRST_LEVEL,
+);
+
+const RouteInfo ROUTE_INFO_IMAGE_INFO_PAGE = RouteInfo(
+  route: Routes.imageInfoPage,
+  level: RouteInfo.SECOND_LEVEL,
+);
+
+const RouteInfo ROUTE_INFO_CUSTOM_COLOR_PICKER_PAGE = RouteInfo(
+  route: Routes.customColorPickerPage,
+  level: RouteInfo.SECOND_LEVEL,
 );
 
 //endregion

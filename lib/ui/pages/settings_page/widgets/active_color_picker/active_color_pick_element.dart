@@ -24,7 +24,16 @@ class ActiveColorPickElement extends ThemeStatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: InkWell(
-        onTap: () => chooseActiveColor(color),
+        onTap: () {
+          chooseActiveColor(
+            color,
+            ColorType.icon,
+          );
+          chooseActiveColor(
+            color,
+            ColorType.button,
+          );
+        },
         child: Container(
           height: _getSize,
           width: _getSize,

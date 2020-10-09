@@ -11,6 +11,7 @@ class BottomBarItem extends ThemeStatelessWidget {
   final IconData iconData;
   final bool isSelected;
   final OnTapFunction onTap;
+  final Color selectedColor;
 
   const BottomBarItem({
     Key key,
@@ -18,6 +19,7 @@ class BottomBarItem extends ThemeStatelessWidget {
     this.size = 66.0,
     this.onTap,
     this.isSelected = false,
+    this.selectedColor,
   }) : super(key: key);
 
   @override
@@ -26,12 +28,13 @@ class BottomBarItem extends ThemeStatelessWidget {
       size: size,
       isSelected: isSelected,
       onTap: onTap,
+      selectedColor: selectedColor,
       child: Container(
         alignment: Alignment.center,
         child: Icon(
           iconData,
           size: size * 0.4,
-          color: isSelected ? theme.colors.activeColor : theme.colors.inActiveColor,
+          color: isSelected ? selectedColor ?? theme.colors.iconColor : theme.colors.inActiveColor,
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:pictures_view/pikcha_main_lib.dart';
-import 'package:pictures_view/ui/pages/settings_page/widgets/active_color_picker/active_color_picker.dart';
 
 import 'package:pictures_view/widgets/divider.dart';
 import 'package:pictures_view/widgets/cleaned_scroll_view.dart';
@@ -10,6 +9,8 @@ import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
 
 import 'package:pictures_view/ui/pages/settings_page/widgets/image_examples.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/settings_header.dart';
+import 'package:pictures_view/ui/pages/settings_page/widgets/active_color_picker/active_color_picker.dart';
+import 'package:pictures_view/ui/pages/settings_page/widgets/custom_color_picker/custom_color_picker.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/custom_theme_picker/custom_theme_picker.dart';
 
 class SettingsPage extends PageWidget {
@@ -18,7 +19,7 @@ class SettingsPage extends PageWidget {
   final List<String> list = ['Color theme'];
 
   @override
-  PreferredSizeWidget buildAppBar() {
+  PreferredSizeWidget buildAppBar(Dictionary dictionary) {
     return MainAppBar(
       title: 'SETTINGS',
       additionalAppBarElement: SettingsHeader(
@@ -29,7 +30,7 @@ class SettingsPage extends PageWidget {
   }
 
   @override
-  Widget buildBody(BuildContext context, AVTheme theme, Language dictionary) {
+  Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary) {
     return CleanedScrollView(
       children: <Widget>[
         AppDivider(),
@@ -38,6 +39,8 @@ class SettingsPage extends PageWidget {
         CustomThemePicker(),
         AppDivider(),
         ActiveColorPicker(),
+        AppDivider(),
+        CustomColorPicker(),
       ],
     );
   }

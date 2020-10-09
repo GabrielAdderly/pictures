@@ -31,7 +31,8 @@ class ImageCard extends ThemeStatelessWidget {
 
   @override
   Widget buildWidget(BuildContext context, AVTheme theme) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 1000),
       height: height,
       width: width ?? double.infinity,
       decoration: BoxDecoration(

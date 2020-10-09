@@ -72,7 +72,7 @@ class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
                   textInputAction: TextInputAction.search,
                   style: theme.textStyles.w400TextStyle(),
                   maxLines: 1,
-                  cursorColor: theme.colors.activeColor,
+                  cursorColor: theme.colors.iconColor,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintStyle: theme.textStyles.w400TextStyle(size: 16.0, height: 1.2),

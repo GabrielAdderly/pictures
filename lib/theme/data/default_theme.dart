@@ -12,17 +12,16 @@ AVTheme darkTheme = AVTheme(
   colors: AVColors(
     primaryColor: AppColors.kBlack,
     accentColor: AppColors.kBlackLight,
-    activeColor: AppColors.kOrange,
+    iconColor: AppColors.kOrange,
+    buttonColor: AppColors.kOrange,
     inActiveColor: AppColors.kGreyTwo,
+    backgroundColor: AppColors.kBlack,
   ),
   textStyles: AVTextStyles(
     titleFontFamily: 'EXIL71',
     textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kWhite,
     additionalTextColor: AppColors.kGreyTwo,
-  ),
-  edgeInsets: AVEdgeInsets(
-    primaryEdgeInsets: EdgeInsets.all(16.0),
   ),
 );
 
@@ -31,15 +30,15 @@ AVTheme lightTheme = AVTheme(
   colors: AVColors(
     primaryColor: AppColors.kWhite,
     accentColor: AppColors.kWhiteDark,
-    activeColor: AppColors.kOrange,
+    iconColor: AppColors.kOrange,
+    buttonColor: AppColors.kOrange,
     inActiveColor: AppColors.kGreyTwo,
+    backgroundColor: AppColors.kWhite,
   ),
   textStyles: AVTextStyles(
     titleFontFamily: 'EXIL71',
-    textFontFamily : 'SF Pro Display',
+    textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kBlack,
-  ),
-  edgeInsets: AVEdgeInsets(
-    primaryEdgeInsets: EdgeInsets.all(16.0),
+    additionalTextColor: AppColors.kGreyTwo,
   ),
 );

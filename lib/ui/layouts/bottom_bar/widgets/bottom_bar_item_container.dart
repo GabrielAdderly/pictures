@@ -11,11 +11,13 @@ class BottomBarItemContainer extends ThemeStatelessWidget {
   final Widget child;
   final bool isSelected;
   final OnTapFunction onTap;
+  final Color selectedColor;
 
   const BottomBarItemContainer({
     @required this.size,
     @required this.child,
     this.onTap,
+    this.selectedColor,
     Key key,
     this.isSelected = false,
   }) : super(key: key);
@@ -32,9 +34,9 @@ class BottomBarItemContainer extends ThemeStatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
             width: 1.0,
-            color: isSelected ? theme.colors.activeColor : theme.colors.primaryColor,
+            color: isSelected ? selectedColor ?? theme.colors.iconColor : theme.colors.primaryColor,
           ),
-          boxShadow: isSelected ? AppShadows.bottomBarItemShadow(theme.colors.activeColor) : [],
+          boxShadow: isSelected ? AppShadows.bottomBarItemShadow(selectedColor ?? theme.colors.iconColor) : [],
         ),
         child: child,
       ),

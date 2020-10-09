@@ -39,7 +39,7 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) {
+  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
     return Container(
       height: widget.getHeight,
       width: double.infinity,
@@ -51,7 +51,6 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
         scrollDirection: Axis.horizontal,
         itemCount: widget.categories.length,
         itemBuilder: (BuildContext context, int index) {
-          print(index);
           return InkWell(
             onTap: () => _onTextTap(index),
             child: Container(
@@ -68,7 +67,7 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
                   Container(
                     height: 2.0,
                     width: 15.0,
-                    color: index == _selectedCategoryIndex ? theme.colors.activeColor : AppColors.kTransparent,
+                    color: index == _selectedCategoryIndex ? theme.colors.iconColor : AppColors.kTransparent,
                   ),
                 ],
               ),

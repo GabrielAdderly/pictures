@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/widgets/cashed_network_image.dart';
+import 'package:pictures_view/widgets/cached_image.dart';
 
 class ImageCardPictureSector extends StatelessWidget {
   final String imageUrl;

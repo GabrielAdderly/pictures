@@ -8,11 +8,19 @@ class CardDTO implements ICard {
     @required this.title,
     @required this.content,
     @required this.imageUrl,
-
     this.isLiked = false,
     this.likesCount = 0,
     this.tags = const [],
   });
+
+  factory CardDTO.empty() {
+    return CardDTO(
+      id: '',
+      title: '',
+      content: '',
+      imageUrl: '',
+    );
+  }
 
   @override
   final String id;
@@ -51,6 +59,7 @@ class CardDTO implements ICard {
 
   // ignore: missing_return
   CardDTO fromJson() {}
+
   // ignore: missing_return
   CardDTO toJson() {}
 }

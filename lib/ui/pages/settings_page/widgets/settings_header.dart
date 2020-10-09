@@ -12,7 +12,7 @@ class SettingsHeader extends AdditionalStatefulWidget {
   const SettingsHeader({
     @required this.titles,
     @required this.callback,
-    double height = 70.0,
+    double height = 71.0,
     Key key,
   }) : super(key: key, height: height);
 
@@ -21,10 +21,14 @@ class SettingsHeader extends AdditionalStatefulWidget {
 }
 
 class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToStateMixin {
+  int _selectedCategoryIndex = 0;
+  List<GlobalKey> _globalKeys;
+
   @override
   void initState() {
     super.initState();
     initController();
+    createKeys();
   }
 
   @override
@@ -34,7 +38,7 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Language dictionary) {
+  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
     return SizedBox(
       height: widget.getHeight,
       width: double.infinity,
@@ -49,16 +53,27 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
           itemBuilder: (BuildContext context, int index) {
             final GlobalKey imageGK = GlobalKey();
             return InkWell(
-              key: imageGK,
-              onTap: () => _onTextTap(imageGK, index),
+              key: _globalKeys[index],
+              onTap: () => _onTextTap(index),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                child: Text(
-                  widget.titles[index],
-                  style: theme.textStyles.primaryTextStyle(
-                    size: 24.0,
-                    height: 1.2,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.titles[index],
+                      style: theme.textStyles.primaryTextStyle(
+                        size: 24.0,
+                        height: 1.2,
+                      ),
+                    ),
+                    if (widget.titles.length > 1)
+                      Container(
+                        height: 2.0,
+                        width: 15.0,
+                        color: index == _selectedCategoryIndex ? theme.colors.iconColor : AppColors.kTransparent,
+                      ),
+                  ],
                 ),
               ),
             );
@@ -68,8 +83,18 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
     );
   }
 
-  void _onTextTap(GlobalKey key, int index) {
-    jumpTo(key.currentContext.findRenderObject());
+  void createKeys() {
+    _globalKeys = [];
+
+    for (int i = 0; i < widget.titles.length; i++) {
+      _globalKeys.add(GlobalKey(debugLabel: widget.titles[i]));
+    }
+  }
+
+  void _onTextTap(int index) {
+    _selectedCategoryIndex = index;
+    setState(() {});
+    jumpTo(_globalKeys[index].currentContext.findRenderObject());
     widget.callback(index);
   }
 }
