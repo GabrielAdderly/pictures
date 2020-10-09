@@ -56,7 +56,7 @@ class _ButtonColorPickerState extends ThemeState<ButtonColorPicker> {
               ),
               SizedBox(height: 40.0),
               CircleColorPicker(
-                initialColor: theme.colors.iconColor,
+                initialColor: theme.colors.buttonColor,
                 strokeWidth: 15.0,
                 onChanged: changeColor,
                 textStyle: theme.textStyles.primaryTextStyle(size: 20.0),
