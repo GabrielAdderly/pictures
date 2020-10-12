@@ -28,6 +28,7 @@ class _IconColorPickerState extends ThemeState<IconColorPicker> {
     return StoreConnector<AppState, IconColorPickerViewModel>(
       converter: IconColorPickerViewModel.fromStore,
       builder: (BuildContext context, IconColorPickerViewModel viewModel) {
+        getStartColor(theme);
         return Expanded(
           child: Column(
             children: <Widget>[
@@ -79,5 +80,14 @@ class _IconColorPickerState extends ThemeState<IconColorPicker> {
         );
       },
     );
+  }
+
+  void getStartColor(AVTheme theme) {
+    if (pickerColor == null) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        pickerColor ??= theme.colors.iconColor;
+        setState(() {});
+      });
+    }
   }
 }

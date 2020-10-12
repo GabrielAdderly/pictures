@@ -31,7 +31,7 @@ class _ButtonColorPickerState extends ThemeState<ButtonColorPicker> {
     return StoreConnector<AppState, ButtonColorPickerViewModel>(
       converter: ButtonColorPickerViewModel.fromStore,
       builder: (BuildContext context, ButtonColorPickerViewModel viewModel) {
-        pickerColor ??= theme.colors.buttonColor;
+        getStartColor(theme);
         return Expanded(
           child: Column(
             children: <Widget>[
@@ -93,5 +93,14 @@ class _ButtonColorPickerState extends ThemeState<ButtonColorPicker> {
         );
       },
     );
+  }
+
+  void getStartColor (AVTheme theme) {
+    if (pickerColor == null) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        pickerColor = theme.colors.buttonColor;
+        setState(() {});
+      });
+    }
   }
 }

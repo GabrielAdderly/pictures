@@ -75,10 +75,11 @@ class RouteHandler {
   NavigateToAction _getAction(RouteInfo routeInfo) {
     logger.i('$TAG => getAction()');
 
-    if (_pages.prevLevel == routeInfo.level) return _replace(routeInfo);
+    if (_pages.prevLevel >= routeInfo.level) return _replace(routeInfo);
 
     return _push(routeInfo);
   }
+
 
   NavigateToAction _replace(RouteInfo routeInfo) {
     logger.i('$TAG => replace()');

@@ -8,7 +8,7 @@ final List<CardDTO> dummyImageList = [
   CardDTO(
     id: UniqueKey().toString(),
     title: 'Lonely girl',
-    content: 'Lonely girl in a gloomy forest',
+    content: '   He knows he\'s innocent. She knows he\'s a killer. Who do you believe?\n\n   In the shadow of a mountain in small-town Tasmania, a woman named Ana is watching the clock, marking the days until she ends her life. \n\n   The strange, reclusive daughter of the local pariah, that\'s how people will remember her, when they remember her at all. No one will mourn her, she reasons, not really. Not ...more',
     imageUrl: 'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
     likesCount: Random().nextInt(1000),
   ),
@@ -59,6 +59,12 @@ final List<CardDTO> dummyImageList = [
     title: 'Shadow-boxing',
     content: 'Today we will learn how to fight like real fighters!',
     imageUrl:   'https://cdn.mos.cms.futurecdn.net/8NpCPa3JSLsmA2hN8GQiih-768-80.jpg',
+    likesCount: Random().nextInt(1000),
+  ),CardDTO(
+    id: UniqueKey().toString(),
+    title: 'Miss Fortune',
+    content: 'Miss Fortune cosplay',
+    imageUrl:   'https://hb.bizmrg.com/cybersportru-media/0a/0a448275bbe37c682966a34a85252e70.jpg',
     likesCount: Random().nextInt(1000),
   ),
 ];

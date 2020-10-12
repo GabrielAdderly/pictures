@@ -40,7 +40,6 @@ class SettingsPage extends PageWidget {
         AppDivider(),
         ActiveColorPicker(),
         AppDivider(),
-        CustomColorPicker(),
       ],
     );
   }
