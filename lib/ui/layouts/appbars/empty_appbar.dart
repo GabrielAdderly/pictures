@@ -17,10 +17,7 @@ class EmptyAppbar extends ThemeStatelessWidget implements PreferredSizeWidget {
     return AnimatedContainer(
       duration: kAVThemeChangeDuration,
       color: theme.colors.accentColor,
-      child: SafeArea(
-        top: true,
-        child: const SizedBox(height: 0),
-      ),
+      child: const SizedBox(height: 0),
     );
   }
 }
