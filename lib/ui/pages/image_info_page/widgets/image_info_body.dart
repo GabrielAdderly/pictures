@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:photo_view/photo_view.dart';
 
 import 'package:pictures_view/pikcha_main_lib.dart';
 import 'package:pictures_view/res/const.dart';
 
-import 'package:pictures_view/widgets/divider.dart';
 import 'package:pictures_view/models/dtos/card_dto.dart';
 import 'package:pictures_view/widgets/global_button.dart';
+
+import 'package:pictures_view/ui/pages/image_info_page/widgets/image_content.dart';
+import 'package:pictures_view/ui/layouts/appbars/transparent_appbar/transparent_appbar.dart';
 
 class ImageInfoBody extends ThemeStatefulWidget {
   final CardDTO image;
@@ -30,8 +33,9 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
   PhotoViewScaleStateController scaleStateController;
 
   AnimationController _animationController;
-  Animation<double> _animation;
+  Animation<double> _animationPadding;
   Animation<double> _animationCard;
+  Animation<double> _animationContainer;
 
   @override
   void initState() {
@@ -46,12 +50,13 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
       });
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final CurvedAnimation curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
       maxHeight = MediaQuery.of(context).size.height;
       minPadding = maxHeight * 0.3;
       maxPadding = maxHeight * 0.75;
-      _animation = Tween<double>(begin: maxPadding, end: minPadding).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
-      _animationCard = Tween<double>(begin: maxPadding + 50.0, end: minPadding + 50.0)
-          .animate(CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
+      _animationPadding = Tween<double>(begin: maxPadding, end: minPadding).animate(curvedAnimation);
+      _animationCard = Tween<double>(begin: maxPadding + 50.0, end: minPadding + 50.0).animate(curvedAnimation);
+      _animationContainer = Tween<double>(begin: minPadding, end: maxPadding).animate(curvedAnimation);
       setState(() {});
     });
   }
@@ -78,7 +83,7 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: _animation?.value ?? 0),
+          padding: EdgeInsets.only(top: _animationPadding?.value ?? 0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
             child: Stack(
@@ -86,44 +91,16 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
                 Padding(
                   padding: EdgeInsets.only(top: 25.0),
                   child: Container(
+                    height: _animationContainer?.value ?? 0,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: theme.colors.primaryColor,
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    child: SingleChildScrollView(
+                    child: ImageContent(
+                      isOpened: isOpened,
+                      image: widget.image,
                       controller: controller,
-                      physics: isOpened ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          const SizedBox(height: 40.0),
-                          Text(
-                            widget.image.title,
-                            style: theme.textStyles.primaryTextStyle(size: 30.0),
-                          ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 1500),
-                            opacity: isOpened ? 1 : 0,
-                            child: Column(
-                              children: <Widget>[
-                                const SizedBox(height: 20.0),
-                                AppDivider(margin: EdgeInsets.symmetric(horizontal: 60.0)),
-                                const SizedBox(height: 14.0),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                                  child: Text(
-                                    widget.image.content,
-                                    style: theme.textStyles.w400TextStyle(size: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 150.0),
-                        ],
-                      ),
                     ),
                   ),
                 ),
@@ -149,6 +126,7 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
             ),
           ),
         ),
+        TransParentAppBar(isFavorite: widget.image.isLiked),
       ],
     );
   }
