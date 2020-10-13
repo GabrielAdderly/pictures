@@ -49,7 +49,7 @@ class ImageContent extends ThemeStatelessWidget {
               ],
             ),
           ),
-          // Spacer(),
+          const SizedBox(height: 90.0),
         ],
       ),
     );

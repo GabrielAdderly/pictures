@@ -6,8 +6,6 @@ import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/res/app_styles/app_shadows.dart';
 
-import 'package:pictures_view/handler/route_handler.dart';
-
 import 'package:pictures_view/ui/layouts/bottom_bar/bottom_bar_view_model.dart';
 import 'package:pictures_view/ui/layouts/bottom_bar/widgets/bottom_bar_builder.dart';
 
