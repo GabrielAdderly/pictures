@@ -23,7 +23,7 @@ class BottomBarItem extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return BottomBarItemContainer(
       size: size,
       isSelected: isSelected,

@@ -13,16 +13,16 @@ class ActiveColorPicker extends ThemeStatelessWidget {
   const ActiveColorPicker({Key key}) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, ActiveColorPickerViewModel>(
       converter: ActiveColorPickerViewModel.fromStore,
       builder: (BuildContext context, ActiveColorPickerViewModel viewModel) {
         return CleanedScrollView(
           scrollDirection: Axis.horizontal,
-          children: CustomTheme.mainActiveColors.map<Widget>((Color activeColor) {
+          children: ThemeService.mainActiveColors.map<Widget>((Color activeColor) {
             return ActiveColorPickElement(
               key: Key('color_picker_${activeColor.toString()}'),
-              isSelected: CustomTheme.isActiveColor(activeColor),
+              isSelected: ThemeService.isActiveColor(activeColor),
               color: activeColor,
               chooseActiveColor: viewModel.chooseActiveColor,
             );

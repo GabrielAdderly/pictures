@@ -9,6 +9,10 @@ import 'package:pictures_view/ui/pages/settings_page/widgets/settings_header.dar
 import 'package:pictures_view/ui/pages/custom_color_picker_page/widgets/icon_color_picker/icon_color_picker.dart';
 
 class CustomColorPickerBody extends PikchaStatefulWidget {
+  CustomColorPickerBody({
+    Key key,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => CustomColorPickerBodyState();
 }
@@ -28,7 +32,7 @@ class CustomColorPickerBodyState<CustomColorPickerBody> extends PikchaState {
   ];
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) {
     return Column(
       children: <Widget>[
         SettingsHeader(

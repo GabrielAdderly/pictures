@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
-import 'package:pictures_view/theme/models/appvesto_theme.dart';
+import 'package:pictures_view/theme/theme_service.dart';
+import 'package:pictures_view/theme/models/custom_theme.dart';
 
 import 'package:pictures_view/dictionary/models/language.dart';
 import 'package:pictures_view/dictionary/flutter_dictionary.dart';
@@ -29,13 +29,13 @@ abstract class AdditionalStatelessWidget extends StatelessWidget implements Addi
   const AdditionalStatelessWidget({Key key, this.height}) : super(key: key);
 
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary);
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary);
 
   @override
   Widget build(BuildContext context) {
     return buildWidget(
       context,
-      CustomTheme.getCurrentTheme,
+      ThemeService.getCurrentTheme,
       FlutterDictionary.instance.dictionary,
     );
   }
@@ -45,7 +45,7 @@ class NonAdditionalStatelessWidget extends AdditionalStatelessWidget {
   const NonAdditionalStatelessWidget({Key key}) : super(key: key, height: 0.0);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) {
     return const SizedBox();
   }
 }
@@ -65,14 +65,14 @@ abstract class AdditionalStatefulWidget extends StatefulWidget implements Additi
 
 abstract class AdditionalState<T extends AdditionalStatefulWidget> extends State<T> {
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) => SizedBox();
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) => SizedBox();
 
   @override
   @nonVirtual
   Widget build(BuildContext context) {
     return buildWidget(
       context,
-      CustomTheme.getCurrentTheme,
+      ThemeService.getCurrentTheme,
       FlutterDictionary.instance.dictionary,
     );
   }

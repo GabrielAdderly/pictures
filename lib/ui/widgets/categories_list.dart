@@ -39,7 +39,7 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) {
     return Container(
       height: widget.getHeight,
       width: double.infinity,

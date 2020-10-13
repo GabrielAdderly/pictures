@@ -3,13 +3,13 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 import 'package:pictures_view/dictionary/models/language.dart';
-import 'package:pictures_view/theme/models/appvesto_theme.dart';
+import 'package:pictures_view/theme/models/custom_theme.dart';
 
 import 'package:pictures_view/store/shared/reducer.dart';
 import 'package:pictures_view/store/shared/layouts/actions/layout_actions.dart';
 
 class LayoutState {
-  final AVTheme theme;
+  final CustomTheme theme;
   final Dictionary dictionary;
 
   LayoutState({
@@ -19,13 +19,13 @@ class LayoutState {
 
   factory LayoutState.initial() {
     return LayoutState(
-      theme: AVTheme.empty(),
+      theme: CustomTheme.empty(),
       dictionary: Dictionary.empty(),
     );
   }
 
   LayoutState copyWith({
-    AVTheme theme,
+    CustomTheme theme,
     Dictionary dictionary,
   }) {
     return LayoutState(

@@ -30,7 +30,7 @@ class ImageCard extends ThemeStatelessWidget {
   final BooleanCallback likeCallback;
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 1000),
       height: height,

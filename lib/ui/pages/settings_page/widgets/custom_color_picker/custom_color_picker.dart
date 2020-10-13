@@ -7,8 +7,12 @@ import 'package:pictures_view/store/application/app_state.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/custom_color_picker/custom_color_picker_view_model.dart';
 
 class CustomColorPicker extends ThemeStatelessWidget {
+  CustomColorPicker({
+    Key key,
+  }) : super(key: key);
+
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, CustomColorPickerViewModel>(
       converter: CustomColorPickerViewModel.fromStore,
       builder: (BuildContext context, CustomColorPickerViewModel viewModel) {

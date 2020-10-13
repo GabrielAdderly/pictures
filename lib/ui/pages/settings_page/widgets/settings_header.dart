@@ -38,7 +38,7 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary) {
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) {
     return SizedBox(
       height: widget.getHeight,
       width: double.infinity,
@@ -51,7 +51,6 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
           scrollDirection: Axis.horizontal,
           itemCount: widget.titles.length,
           itemBuilder: (BuildContext context, int index) {
-            final GlobalKey imageGK = GlobalKey();
             return InkWell(
               key: _globalKeys[index],
               onTap: () => _onTextTap(index),

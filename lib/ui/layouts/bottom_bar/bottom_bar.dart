@@ -21,7 +21,7 @@ class BottomBar extends ThemeStatelessWidget {
   }) : super(key: Key(tag));
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector(
       converter: BottomBarViewModel.fromStore,
       builder: (BuildContext context, BottomBarViewModel viewModel) {

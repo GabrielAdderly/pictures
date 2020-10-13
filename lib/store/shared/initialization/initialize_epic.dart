@@ -3,7 +3,7 @@ import 'package:redux_epics/redux_epics.dart';
 
 import 'package:pictures_view/res/const.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/theme/theme_service.dart';
 import 'package:pictures_view/handler/route_handler.dart';
 import 'package:pictures_view/dictionary/flutter_dictionary.dart';
 
@@ -30,8 +30,8 @@ class InitializeEpics {
 
   static Stream<dynamic> initializationThemeEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
     return actions.whereType<StartInitialization>().switchMap((action) async* {
-      await CustomTheme.instance.init();
-      yield* Stream.value(GetThemeAction(theme: CustomTheme.getCurrentTheme));
+      await ThemeService.instance.init();
+      yield* Stream.value(GetThemeAction(theme: ThemeService.getCurrentTheme));
     });
   }
 }

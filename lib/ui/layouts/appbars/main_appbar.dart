@@ -22,7 +22,7 @@ class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
         super(key: const Key('MainAppBar'));
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return AnimatedContainer(
       duration: kAVThemeChangeDuration,
       color: theme.colors.accentColor,

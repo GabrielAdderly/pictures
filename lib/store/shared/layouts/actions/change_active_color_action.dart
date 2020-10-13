@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pictures_view/store/shared/base_action.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/theme/theme_service.dart';
 
 class ChangeActiveColorAction extends BaseAction {
   final Color color;

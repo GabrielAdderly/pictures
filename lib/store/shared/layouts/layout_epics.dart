@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:redux_epics/redux_epics.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/theme/theme_service.dart';
 import 'package:pictures_view/dictionary/flutter_dictionary.dart';
 
 import 'package:pictures_view/store/application/app_state.dart';
@@ -16,14 +16,14 @@ class LayoutEpics {
 
   static Stream<dynamic> changeActiveColorEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
     return actions.whereType<ChangeActiveColorAction>().switchMap((action) async* {
-      await CustomTheme.instance.setColorWithColorType(action.color, action.colorType);
-      yield* Stream.value(GetThemeAction(theme: CustomTheme.getCurrentTheme));
+      await ThemeService.instance.setColorWithColorType(action.color, action.colorType);
+      yield* Stream.value(GetThemeAction(theme: ThemeService.getCurrentTheme));
     });
   }
 
   static Stream<dynamic> setThemeEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
     return actions.whereType<ChangeThemeAction>().switchMap((ChangeThemeAction action) async* {
-      await CustomTheme.instance.setNewTheme(action.theme);
+      await ThemeService.instance.setNewTheme(action.theme);
       yield* Stream.value(GetThemeAction(theme: action.theme));
     });
   }

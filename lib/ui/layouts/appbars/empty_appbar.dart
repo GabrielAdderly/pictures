@@ -13,7 +13,7 @@ class EmptyAppbar extends ThemeStatelessWidget implements PreferredSizeWidget {
         super(key: const Key('EmptyAppbar'));
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return AnimatedContainer(
       duration: kAVThemeChangeDuration,
       color: theme.colors.accentColor,

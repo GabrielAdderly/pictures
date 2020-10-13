@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:pictures_view/res/app_styles/app_colors.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
 
 class AppShadows {
 

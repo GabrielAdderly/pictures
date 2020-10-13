@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:http/src/response.dart';
 import 'package:pictures_view/services/network_service/interfaces/i_base_request.dart';
 
 class PatchRequestModel implements IBaseRequest {
@@ -14,7 +13,7 @@ class PatchRequestModel implements IBaseRequest {
   });
 
   @override
-  Future<Response> call() {
+  Future<http.Response> call() {
     return http.patch(
       url,
       headers: headers,

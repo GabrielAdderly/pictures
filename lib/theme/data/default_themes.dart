@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
-
 import 'package:pictures_view/res/app_styles/app_colors.dart';
 
-import 'package:pictures_view/theme/models/appvesto_theme.dart';
-import 'package:pictures_view/theme/models/appvesto_colors.dart';
-import 'package:pictures_view/theme/models/appvesto_edge_insets.dart';
-import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
+import 'package:pictures_view/theme/models/custom_theme.dart';
+import 'package:pictures_view/theme/models/custom_theme_colors.dart';
+import 'package:pictures_view/theme/models/custom_theme_text_styles.dart';
 
-AVTheme darkTheme = AVTheme(
+CustomTheme darkTheme = CustomTheme(
   themeName: 'Dark',
-  colors: AVColors(
+  colors: CustomThemeColors(
     primaryColor: AppColors.kBlack,
     accentColor: AppColors.kBlackLight,
     iconColor: AppColors.kOrange,
@@ -17,7 +14,7 @@ AVTheme darkTheme = AVTheme(
     inActiveColor: AppColors.kGreyTwo,
     backgroundColor: AppColors.kBlack,
   ),
-  textStyles: AVTextStyles(
+  textStyles: CustomThemeTextStyles(
     titleFontFamily: 'EXIL71',
     textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kWhite,
@@ -25,9 +22,9 @@ AVTheme darkTheme = AVTheme(
   ),
 );
 
-AVTheme lightTheme = AVTheme(
+CustomTheme lightTheme = CustomTheme(
   themeName: 'Light',
-  colors: AVColors(
+  colors: CustomThemeColors(
     primaryColor: AppColors.kWhite,
     accentColor: AppColors.kWhiteDark,
     iconColor: AppColors.kOrange,
@@ -35,7 +32,7 @@ AVTheme lightTheme = AVTheme(
     inActiveColor: AppColors.kGreyTwo,
     backgroundColor: AppColors.kWhite,
   ),
-  textStyles: AVTextStyles(
+  textStyles: CustomThemeTextStyles(
     titleFontFamily: 'EXIL71',
     textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kBlack,

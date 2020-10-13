@@ -4,8 +4,6 @@ import 'package:pictures_view/pikcha_main_lib.dart';
 import 'package:pictures_view/res/typedef.dart';
 import 'package:pictures_view/res/app_styles/app_shadows.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
-
 class BottomBarItemContainer extends ThemeStatelessWidget {
   final double size;
   final Widget child;
@@ -23,7 +21,7 @@ class BottomBarItemContainer extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return InkWell(
       onTap: onTap,
       child: Container(

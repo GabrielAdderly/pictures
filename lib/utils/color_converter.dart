@@ -1,4 +1,5 @@
 import 'package:flutter/painting.dart';
+import 'package:pictures_view/res/const.dart';
 
 class ColorConverter {
   static Color hexToColor(String colorHex) {
@@ -7,7 +8,7 @@ class ColorConverter {
     try {
       colorInt = int.parse(colorHex.substring(1, 7), radix: 16) + 0xFF000000;
     } catch (e) {
-      print('[ColorConverter] => Error => $e');
+      logger.e('[ColorConverter] => Error => $e');
       colorInt = 0xFF000000;
     }
 

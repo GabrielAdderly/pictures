@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pictures_view/pikcha_main_lib.dart';
 
 class CustomThemeElement extends ThemeStatelessWidget {
-  final AVTheme customTheme;
+  final CustomTheme customTheme;
 
   const CustomThemeElement({
     @required this.customTheme,
@@ -11,13 +11,13 @@ class CustomThemeElement extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Container(
       decoration: BoxDecoration(
         color: customTheme.colors.accentColor,
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
-          width: CustomTheme.isCurrentTheme(customTheme) ? 1.0 : 0.0,
+          width: ThemeService.isCurrentTheme(customTheme) ? 1.0 : 0.0,
           color: theme.colors.inActiveColor,
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pictures_view/pikcha_main_lib.dart';
 
 import 'package:pictures_view/res/typedef.dart';
-import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
+
 import 'package:pictures_view/ui/widgets/favorite_button.dart';
 
 class ImageCardFavoriteSector extends ThemeStatelessWidget {
@@ -19,7 +19,7 @@ class ImageCardFavoriteSector extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

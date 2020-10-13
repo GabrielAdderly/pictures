@@ -25,7 +25,7 @@ class GlobalButton extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Padding(
       padding: margin,
       child: InkWell(

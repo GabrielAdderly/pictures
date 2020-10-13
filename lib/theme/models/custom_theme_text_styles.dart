@@ -4,23 +4,23 @@ import 'package:pictures_view/utils/color_converter.dart';
 
 import 'package:pictures_view/theme/dto/theme_text_styles_dto.dart';
 
-class AVTextStyles {
+class CustomThemeTextStyles {
   String titleFontFamily;
   String textFontFamily;
   Color mainTextColor;
   Color additionalTextColor;
 
-  AVTextStyles({
+  CustomThemeTextStyles({
     @required this.titleFontFamily,
     @required this.textFontFamily,
     @required this.mainTextColor,
     this.additionalTextColor,
   });
 
-  AVTextStyles.empty();
+  CustomThemeTextStyles.empty();
 
-  factory AVTextStyles.fromDTO(ThemeTextStylesDTO dto) {
-    return AVTextStyles(
+  factory CustomThemeTextStyles.fromDTO(ThemeTextStylesDTO dto) {
+    return CustomThemeTextStyles(
       textFontFamily: dto.textFontFamily,
       titleFontFamily: dto.titleFontFamily,
       mainTextColor: ColorConverter.hexToColor(dto.mainTextColor),

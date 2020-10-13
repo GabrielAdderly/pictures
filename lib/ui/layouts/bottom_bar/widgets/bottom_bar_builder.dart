@@ -10,6 +10,7 @@ enum BottomBarType {
 }
 
 class BottomBarBuilder {
+  // ignore: missing_return
   static Widget build(
     BottomBarType type, {
     void Function(RouteInfo) navigateFunc,

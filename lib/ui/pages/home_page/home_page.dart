@@ -37,7 +37,7 @@ class HomePage extends PageWidget {
   }
 
   @override
-  Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary) {
+  Widget buildBody(BuildContext context, CustomTheme theme, Dictionary dictionary) {
 
     return StoreConnector<AppState, HomePageViewModel>(
       converter: HomePageViewModel.fromStore,

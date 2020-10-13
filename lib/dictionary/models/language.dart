@@ -5,7 +5,7 @@ class Dictionary {
 
   @override
   bool operator ==(Object other) {
-    bool isIdentical = identical(this, other);
+    final bool isIdentical = identical(this, other);
 
     if (other is Dictionary) {
       return isIdentical;
@@ -15,6 +15,5 @@ class Dictionary {
   }
 
   @override
-  // TODO: implement hashCode
   int get hashCode => super.hashCode;
 }

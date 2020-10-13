@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/models/dtos/card_dto.dart';
 
 import 'package:pictures_view/pikcha_main_lib.dart';
 import 'package:pictures_view/widgets/divider.dart';
+
+import 'package:pictures_view/models/dtos/card_dto.dart';
 
 class ImageContent extends ThemeStatelessWidget {
   final CardDTO image;
@@ -10,14 +11,14 @@ class ImageContent extends ThemeStatelessWidget {
   final ScrollController controller;
 
   ImageContent({
-    this.image,
-    this.isOpened,
+    @required this.image,
+    @required this.isOpened,
     this.controller,
     Key key,
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return SingleChildScrollView(
       controller: controller,
       physics: isOpened ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),

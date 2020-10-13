@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:pictures_view/dictionary/models/language.dart';
-import 'package:pictures_view/theme/models/appvesto_colors.dart';
-import 'package:pictures_view/theme/models/appvesto_theme.dart';
+import 'package:pictures_view/theme/models/custom_theme_colors.dart';
+import 'package:pictures_view/theme/models/custom_theme.dart';
 
 import 'package:pictures_view/store/application/app_state.dart';
 
@@ -19,13 +19,13 @@ abstract class PageWidget extends StatelessWidget {
   PreferredSizeWidget buildAppBar(Dictionary dictionary);
 
   @protected
-  Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary);
+  Widget buildBody(BuildContext context, CustomTheme theme, Dictionary dictionary);
 
   @protected
   bool get resizeToAvoidBottomBarPadding => false;
 
   @protected
-  Color backgroundColor(AVColors colors) => colors.accentColor;
+  Color backgroundColor(CustomThemeColors colors) => colors.accentColor;
 
   @override
   @nonVirtual

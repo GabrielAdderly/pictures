@@ -16,36 +16,36 @@ class ThemeAdapter {
   static ThemeAdapter get instance => _instance;
 
   // endregion
-  Future<void> addThemeToStorage(AVTheme theme) async {
+  Future<void> addThemeToStorage(CustomTheme theme) async {
     String value;
 
-    ThemeDTO themeDTO = theme.toDTO();
+    final ThemeDTO themeDTO = theme.toDTO();
 
-    Map<String, dynamic> map = themeDTO.toJson();
+    final Map<String, dynamic> map = themeDTO.toJson();
 
     value = json.encode(map);
 
     await StorageRepository.instance.addThemeToStorage(value);
   }
 
-  Future<AVTheme> getTheme() async {
-    String fromStorage = await StorageRepository.instance.getTheme();
+  Future<CustomTheme> getTheme() async {
+    final String fromStorage = await StorageRepository.instance.getTheme();
 
     if (fromStorage == null) return null;
 
-    Map<String, dynamic> map = json.decode(fromStorage);
+    final Map<String, dynamic> map = json.decode(fromStorage);
 
-    ThemeDTO themeDTO = ThemeDTO.fromJson(map);
+    final ThemeDTO themeDTO = ThemeDTO.fromJson(map);
 
-    return AVTheme.fromDTO(themeDTO);
+    return CustomTheme.fromDTO(themeDTO);
   }
 
-  Future<void> addThemesToStorage(List<AVTheme> themes) async {
+  Future<void> addThemesToStorage(List<CustomTheme> themes) async {
     String value;
 
-    List<ThemeDTO> themeDTO = themes.map((AVTheme theme) => theme.toDTO()).toList();
+    final List<ThemeDTO> themeDTO = themes.map((CustomTheme theme) => theme.toDTO()).toList();
 
-    Map<String, dynamic> map = {
+    final Map<String, dynamic> map = {
       DATA: themeDTO.map((ThemeDTO dto) => dto.toJson()).toList(),
     };
 
@@ -54,19 +54,19 @@ class ThemeAdapter {
     await StorageRepository.instance.addThemesToStorage(value);
   }
 
-  Future<List<AVTheme>> getThemes() async {
-    String fromStorage = await StorageRepository.instance.getThemes();
+  Future<List<CustomTheme>> getThemes() async {
+    final String fromStorage = await StorageRepository.instance.getThemes();
 
     if (fromStorage == null) return null;
 
-    Map<String, dynamic> map = json.decode(fromStorage);
+    final Map<String, dynamic> map = json.decode(fromStorage);
 
-    List<ThemeDTO> themesDTO = [];
+    final List<ThemeDTO> themesDTO = [];
 
     map[DATA].forEach((el) {
       themesDTO.add(ThemeDTO.fromJson(el));
     });
 
-    return themesDTO.map((ThemeDTO dto) => AVTheme.fromDTO(dto)).toList();
+    return themesDTO.map((ThemeDTO dto) => CustomTheme.fromDTO(dto)).toList();
   }
 }

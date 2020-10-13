@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
@@ -27,7 +25,7 @@ class _ButtonColorPickerState extends ThemeState<ButtonColorPicker> {
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, ButtonColorPickerViewModel>(
       converter: ButtonColorPickerViewModel.fromStore,
       builder: (BuildContext context, ButtonColorPickerViewModel viewModel) {
@@ -95,7 +93,7 @@ class _ButtonColorPickerState extends ThemeState<ButtonColorPicker> {
     );
   }
 
-  void getStartColor (AVTheme theme) {
+  void getStartColor (CustomTheme theme) {
     if (pickerColor == null) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         pickerColor = theme.colors.buttonColor;

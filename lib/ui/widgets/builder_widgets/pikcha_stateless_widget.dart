@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:pictures_view/dictionary/models/language.dart';
-import 'package:pictures_view/theme/models/appvesto_theme.dart';
+import 'package:pictures_view/theme/models/custom_theme.dart';
 
 import 'package:pictures_view/store/application/app_state.dart';
 
@@ -13,7 +13,7 @@ abstract class PikchaStatelessWidget extends StatelessWidget {
   PikchaStatelessWidget({Key key}) : super(key: key);
 
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary);
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ abstract class PikchaStatefulWidget extends StatefulWidget {
 
 abstract class PikchaState<T extends PikchaStatefulWidget> extends State<T> {
   @protected
-  Widget buildWidget(BuildContext context, AVTheme theme, Dictionary dictionary);
+  Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary);
 
   @override
   @nonVirtual

@@ -21,7 +21,7 @@ class TransParentAppBar extends ThemeStatelessWidget implements PreferredSizeWid
         super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, TransparentAppBarViewModel>(
       converter: TransparentAppBarViewModel.fromStore,
       builder: (BuildContext context, TransparentAppBarViewModel viewModel) {

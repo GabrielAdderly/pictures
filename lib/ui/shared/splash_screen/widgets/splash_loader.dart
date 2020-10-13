@@ -4,32 +4,32 @@ import 'package:pictures_view/pikcha_main_lib.dart';
 import 'package:pictures_view/res/app_styles/app_gradient.dart';
 
 class SplashLoader extends StatefulWidget {
-
-  const SplashLoader({Key key}) : super (key: key);
+  const SplashLoader({Key key}) : super(key: key);
 
   @override
   _SplashLoaderState createState() => _SplashLoaderState();
 }
 
 class _SplashLoaderState extends State<SplashLoader> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+  Animation<double> _loadingAnimation;
+  AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(duration: const Duration(seconds: 4, milliseconds: 500), vsync: this);
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 4, milliseconds: 500),
+      vsync: this,
+    )..addListener(() {
+        setState(() {});
+      });
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      animation = Tween<double>(begin: 0.0, end: context.size.width).animate(controller)
-        ..addListener(() => setState(() {}));
-      controller.forward();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(bindingsInitAnimation);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -48,7 +48,7 @@ class _SplashLoaderState extends State<SplashLoader> with TickerProviderStateMix
             ),
           ),
           Container(
-            width: animation?.value ?? 0,
+            width: _loadingAnimation?.value ?? 0,
             decoration: BoxDecoration(
               gradient: AppGradient.mainGradient,
               borderRadius: BorderRadius.circular(11.0),
@@ -57,5 +57,11 @@ class _SplashLoaderState extends State<SplashLoader> with TickerProviderStateMix
         ],
       ),
     );
+  }
+
+  void bindingsInitAnimation(Duration timeStamp) {
+    final CurvedAnimation curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
+    _loadingAnimation = Tween<double>(begin: 0.0, end: context.size.width).animate(curvedAnimation);
+    _animationController.forward();
   }
 }

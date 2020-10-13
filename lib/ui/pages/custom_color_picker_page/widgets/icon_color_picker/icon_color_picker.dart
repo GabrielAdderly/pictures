@@ -24,7 +24,7 @@ class _IconColorPickerState extends ThemeState<IconColorPicker> {
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, IconColorPickerViewModel>(
       converter: IconColorPickerViewModel.fromStore,
       builder: (BuildContext context, IconColorPickerViewModel viewModel) {
@@ -82,7 +82,7 @@ class _IconColorPickerState extends ThemeState<IconColorPicker> {
     );
   }
 
-  void getStartColor(AVTheme theme) {
+  void getStartColor(CustomTheme theme) {
     if (pickerColor == null) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         pickerColor ??= theme.colors.iconColor;

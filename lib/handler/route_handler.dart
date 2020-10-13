@@ -6,8 +6,6 @@ import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
 import 'package:pictures_view/models/models/pages.dart';
 import 'package:pictures_view/models/models/route_info.dart';
 import 'package:pictures_view/models/models/bottom_bar_item_model.dart';
-import 'package:pictures_view/res/typedef.dart';
-import 'package:pictures_view/ui/layouts/bottom_bar/widgets/bottom_bar_item.dart';
 
 class RouteHandler {
   // region [Initialization]

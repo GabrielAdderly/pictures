@@ -4,7 +4,7 @@ import 'package:pictures_view/utils/color_converter.dart';
 
 import 'package:pictures_view/theme/dto/theme_colors_dto.dart';
 
-class AVColors {
+class CustomThemeColors {
   Color primaryColor;
   Color accentColor;
   Color backgroundColor;
@@ -12,7 +12,7 @@ class AVColors {
   Color buttonColor;
   Color inActiveColor;
 
-  AVColors({
+  CustomThemeColors({
     this.primaryColor,
     this.accentColor,
     this.backgroundColor,
@@ -21,10 +21,10 @@ class AVColors {
     this.inActiveColor,
   });
 
-  AVColors.empty();
+  CustomThemeColors.empty();
 
-  factory AVColors.fromDTO(ThemeColorsDTO dto) {
-    return AVColors(
+  factory CustomThemeColors.fromDTO(ThemeColorsDTO dto) {
+    return CustomThemeColors(
       accentColor: ColorConverter.hexToColor(dto.accentColor),
       iconColor: ColorConverter.hexToColor(dto.iconColor),
       buttonColor: ColorConverter.hexToColor(dto.buttonColor),

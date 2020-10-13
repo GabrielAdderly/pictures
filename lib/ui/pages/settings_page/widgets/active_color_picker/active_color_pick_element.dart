@@ -20,7 +20,7 @@ class ActiveColorPickElement extends ThemeStatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: InkWell(

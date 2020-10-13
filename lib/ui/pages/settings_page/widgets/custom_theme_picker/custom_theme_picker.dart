@@ -14,7 +14,7 @@ class CustomThemePicker extends ThemeStatelessWidget {
   const CustomThemePicker({Key key}) : super(key: key);
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return StoreConnector<AppState, CustomThemePickerViewModel>(
       converter: CustomThemePickerViewModel.fromStore,
       builder: (BuildContext context, CustomThemePickerViewModel viewModel) {
@@ -23,7 +23,7 @@ class CustomThemePicker extends ThemeStatelessWidget {
           color: theme.colors.primaryColor,
           padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 6.0),
           child: Row(
-            children: CustomTheme.mainThemes.map((AVTheme customTheme) {
+            children: ThemeService.mainThemes.map((CustomTheme customTheme) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0),
                 child: InkWell(

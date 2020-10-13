@@ -25,7 +25,7 @@ class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
         super(key: const Key('MainAppBar'));
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Container(
       color: theme.colors.accentColor,
       child: SafeArea(

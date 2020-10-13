@@ -23,21 +23,14 @@ class _SplashScreenState extends ThemeState<SplashScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScreenUtil.init(
-        context,
-        height: DESIGN_SCREEN_HEIGHT,
-        width: DESIGN_SCREEN_WIDTH,
-        allowFontScaling: DESIGN_SCREEN_ALLOW_FONT_SCALING,
-      );
-    });
-    updateAppVersion();
     super.initState();
+    updateAppVersion();
+    WidgetsBinding.instance.addPostFrameCallback(bindingsInitScreenUtil);
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme avTheme) {
-    AVTheme theme = avTheme ?? darkTheme;
+  Widget buildWidget(BuildContext context, CustomTheme avTheme) {
+    final CustomTheme theme = avTheme ?? darkTheme;
     return Scaffold(
       backgroundColor: theme.colors.accentColor,
       body: Directionality(
@@ -62,6 +55,15 @@ class _SplashScreenState extends ThemeState<SplashScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void bindingsInitScreenUtil(Duration callback) {
+    ScreenUtil.init(
+      context,
+      height: DESIGN_SCREEN_HEIGHT,
+      width: DESIGN_SCREEN_WIDTH,
+      allowFontScaling: DESIGN_SCREEN_ALLOW_FONT_SCALING,
     );
   }
 

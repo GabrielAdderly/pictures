@@ -39,7 +39,7 @@ class StorageService {
   }
 
   Future<String> getElementByKey(StorageKey key) async {
-    String text = await storage.read(key: _storageKeysMap[key]);
+    final String text = await storage.read(key: _storageKeysMap[key]);
 
     logger.i('$TAG => getElementByKey() => key = $key => return $text');
     return text;

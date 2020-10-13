@@ -24,24 +24,19 @@ class ImageInfoBody extends ThemeStatefulWidget {
 }
 
 class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProviderStateMixin {
-  ScrollController controller;
-  double topPadding = 0;
-  double minPadding;
-  double maxPadding;
-  double maxHeight;
   bool isOpened = false;
-  PhotoViewScaleStateController scaleStateController;
 
   AnimationController _animationController;
-  Animation<double> _animationPadding;
-  Animation<double> _animationCard;
-  Animation<double> _animationContainer;
+  PhotoViewScaleStateController _scaleStateController;
+
+  Animation<double> _paddingAnimation;
+  Animation<double> _imageSizeAnimation;
+  Animation<double> _containerSizeAnimation;
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController();
-    scaleStateController = PhotoViewScaleStateController();
+    _scaleStateController = PhotoViewScaleStateController();
     _animationController = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
       duration: kBaseChangeDuration,
@@ -49,41 +44,33 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
         setState(() {});
       });
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final CurvedAnimation curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
-      maxHeight = MediaQuery.of(context).size.height;
-      minPadding = maxHeight * 0.3;
-      maxPadding = maxHeight * 0.75;
-      _animationPadding = Tween<double>(begin: maxPadding, end: minPadding).animate(curvedAnimation);
-      _animationCard = Tween<double>(begin: maxPadding + 50.0, end: minPadding + 50.0).animate(curvedAnimation);
-      _animationContainer = Tween<double>(begin: minPadding, end: maxPadding).animate(curvedAnimation);
-      setState(() {});
-    });
+    WidgetsBinding.instance.addPostFrameCallback(bindingsInitAnimation);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _animationController.dispose();
+    _scaleStateController.dispose();
     super.dispose();
   }
 
   @override
-  Widget buildWidget(BuildContext context, AVTheme theme) {
+  Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Stack(
       children: <Widget>[
         SizedBox(
-          height: _animationCard?.value ?? 0,
+          height: _imageSizeAnimation?.value ?? 0,
           child: PhotoView(
             imageProvider: NetworkImage(widget.image.imageUrl),
             basePosition: Alignment.topCenter,
             minScale: PhotoViewComputedScale.covered,
             maxScale: PhotoViewComputedScale.covered,
-            scaleStateController: scaleStateController,
+            scaleStateController: _scaleStateController,
             backgroundDecoration: BoxDecoration(color: theme.colors.accentColor),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: _animationPadding?.value ?? 0),
+          padding: EdgeInsets.only(top: _paddingAnimation?.value ?? 0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
             child: Stack(
@@ -91,7 +78,7 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
                 Padding(
                   padding: EdgeInsets.only(top: 25.0),
                   child: Container(
-                    height: _animationContainer?.value ?? 0,
+                    height: _containerSizeAnimation?.value ?? 0,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: theme.colors.primaryColor,
@@ -100,7 +87,6 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
                     child: ImageContent(
                       isOpened: isOpened,
                       image: widget.image,
-                      controller: controller,
                     ),
                   ),
                 ),
@@ -131,14 +117,29 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
     );
   }
 
+  void bindingsInitAnimation(Duration timeStamp) {
+    final double maxHeight = MediaQuery.of(context).size.height;
+    final double minPadding = maxHeight * 0.3;
+    final double maxPadding = maxHeight * 0.75;
+
+    final CurvedAnimation curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
+
+    _paddingAnimation = Tween<double>(begin: maxPadding, end: minPadding).animate(curvedAnimation);
+    _containerSizeAnimation = Tween<double>(begin: minPadding, end: maxPadding).animate(curvedAnimation);
+    _imageSizeAnimation = Tween<double>(begin: maxPadding + 50.0, end: minPadding + 50.0).animate(curvedAnimation);
+    setState(() {});
+  }
+
   void changePosition() {
     isOpened = !isOpened;
+
     if (isOpened) {
       _animationController.forward();
     } else {
       _animationController.reverse();
     }
-    scaleStateController.reset();
+
+    _scaleStateController.reset();
     setState(() {});
   }
 }
