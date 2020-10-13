@@ -7,7 +7,6 @@ import 'package:pictures_view/res/typedef.dart';
 import 'package:pictures_view/store/application/app_state.dart';
 import 'package:pictures_view/store/shared/route_selectors.dart';
 
-
 class BottomBarViewModel {
   final NavigateToFunction navigateTo;
 

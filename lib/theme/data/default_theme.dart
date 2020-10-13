@@ -8,37 +8,37 @@ import 'package:pictures_view/theme/models/appvesto_edge_insets.dart';
 import 'package:pictures_view/theme/models/appvesto_text_styles.dart';
 
 AVTheme darkTheme = AVTheme(
-  themeName: 'default_theme',
+  themeName: 'Dark',
   colors: AVColors(
     primaryColor: AppColors.kBlack,
     accentColor: AppColors.kBlackLight,
-    activeColor: AppColors.kOrange,
+    iconColor: AppColors.kOrange,
+    buttonColor: AppColors.kOrange,
     inActiveColor: AppColors.kGreyTwo,
+    backgroundColor: AppColors.kBlack,
   ),
   textStyles: AVTextStyles(
     titleFontFamily: 'EXIL71',
     textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kWhite,
-  ),
-  edgeInsets: AVEdgeInsets(
-    primaryEdgeInsets: EdgeInsets.all(16.0),
+    additionalTextColor: AppColors.kGreyTwo,
   ),
 );
 
 AVTheme lightTheme = AVTheme(
-  themeName: 'default_theme',
+  themeName: 'Light',
   colors: AVColors(
     primaryColor: AppColors.kWhite,
     accentColor: AppColors.kWhiteDark,
-    activeColor: AppColors.kOrange,
+    iconColor: AppColors.kOrange,
+    buttonColor: AppColors.kOrange,
     inActiveColor: AppColors.kGreyTwo,
+    backgroundColor: AppColors.kWhite,
   ),
   textStyles: AVTextStyles(
     titleFontFamily: 'EXIL71',
-    textFontFamily : 'SF Pro Display',
+    textFontFamily: 'SF Pro Display',
     mainTextColor: AppColors.kBlack,
-  ),
-  edgeInsets: AVEdgeInsets(
-    primaryEdgeInsets: EdgeInsets.all(16.0),
+    additionalTextColor: AppColors.kGreyTwo,
   ),
 );

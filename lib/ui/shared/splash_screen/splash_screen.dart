@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get_version/get_version.dart';
 
-import 'package:pictures_view/res/const.dart';
-import 'package:pictures_view/res/image_assets.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
-import 'package:pictures_view/ui/pages/splash_screen/widgets/splash_loader.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// ignore: use_key_in_widget_constructors
-class SplashScreen extends StatefulWidget {
+import 'package:pictures_view/pikcha_main_lib.dart';
+
+import 'package:pictures_view/res/const.dart';
+
+import 'package:pictures_view/ui/shared/splash_screen/widgets/splash_loader.dart';
+
+class SplashScreen extends ThemeStatefulWidget {
+  const SplashScreen({Key key}) : super (key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ThemeState<SplashScreen> {
   String appVersion;
 
   @override
@@ -33,9 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context, AVTheme avTheme) {
+    AVTheme theme = avTheme ?? darkTheme;
     return Scaffold(
-      backgroundColor: CustomTheme.colors.accentColor,
+      backgroundColor: theme.colors.accentColor,
       body: Directionality(
         textDirection: TextDirection.ltr,
         child: Container(
@@ -48,8 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Spacer(),
-                Text('PIK', style: CustomTheme.textStyles.titleTextStyle(size: 45.0, height: 1.3)),
-                Text('CHA', style: CustomTheme.textStyles.titleTextStyle(size: 45.0, height: 1.3)),
+                Text('PIK', style: theme.textStyles.titleTextStyle(size: 45.0, height: 1.3)),
+                Text('CHA', style: theme.textStyles.titleTextStyle(size: 45.0, height: 1.3)),
                 SizedBox(height: 30.0),
                 SplashLoader(),
                 Spacer(),

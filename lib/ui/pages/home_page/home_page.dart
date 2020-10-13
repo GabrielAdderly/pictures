@@ -1,51 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+import 'package:pictures_view/pikcha_main_lib.dart';
+
+import 'package:pictures_view/models/dtos/card_dto.dart';
+import 'package:pictures_view/models/dtos/category_dto.dart';
+
+import 'package:pictures_view/dummy_classes/dummy_lib.dart';
+import 'package:pictures_view/res/const.dart';
+import 'package:pictures_view/store/application/app_state.dart';
+import 'package:pictures_view/ui/pages/home_page/home_page_view_model.dart';
 
 import 'package:pictures_view/widgets/clean_behavior.dart';
-import 'package:pictures_view/widgets/cashed_network_image.dart';
+import 'package:pictures_view/widgets/grid_image_item.dart';
 
-import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
-import 'package:pictures_view/ui/layouts/main_layout/main_layout.dart';
+import 'package:pictures_view/ui/widgets/categories_list.dart';
+import 'package:pictures_view/ui/layouts/appbars/search_appbar.dart';
 
-// ignore: use_key_in_widget_constructors
-class HomePage extends StatelessWidget {
-  final List<String> urlImages = [
-    for (int i = 0; i < 20; i++) ...[
-      'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
-      'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
-      'https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg',
-      'https://i.insider.com/5eb031e1e3c3fb77d21c342e?width=1100&format=jpeg&auto=webp',
-      'https://handluggageonly.co.uk/wp-content/uploads/2018/05/The-12-Best-Markets-In-Paris-You-Have-To-Visit-3.jpg',
-      'https://img.fixthephoto.com/blog/UserFiles/Image/222/best-camera-for-sports_640x640.jpg',
-      'https://s14761.pcdn.co/wp-content/uploads/sites/2/2019/12/eMTB-grouptest-2019-19-Specialized-Turbo-Kenevo-Expert-032-2-1140x760.jpg',
-      'https://cdn.mos.cms.futurecdn.net/8NpCPa3JSLsmA2hN8GQiih-768-80.jpg',
-    ]
-  ];
+class HomePage extends PageWidget {
+  HomePage() : super(key: Key('HomePage'));
+
+  final List<CardDTO> imageCards = [...dummyImageList];
+
+  final List<CategoryDTO> _categories = dummyCategories;
 
   @override
-  Widget build(BuildContext context) {
-    return MainLayout(
-      bgColor: CustomTheme.colors.accentColor,
-      appBar: MainAppBar(title: 'image gallery'.toUpperCase()),
-      child: ScrollConfiguration(
-        behavior: CleanBehavior(),
-        child: GridView.builder(
-          key: Key('Grid'),
-          itemCount: urlImages.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          padding: EdgeInsets.zero,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: CachedImage(
-                height: 200.0,
-                width: 200.0,
-                imageUrl: urlImages[index],
-              ),
-            );
-          },
-        ),
+  PreferredSizeWidget buildAppBar(Dictionary dictionary) {
+    return SearchAppBar(
+      title: 'IMAGE GALLERY',
+      additionalAppBarElement: CategoriesList(
+        key: Key('categories_list'),
+        categories: _categories,
+        selectCallback: (int index) {},
       ),
+    );
+  }
+
+  @override
+  Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary) {
+
+    return StoreConnector<AppState, HomePageViewModel>(
+      converter: HomePageViewModel.fromStore,
+      builder: (BuildContext context, HomePageViewModel viewModel) {
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(bottom: 90.0),
+          child: ScrollConfiguration(
+            behavior: CleanBehavior(),
+            child: GridView.builder(
+              key: Key('Grid'),
+              itemCount: imageCards.length,
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GridImageItem(
+                  aspectRatio: 1,
+                  onTap: () {
+                    viewModel.selectImage(imageCards[index]);
+                    viewModel.navigateTo(ROUTE_INFO_IMAGE_INFO_PAGE);
+                  },
+                  card: imageCards[index],
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

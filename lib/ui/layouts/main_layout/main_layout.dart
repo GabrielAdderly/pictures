@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/ui/layouts/bottom_bar/bottom_bar.dart';
+import 'package:pictures_view/res/const.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
@@ -13,7 +13,7 @@ class MainLayout extends StatelessWidget {
     this.appBar,
     this.bgColor,
     this.child,
-    this.resizeToAvoidBottomPadding = false,
+    this.resizeToAvoidBottomPadding,
   }) : super(key: key);
 
   @override
@@ -22,10 +22,11 @@ class MainLayout extends StatelessWidget {
       resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       appBar: appBar,
       backgroundColor: bgColor,
-      body: Container(
+      body: AnimatedContainer(
         color: bgColor,
         width: double.infinity,
         height: double.infinity,
+        duration: kAVThemeChangeDuration,
         child: child,
       ),
     );

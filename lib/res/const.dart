@@ -7,6 +7,7 @@ final Logger logger = Logger();
 const Duration MILLISECONDS_300 = Duration(milliseconds: 300);
 
 const String LOCALE_EN = 'en';
+const String DATA = 'data';
 
 const String BASE_LOCALE = LOCALE_EN;
 
@@ -33,8 +34,20 @@ const RouteInfo ROUTE_INFO_FAVORITES_PAGE = RouteInfo(
   level: RouteInfo.FIRST_LEVEL,
 );
 
+const RouteInfo ROUTE_INFO_IMAGE_INFO_PAGE = RouteInfo(
+  route: Routes.imageInfoPage,
+  level: RouteInfo.SECOND_LEVEL,
+);
+
+const RouteInfo ROUTE_INFO_CUSTOM_COLOR_PICKER_PAGE = RouteInfo(
+  route: Routes.customColorPickerPage,
+  level: RouteInfo.SECOND_LEVEL,
+);
+
 //endregion
 
 const bool DESIGN_SCREEN_ALLOW_FONT_SCALING = true;
 const double DESIGN_SCREEN_HEIGHT = 812.0;
 const double DESIGN_SCREEN_WIDTH = 375.0;
+const Duration kAVThemeChangeDuration = Duration(seconds: 1);
+const Duration kBaseChangeDuration = Duration(seconds: 1);

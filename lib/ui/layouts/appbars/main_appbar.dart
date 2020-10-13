@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/theme/custom_theme.dart';
+import 'package:pictures_view/res/const.dart';
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+import 'package:pictures_view/pikcha_main_lib.dart';
+
+class MainAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
   final double height;
   final String title;
+  final AdditionalAppbarWidget additionalAppBarElement;
 
   MainAppBar({
     @required this.title,
-    this.height = 91.0,
-  })  : preferredSize = Size.fromHeight(height),
+    this.height = 88.0,
+    this.additionalAppBarElement = const NonAdditionalStatelessWidget(),
+  })  : preferredSize = Size.fromHeight(height + additionalAppBarElement.getHeight),
         assert(title != null, throw ('You forgot filled title!')),
+        assert(additionalAppBarElement != null, throw ('additionalAppBarElement is null!')),
         super(key: const Key('MainAppBar'));
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: CustomTheme.colors.accentColor,
+  Widget buildWidget(BuildContext context, AVTheme theme) {
+    return AnimatedContainer(
+      duration: kAVThemeChangeDuration,
+      color: theme.colors.accentColor,
       child: SafeArea(
         top: true,
         child: Container(
-          height: height,
+          height: height + additionalAppBarElement.getHeight,
           alignment: Alignment.bottomCenter,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 17.0),
-          child: Text(
-            title,
-            style: CustomTheme.textStyles.titleTextStyle(
-              size: 20.0,
-              height: 1.3,
-            ),
+          child: Column(
+            children: <Widget>[
+              Spacer(flex: 2),
+              Text(
+                title,
+                style: theme.textStyles.titleTextStyle(height: 1.3),
+              ),
+              Spacer(),
+              additionalAppBarElement,
+            ],
           ),
         ),
       ),

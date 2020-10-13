@@ -15,7 +15,7 @@ class FlutterDictionary {
   static FlutterDictionary get instance => _instance;
 
   final Locale locale;
-  Language language;
+  Dictionary dictionary;
 
   FlutterDictionary(this.locale) {
     if (locale != null) setNewLanguage(locale.languageCode);
@@ -24,12 +24,17 @@ class FlutterDictionary {
   void setNewLanguage(String languageCode) {
     logger.i('$tag => setNewLanguage() => locale => $languageCode');
     FlutterDictionaryDelegate.changeLocaleWithLanguageCode(languageCode);
-    language = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
+    dictionary = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
+  }
+
+  void setNewDictionary(Dictionary dictionary) {
+    logger.i('$tag => setNewDictionary()');
+    this.dictionary = dictionary;
   }
 
   void setNewLanguageAndSave(String languageCode) {
     logger.i('$tag => setNewLanguageAndSave() => locale => $languageCode');
-    language = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
+    dictionary = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
   }
 
   static const List<String> _rtlLanguages = <String>[

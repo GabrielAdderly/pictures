@@ -6,6 +6,6 @@ import 'package:pictures_view/store/shared/initialization/actions/start_initiali
 
 class InitializeSelectors {
   static void startInitialization(Store<AppState> store) {
-    return store.dispatch(StartInitialization())();
+    return store.dispatch(StartInitialization());
   }
 }

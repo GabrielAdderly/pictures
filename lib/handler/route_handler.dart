@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 
 import 'package:pictures_view/res/const.dart';
@@ -8,12 +6,14 @@ import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
 import 'package:pictures_view/models/models/pages.dart';
 import 'package:pictures_view/models/models/route_info.dart';
 import 'package:pictures_view/models/models/bottom_bar_item_model.dart';
+import 'package:pictures_view/res/typedef.dart';
+import 'package:pictures_view/ui/layouts/bottom_bar/widgets/bottom_bar_item.dart';
 
 class RouteHandler {
   // region [Initialization]
-  static const String TAG = '[RouteHelper]';
+  static const String TAG = '[RouteHandler]';
 
-  static final List<BottomBarItemModel> initBarItems = [
+  static final List<BottomBarItemModel> _initBarItems = [
     BottomBarItemModel(
       route: ROUTE_INFO_FAVORITES_PAGE,
       iconData: BottomBarIcons.favorites,
@@ -32,9 +32,10 @@ class RouteHandler {
   Pages _pages;
   List<BottomBarItemModel> barItems;
 
+
   RouteHandler._privateConstructor() {
     _pages = Pages();
-    barItems = List.from(initBarItems);
+    barItems = List.from(_initBarItems);
   }
 
   static final RouteHandler _instance = RouteHandler._privateConstructor();
@@ -65,17 +66,20 @@ class RouteHandler {
   }
 
   void _changeBar(RouteInfo routeInfo) {
-    barItems?.firstWhere((barItem) => barItem.isSelected)?.discard();
-    barItems?.firstWhere((barItem) => routeInfo == barItem.route)?.choose();
+    if(!routeInfo.isFirstLevel) return;
+
+    barItems.firstWhere((barItem) => barItem.isSelected, orElse: () => BottomBarItemModel.empty()).discard();
+    barItems.firstWhere((barItem) => routeInfo == barItem.route, orElse: () => BottomBarItemModel.empty()).choose();
   }
 
   NavigateToAction _getAction(RouteInfo routeInfo) {
     logger.i('$TAG => getAction()');
 
-    if (_pages.prevLevel == routeInfo.level) return _replace(routeInfo);
+    if (_pages.prevLevel >= routeInfo.level) return _replace(routeInfo);
 
     return _push(routeInfo);
   }
+
 
   NavigateToAction _replace(RouteInfo routeInfo) {
     logger.i('$TAG => replace()');
