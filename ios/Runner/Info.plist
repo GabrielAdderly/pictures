@@ -27,6 +27,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<key>NSCameraUsageDescription</key>
+    <string>Please allow App to use Camera.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Please allow App to use Microphone.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Please allow App to use Gallery.</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
@@ -41,5 +47,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
 </dict>
 </plist>

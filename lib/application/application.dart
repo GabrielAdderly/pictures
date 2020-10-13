@@ -30,11 +30,11 @@ class Application extends StatelessWidget {
         builder: (BuildContext context, AppState store) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            navigatorKey: NavigatorHolder.navigatorKey,
-            builder: RouteHelper.pageBuilder,
-            onGenerateRoute: RouteHelper.onGenerateRoute,
             home: SplashScreen(),
             locale: Locale(BASE_LOCALE),
+            builder: RouteHelper.pageBuilder,
+            navigatorKey: NavigatorHolder.navigatorKey,
+            onGenerateRoute: RouteHelper.onGenerateRoute,
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
             localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
           );

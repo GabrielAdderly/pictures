@@ -38,6 +38,8 @@ class CustomTheme {
     AppColors.kGreen,
     AppColors.kBlue,
     AppColors.kYellow,
+    AppColors.kPurple,
+    AppColors.kRed,
   ];
 
   AVTheme _theme;

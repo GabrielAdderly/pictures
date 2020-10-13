@@ -20,7 +20,7 @@ import 'package:pictures_view/ui/layouts/appbars/search_appbar.dart';
 class HomePage extends PageWidget {
   HomePage() : super(key: Key('HomePage'));
 
-  final List<CardDTO> imageCards = [for (int i = 0; i < 20; i++) ...dummyImageList];
+  final List<CardDTO> imageCards = [...dummyImageList];
 
   final List<CategoryDTO> _categories = dummyCategories;
 
@@ -38,11 +38,13 @@ class HomePage extends PageWidget {
 
   @override
   Widget buildBody(BuildContext context, AVTheme theme, Dictionary dictionary) {
+
     return StoreConnector<AppState, HomePageViewModel>(
       converter: HomePageViewModel.fromStore,
       builder: (BuildContext context, HomePageViewModel viewModel) {
-        return SizedBox(
+        return Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 90.0),
           child: ScrollConfiguration(
             behavior: CleanBehavior(),
             child: GridView.builder(

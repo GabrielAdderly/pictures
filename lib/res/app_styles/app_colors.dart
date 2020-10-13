@@ -23,6 +23,8 @@ class AppColors {
   static const Color kGreen = Color(0xFF20C6A4);
   static const Color kBlue = Color(0xFF5F70FF);
   static const Color kYellow = Color(0xFFFFCD53);
+  static const Color kPurple = Color(0xFF9B59B6);
+  static const Color kRed = Color(0xFFE74C3C);
 
   //region gradient colors
   static const Color kPeach = Color(0xFFFDB796);

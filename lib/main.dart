@@ -14,7 +14,7 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
       statusBarBrightness: Brightness.dark,
     ),
   );
