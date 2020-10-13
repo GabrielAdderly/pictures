@@ -42,8 +42,9 @@ class HomePage extends PageWidget {
     return StoreConnector<AppState, HomePageViewModel>(
       converter: HomePageViewModel.fromStore,
       builder: (BuildContext context, HomePageViewModel viewModel) {
-        return SizedBox(
+        return Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 90.0),
           child: ScrollConfiguration(
             behavior: CleanBehavior(),
             child: GridView.builder(
