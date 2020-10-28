@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pictures_view/res/app_styles/app_colors.dart';
-import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
-import 'package:pictures_view/res/typedef.dart';
+
 import 'package:rive/rive.dart';
+
+import 'package:pictures_view/res/typedef.dart';
+import 'package:pictures_view/res/app_styles/app_colors.dart';
+
 
 class FavoriteButton extends StatefulWidget {
   final double size;
@@ -64,6 +66,8 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
 
   void _togglePlay() {
     isLiked = !isLiked;
+    if (widget.likeCallback != null) widget.likeCallback(isLiked);
+
     _riveArtBoard.removeController(_controller);
 
     _chooseController;
