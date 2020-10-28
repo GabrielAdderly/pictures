@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pictures_view/res/app_styles/app_colors.dart';
 import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
 import 'package:pictures_view/res/typedef.dart';
+import 'package:rive/rive.dart';
 
 class FavoriteButton extends StatefulWidget {
   final double size;
@@ -25,35 +27,78 @@ class FavoriteButton extends StatefulWidget {
   _FavoriteButtonState createState() => _FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<FavoriteButton> {
+class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProviderStateMixin {
   bool isLiked;
+  Artboard _riveArtBoard;
+  RiveAnimationController _controller;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     isLiked = widget.isLiked;
+    _initRive;
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _onTap,
-      child: Padding(
-        padding: widget.padding,
-        child: Icon(
-          BottomBarIcons.favorites,
-          size: widget.size,
-          color: isLiked ? widget.activeColor : widget.inactiveColor,
-        ),
+      onTap: _togglePlay,
+      child: SizedBox(
+        width: widget.size,
+        height: widget.size,
+        child: _getRiveArtBoard,
       ),
     );
   }
 
-  void _onTap() {
+  Widget get _getRiveArtBoard {
+    if (_riveArtBoard == null) return const SizedBox();
+    return Rive(artboard: _riveArtBoard);
+  }
+
+  void _togglePlay() {
     isLiked = !isLiked;
+    _riveArtBoard.removeController(_controller);
 
-    if (widget.likeCallback != null) widget.likeCallback(isLiked);
+    _chooseController;
 
+    _controller.isActive = true;
     setState(() {});
+  }
+
+  void _addController(String animationName) {
+    _riveArtBoard.addController(
+      _controller = SimpleAnimation(animationName),
+    );
+  }
+
+  void get _chooseController {
+    if (isLiked) {
+      _addController('forward');
+    } else {
+      _addController('backward');
+    }
+  }
+
+  void get _initRive {
+    rootBundle.load('assets/rives/heart_animated_icon.riv').then(
+      (data) async {
+        final RiveFile file = RiveFile();
+
+        if (file.import(data)) {
+          _riveArtBoard = file.mainArtboard;
+          _chooseController;
+
+          _controller.isActive = false;
+          setState(() {});
+        }
+      },
+    );
   }
 }
