@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pictures_view/res/image_assets.dart';
 
 import 'package:rive/rive.dart';
 
@@ -91,7 +92,7 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
   }
 
   void get _initRive {
-    rootBundle.load('assets/rives/heart_animated_icon.riv').then(
+    rootBundle.load(ImageAssets.favoriteButtonRive).then(
       (data) async {
         final RiveFile file = RiveFile();
 
