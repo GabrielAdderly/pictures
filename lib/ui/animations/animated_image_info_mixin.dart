@@ -17,7 +17,9 @@ mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements Ti
   double get getAnimatedImageSize=> _imageSizeAnimation?.value ?? 0;
   double get getAnimatedContainerSize => _containerSizeAnimation?.value ?? 0;
 
+  @protected
   @override
+  @mustCallSuper
   void initState() {
     super.initState();
     _animationController = AnimationController(
@@ -29,12 +31,15 @@ mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements Ti
     WidgetsBinding.instance.addPostFrameCallback(_bindingsInitAnimation);
   }
 
+  @protected
   @override
+  @mustCallSuper
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
 
+  @protected
   @nonVirtual
   void _bindingsInitAnimation(Duration timeStamp) {
     final double maxHeight = MediaQuery.of(context).size.height;
@@ -49,6 +54,8 @@ mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements Ti
     setState(() {});
   }
 
+  @protected
+  @mustCallSuper
   void changePosition() {
     isOpened = !isOpened;
     if (isOpened) {
