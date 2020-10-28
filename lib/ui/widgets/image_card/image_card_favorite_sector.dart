@@ -21,7 +21,6 @@ class ImageCardFavoriteSector extends ThemeStatelessWidget {
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         FavoriteButton(
           isLiked: isLiked,

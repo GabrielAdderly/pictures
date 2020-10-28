@@ -7,13 +7,14 @@ mixin JumpToStateMixin<T extends StatefulWidget> on State<T> {
   ScrollController _controller;
 
   ScrollController get controller {
-    if (_controller == null) initController();
-
     return _controller;
   }
 
-  @nonVirtual
-  void initController() => _controller = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+  }
 
   @nonVirtual
   void disposeController() => _controller.dispose();

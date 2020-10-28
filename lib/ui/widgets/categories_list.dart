@@ -28,7 +28,6 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
   @override
   void initState() {
     super.initState();
-    initController();
     createKeys();
   }
 

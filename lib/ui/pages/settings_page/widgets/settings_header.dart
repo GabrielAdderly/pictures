@@ -27,7 +27,6 @@ class _SettingsHeaderState extends AdditionalState<SettingsHeader> with JumpToSt
   @override
   void initState() {
     super.initState();
-    initController();
     createKeys();
   }
 
