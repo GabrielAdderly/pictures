@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
 import 'package:pictures_view/store/application/app_state.dart';

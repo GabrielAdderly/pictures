@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/store/application/app_state.dart';
 import 'package:pictures_view/ui/pages/settings_page/widgets/active_color_picker/active_color_pick_element.dart';
@@ -31,7 +31,7 @@ class ActiveColorPicker extends ThemeStatelessWidget {
               0,
               CustomColorPickerButton(
                 key: Key('meowmoew'),
-                onTap: () => viewModel.navigateTo(ROUTE_INFO_CUSTOM_COLOR_PICKER_PAGE),
+                onTap: () => viewModel.navigateTo(kRouteInfoCustomColorPickerPage),
               ),
             ),
         );

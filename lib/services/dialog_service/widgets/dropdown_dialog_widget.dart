@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/services/dialog_service/models/dropdown_dialog.dart';
 
 class ClientDropdown extends StatefulWidget {
@@ -80,7 +81,7 @@ class _ClientDropdownState extends State<ClientDropdown> {
                     widget.dialog.printedParam.isEmpty ||
                     widget.dialog.list[index][widget.dialog.printedParam] == null ||
                     widget.dialog.list[index][widget.dialog.printedParam].isEmpty ||
-                    widget.dialog.list[index][widget.dialog.printedParam] == ' ') {
+                    widget.dialog.list[index][widget.dialog.printedParam] == kSpaceString) {
                   return Container();
                 }
 

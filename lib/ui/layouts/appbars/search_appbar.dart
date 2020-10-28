@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
+import 'package:pictures_view/utils/change_status_bar.dart';
 
 class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
   @override
@@ -26,10 +27,10 @@ class SearchAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
+    changeStatusBarTheme(theme.themeName);
     return Container(
       color: theme.colors.accentColor,
       child: SafeArea(
-        top: true,
         child: Container(
           height: height + additionalAppBarElement.getHeight,
           alignment: Alignment.bottomCenter,

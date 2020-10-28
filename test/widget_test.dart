@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pictures_view/res/const.dart';
 
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
@@ -33,7 +34,7 @@ void main() {
       );
     });
 
-    testWidgets('', (WidgetTester tester) async {
+    testWidgets(kEmptyString, (WidgetTester tester) async {
       await tester.pumpWidget(testAppWidget(child: SettingsPage()));
 
       await tester.tap(find.byKey(Key('MainAppBar')));

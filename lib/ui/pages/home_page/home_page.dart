@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:pictures_view/models/dtos/card_dto.dart';
 import 'package:pictures_view/models/dtos/category_dto.dart';
@@ -60,7 +60,7 @@ class HomePage extends PageWidget {
                   aspectRatio: 1,
                   onTap: () {
                     viewModel.selectImage(imageCards[index]);
-                    viewModel.navigateTo(ROUTE_INFO_IMAGE_INFO_PAGE);
+                    viewModel.navigateTo(kRouteInfoImageInfoPage);
                   },
                   card: imageCards[index],
                 );

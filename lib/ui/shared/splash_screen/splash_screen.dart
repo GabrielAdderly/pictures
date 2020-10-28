@@ -5,7 +5,7 @@ import 'package:get_version/get_version.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:pictures_view/res/const.dart';
 
@@ -35,14 +35,12 @@ class _SplashScreenState extends ThemeState<SplashScreen> {
       backgroundColor: theme.colors.accentColor,
       body: Directionality(
         textDirection: TextDirection.ltr,
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 47.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Spacer(),
                 Text('PIK', style: theme.textStyles.titleTextStyle(size: 45.0, height: 1.3)),
@@ -61,9 +59,9 @@ class _SplashScreenState extends ThemeState<SplashScreen> {
   void bindingsInitScreenUtil(Duration callback) {
     ScreenUtil.init(
       context,
-      height: DESIGN_SCREEN_HEIGHT,
-      width: DESIGN_SCREEN_WIDTH,
-      allowFontScaling: DESIGN_SCREEN_ALLOW_FONT_SCALING,
+      height: kDesignScreenHeight,
+      width: kDesignScreenWidth,
+      allowFontScaling: true,
     );
   }
 

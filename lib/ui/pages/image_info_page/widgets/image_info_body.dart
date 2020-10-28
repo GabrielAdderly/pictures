@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:photo_view/photo_view.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
-import 'package:pictures_view/res/const.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:pictures_view/models/dtos/card_dto.dart';
 import 'package:pictures_view/ui/animations/animated_image_info_mixin.dart';

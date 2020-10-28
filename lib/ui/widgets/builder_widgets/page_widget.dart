@@ -34,12 +34,11 @@ abstract class PageWidget extends StatelessWidget {
       distinct: true,
       converter: LayoutViewModel.fromStore,
       builder: (BuildContext context, LayoutViewModel viewModel) {
-        print('rebuild');
         return MainLayout(
           key: key,
-          bgColor: backgroundColor(viewModel.theme.colors),
           resizeToAvoidBottomPadding: resizeToAvoidBottomBarPadding,
           appBar: buildAppBar(viewModel.dictionary),
+          bgColor: backgroundColor(viewModel.theme.colors),
           child: buildBody(context, viewModel.theme, viewModel.dictionary),
         );
       },

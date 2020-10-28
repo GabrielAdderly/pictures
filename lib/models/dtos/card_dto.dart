@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:pictures_view/models/interfaces/i_card.dart';
+import 'package:pictures_view/res/const.dart';
 
 class CardDTO implements ICard {
   CardDTO({
@@ -15,10 +16,10 @@ class CardDTO implements ICard {
 
   factory CardDTO.empty() {
     return CardDTO(
-      id: '',
-      title: '',
-      content: '',
-      imageUrl: '',
+      id: kEmptyString,
+      title: kEmptyString,
+      content: kEmptyString,
+      imageUrl: kEmptyString,
     );
   }
 

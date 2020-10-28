@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:pictures_view/models/models/settings_colors_picker.dart';
 import 'package:pictures_view/ui/pages/custom_color_picker_page/widgets/button_color_picker/button_color_picker.dart';

@@ -8,12 +8,13 @@ import 'package:pictures_view/store/images_state/images_selector.dart';
 class ImageInfoViewModel {
   final CardDTO image;
 
-  ImageInfoViewModel({this.image,});
+  ImageInfoViewModel({
+    this.image,
+  });
 
   static ImageInfoViewModel fromStore(Store<AppState> store) {
     return ImageInfoViewModel(
       image: ImagesSelector.getImage(store),
     );
   }
-
 }

@@ -1,3 +1,4 @@
+import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/theme/dto/theme_dto.dart';
 
 import 'package:pictures_view/theme/models/custom_theme_colors.dart';
@@ -15,7 +16,7 @@ class CustomTheme {
   });
 
   CustomTheme.empty() {
-    themeName = '';
+    themeName = kEmptyString;
     colors = CustomThemeColors.empty();
     textStyles = CustomThemeTextStyles.empty();
   }

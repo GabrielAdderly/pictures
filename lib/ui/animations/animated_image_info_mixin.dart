@@ -43,8 +43,8 @@ mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements Ti
   @nonVirtual
   void _bindingsInitAnimation(Duration timeStamp) {
     final double maxHeight = MediaQuery.of(context).size.height;
-    final double minPadding = maxHeight * 0.3;
-    final double maxPadding = maxHeight * 0.75;
+    final double minPadding = maxHeight * 0.25;
+    final double maxPadding = maxHeight * 0.7;
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
 

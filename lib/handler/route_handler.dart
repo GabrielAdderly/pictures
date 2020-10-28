@@ -13,16 +13,16 @@ class RouteHandler {
 
   static final List<BottomBarItemModel> _initBarItems = [
     BottomBarItemModel(
-      route: ROUTE_INFO_FAVORITES_PAGE,
+      route: kRouteInfoFavoritesPage,
       iconData: BottomBarIcons.favorites,
     ),
     BottomBarItemModel(
-      route: ROUTE_INFO_HOME_PAGE,
+      route: kRouteInfoHomePage,
       iconData: BottomBarIcons.home,
       isSelected: true,
     ),
     BottomBarItemModel(
-      route: ROUTE_INFO_SETTINGS_PAGE,
+      route: kRouteInfoSettingsPage,
       iconData: BottomBarIcons.settings,
     ),
   ];

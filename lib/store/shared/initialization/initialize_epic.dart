@@ -21,7 +21,7 @@ class InitializeEpics {
     return actions.whereType<StartInitialization>().switchMap((action) async* {
       yield* await Future.delayed(Duration(seconds: 5)).then((_) {
         return Stream.fromIterable([
-          RouteHandler.instance.navigateTo(ROUTE_INFO_HOME_PAGE),
+          RouteHandler.instance.navigateTo(kRouteInfoHomePage),
           GetDictionaryAction(dictionary: FlutterDictionary.instance.dictionary),
         ]);
       });

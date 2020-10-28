@@ -6,48 +6,48 @@ final Logger logger = Logger();
 
 const Duration MILLISECONDS_300 = Duration(milliseconds: 300);
 
-const String LOCALE_EN = 'en';
-const String DATA = 'data';
+const String kEmptyString = '';
+const String kSpaceString = ' ';
+const String kLocaleEn = 'en';
+const String kData = 'data';
 
-const String BASE_LOCALE = LOCALE_EN;
+const String kBaseLocale = kLocaleEn;
 
-const String LOCALE_HE = 'he'; // Hebrew
-const String LOCALE_PS = 'ps'; // Pashto
-const String LOCALE_UR = 'ur'; // Urdu
-const String LOCALE_AR = 'ar'; // Arabic
-const String LOCALE_FA = 'fa'; // Farsi
+const String kLocaleHe = 'he'; // Hebrew
+const String kLocalePs = 'ps'; // Pashto
+const String kLocaleUr = 'ur'; // Urdu
+const String kLocaleAr = 'ar'; // Arabic
+const String kLocaleFa = 'fa'; // Farsi
 
 //region [ROUTE INFO]
 
-const RouteInfo ROUTE_INFO_HOME_PAGE = RouteInfo(
+const RouteInfo kRouteInfoHomePage = RouteInfo(
   route: Routes.home,
-  level: RouteInfo.FIRST_LEVEL,
+  level: RouteInfo.kFirstLevel,
 );
 
-const RouteInfo ROUTE_INFO_SETTINGS_PAGE = RouteInfo(
+const RouteInfo kRouteInfoSettingsPage = RouteInfo(
   route: Routes.settings,
-  level: RouteInfo.FIRST_LEVEL,
+  level: RouteInfo.kFirstLevel,
 );
 
-const RouteInfo ROUTE_INFO_FAVORITES_PAGE = RouteInfo(
+const RouteInfo kRouteInfoFavoritesPage = RouteInfo(
   route: Routes.favorites,
-  level: RouteInfo.FIRST_LEVEL,
+  level: RouteInfo.kFirstLevel,
 );
 
-const RouteInfo ROUTE_INFO_IMAGE_INFO_PAGE = RouteInfo(
+const RouteInfo kRouteInfoImageInfoPage = RouteInfo(
   route: Routes.imageInfoPage,
-  level: RouteInfo.SECOND_LEVEL,
+  level: RouteInfo.kSecondLevel,
 );
 
-const RouteInfo ROUTE_INFO_CUSTOM_COLOR_PICKER_PAGE = RouteInfo(
+const RouteInfo kRouteInfoCustomColorPickerPage = RouteInfo(
   route: Routes.customColorPickerPage,
-  level: RouteInfo.SECOND_LEVEL,
+  level: RouteInfo.kSecondLevel,
 );
-
 //endregion
 
-const bool DESIGN_SCREEN_ALLOW_FONT_SCALING = true;
-const double DESIGN_SCREEN_HEIGHT = 812.0;
-const double DESIGN_SCREEN_WIDTH = 375.0;
+const double kDesignScreenHeight = 812.0;
+const double kDesignScreenWidth = 375.0;
 const Duration kAVThemeChangeDuration = Duration(seconds: 1);
 const Duration kBaseChangeDuration = Duration(seconds: 1);

@@ -38,11 +38,11 @@ class FlutterDictionary {
   }
 
   static const List<String> _rtlLanguages = <String>[
-    LOCALE_HE,
-    LOCALE_PS,
-    LOCALE_UR,
-    LOCALE_AR,
-    LOCALE_FA,
+    kLocaleHe,
+    kLocalePs,
+    kLocaleUr,
+    kLocaleAr,
+    kLocaleFa,
   ];
 
   bool get isRTL {

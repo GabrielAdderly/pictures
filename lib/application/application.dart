@@ -31,7 +31,7 @@ class Application extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: SplashScreen(),
-            locale: Locale(BASE_LOCALE),
+            locale: Locale(kBaseLocale),
             builder: RouteHelper.pageBuilder,
             navigatorKey: NavigatorHolder.navigatorKey,
             onGenerateRoute: RouteHelper.onGenerateRoute,

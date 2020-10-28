@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:pictures_view/res/app_styles/app_colors.dart';
 
-// ignore: use_key_in_widget_constructors
 class AppDivider extends StatelessWidget {
   final EdgeInsets margin;
 
@@ -12,7 +11,7 @@ class AppDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.zero,
-      child: Divider(
+      child: Container(
         height: 1.0,
         color: AppColors.kDivider,
       ),

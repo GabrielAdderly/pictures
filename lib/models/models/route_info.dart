@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:pictures_view/res/const.dart';
+
 class RouteInfo {
-  static const int FIRST_LEVEL = 0;
-  static const int SECOND_LEVEL = 1;
+  static const int kFirstLevel = 0;
+  static const int kSecondLevel = 1;
 
   final String route;
   final int level;
@@ -13,10 +15,10 @@ class RouteInfo {
   });
 
   factory RouteInfo.empty() {
-    return RouteInfo(route: ' ', level: -1);
+    return RouteInfo(route: kSpaceString, level: -1);
   }
 
-  bool get isFirstLevel => level == FIRST_LEVEL;
+  bool get isFirstLevel => level == kFirstLevel;
 
-  bool get isSecondLevel => level == SECOND_LEVEL;
+  bool get isSecondLevel => level == kSecondLevel;
 }

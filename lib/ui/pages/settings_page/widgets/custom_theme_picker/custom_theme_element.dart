@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 class CustomThemeElement extends ThemeStatelessWidget {
   final CustomTheme customTheme;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 
 import 'package:pictures_view/widgets/divider.dart';
 import 'package:pictures_view/widgets/cleaned_scroll_view.dart';

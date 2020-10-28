@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 import 'package:redux/redux.dart';
 
 import 'package:pictures_view/res/typedef.dart';

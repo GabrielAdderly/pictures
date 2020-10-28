@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 import 'package:pictures_view/store/application/app_state.dart';
-import 'package:pictures_view/ui/layouts/appbars/transparent_appbar/transparent_view_model.dart';
 
 import 'package:pictures_view/ui/widgets/favorite_button.dart';
+import 'package:pictures_view/ui/layouts/appbars/transparent_appbar/transparent_view_model.dart';
 
 class TransParentAppBar extends ThemeStatelessWidget implements PreferredSizeWidget {
   final bool isFavorite;
@@ -15,7 +15,7 @@ class TransParentAppBar extends ThemeStatelessWidget implements PreferredSizeWid
 
   TransParentAppBar({
     @required this.isFavorite,
-    this.height = 75.0,
+    this.height = 55.0,
     Key key,
   })  : preferredSize = Size.fromHeight(height),
         super(key: key);

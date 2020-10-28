@@ -13,7 +13,7 @@ class NextButtonTextField extends StatelessWidget {
   }) : super(key: Key(focusKeyValue));
 
   bool get _isControllerHaveData {
-    return controller.text != null && controller.text != '';
+    return controller.text != null && controller.text.isNotEmpty;
   }
 
   @override

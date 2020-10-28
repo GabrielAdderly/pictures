@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:pictures_view/pikcha_main_lib.dart';
+import 'package:pictures_view/pic_main_lib.dart';
 import 'package:pictures_view/repositories/theme_repository.dart';
 import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/theme/dto/theme_dto.dart';
@@ -46,7 +46,7 @@ class ThemeAdapter {
     final List<ThemeDTO> themeDTO = themes.map((CustomTheme theme) => theme.toDTO()).toList();
 
     final Map<String, dynamic> map = {
-      DATA: themeDTO.map((ThemeDTO dto) => dto.toJson()).toList(),
+      kData: themeDTO.map((ThemeDTO dto) => dto.toJson()).toList(),
     };
 
     value = json.encode(map);
@@ -63,7 +63,7 @@ class ThemeAdapter {
 
     final List<ThemeDTO> themesDTO = [];
 
-    map[DATA].forEach((el) {
+    map[kData].forEach((el) {
       themesDTO.add(ThemeDTO.fromJson(el));
     });
 

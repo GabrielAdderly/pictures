@@ -11,7 +11,7 @@ class SupportedLocales {
   SupportedLocales._() {
     _supportedLocales = <SupportedLanguage>[
       SupportedLanguage(
-        languageCode: LOCALE_EN,
+        languageCode: kLocaleEn,
         language: en,
       )..choose(),
     ];
@@ -29,7 +29,7 @@ class SupportedLocales {
   }
 
   String get getCurrentLocale {
-    return _supportedLocales?.firstWhere((SupportedLanguage supLang) => supLang.isSelected)?.languageCode ?? BASE_LOCALE;
+    return _supportedLocales?.firstWhere((SupportedLanguage supLang) => supLang.isSelected)?.languageCode ?? kBaseLocale;
   }
 
   SupportedLanguage getSupportedLanguage(Locale locale) {
