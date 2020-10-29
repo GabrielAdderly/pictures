@@ -41,11 +41,11 @@ class _CategoriesListState extends AdditionalState<CategoriesList> with JumpToSt
   Widget buildWidget(BuildContext context, CustomTheme theme, Dictionary dictionary) {
     return Container(
       height: widget.getHeight,
-      width: double.infinity,
       padding: EdgeInsets.symmetric(
         vertical: 8.0,
       ),
       child: ListView.builder(
+        shrinkWrap: true,
         controller: controller,
         scrollDirection: Axis.horizontal,
         itemCount: widget.categories.length,
