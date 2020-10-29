@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
 
 import 'package:rive/rive.dart';
 
 import 'package:pictures_view/res/typedef.dart';
 import 'package:pictures_view/res/image_assets.dart';
 import 'package:pictures_view/res/app_styles/app_colors.dart';
+import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
+
 
 class FavoriteButton extends StatefulWidget {
   final double size;
@@ -32,9 +33,9 @@ class FavoriteButton extends StatefulWidget {
 
 class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProviderStateMixin {
   bool isLiked;
-  bool _showRiveAnimation = false;
   Artboard _riveArtBoard;
   RiveAnimationController _controller;
+  bool _showRiveAnimation = false;
 
   @override
   void dispose() {
@@ -92,15 +93,15 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
 
     _riveArtBoard.removeController(_controller);
 
-
     _chooseController;
-
     _showRiveAnimation = true;
     _controller.isActive = true;
+
     Future.delayed(Duration(seconds: 1), () {
       _showRiveAnimation = false;
       setState(() {});
     });
+
     setState(() {});
   }
 
