@@ -6,6 +6,8 @@ import 'package:rive/rive.dart';
 import 'package:pictures_view/res/typedef.dart';
 import 'package:pictures_view/res/image_assets.dart';
 import 'package:pictures_view/res/app_styles/app_colors.dart';
+import 'package:pictures_view/res/icons/bottom_bar_icons.dart';
+
 
 class FavoriteButton extends StatefulWidget {
   final double size;
@@ -33,6 +35,7 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
   bool isLiked;
   Artboard _riveArtBoard;
   RiveAnimationController _controller;
+  bool _showRiveAnimation = false;
 
   @override
   void dispose() {
@@ -51,17 +54,37 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _togglePlay,
-      child: SizedBox(
-        width: widget.size,
-        height: widget.size,
-        child: _getRiveArtBoard,
-      ),
+      child: _getIcon,
     );
   }
 
+  Widget get _getIcon {
+    if (_showRiveAnimation) return _getRiveArtBoard;
+    return _placeHolderIcon;
+  }
+
   Widget get _getRiveArtBoard {
-    if (_riveArtBoard == null) return const SizedBox();
-    return Rive(artboard: _riveArtBoard);
+    if (_riveArtBoard == null) return _sizedBoxFacade();
+
+    return _sizedBoxFacade(
+      child: Rive(artboard: _riveArtBoard),
+    );
+  }
+
+  Widget get _placeHolderIcon {
+    return Icon(
+      BottomBarIcons.favorites,
+      size: widget.size,
+      color: isLiked ? AppColors.kLikeColor : AppColors.kGreyTwo,
+    );
+  }
+
+  Widget _sizedBoxFacade({Widget child}) {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: child,
+    );
   }
 
   void _togglePlay() {
@@ -71,8 +94,14 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
     _riveArtBoard.removeController(_controller);
 
     _chooseController;
-
+    _showRiveAnimation = true;
     _controller.isActive = true;
+
+    Future.delayed(Duration(seconds: 1), () {
+      _showRiveAnimation = false;
+      setState(() {});
+    });
+
     setState(() {});
   }
 
