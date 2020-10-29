@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pictures_view/res/image_assets.dart';
 
 import 'package:rive/rive.dart';
 
 import 'package:pictures_view/res/typedef.dart';
+import 'package:pictures_view/res/image_assets.dart';
 import 'package:pictures_view/res/app_styles/app_colors.dart';
-
 
 class FavoriteButton extends StatefulWidget {
   final double size;
@@ -93,7 +92,7 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
 
   void get _initRive {
     rootBundle.load(ImageAssets.favoriteButtonRive).then(
-      (data) async {
+      (ByteData data) async {
         final RiveFile file = RiveFile();
 
         if (file.import(data)) {

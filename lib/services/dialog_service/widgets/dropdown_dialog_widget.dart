@@ -24,7 +24,7 @@ class _ClientDropdownState extends State<ClientDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 300,
       child: Column(
         children: <Widget>[

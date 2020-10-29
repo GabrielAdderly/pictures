@@ -29,7 +29,6 @@ class CustomThemeElement extends ThemeStatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 7.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(child: Container(color: customTheme.colors.primaryColor)),
             const SizedBox(width: 16.0),

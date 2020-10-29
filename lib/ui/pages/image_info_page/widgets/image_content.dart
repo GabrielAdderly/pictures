@@ -23,9 +23,6 @@ class ImageContent extends ThemeStatelessWidget {
       controller: controller,
       physics: isOpened ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const SizedBox(height: 40.0),
           Text(

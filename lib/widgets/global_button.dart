@@ -38,7 +38,6 @@ class GlobalButton extends ThemeStatelessWidget {
             color: bgColor ?? theme.colors.buttonColor,
             border: Border.all(
               color: borderColor ?? bgColor ?? theme.colors.buttonColor,
-              width: 1.0,
             ),
             borderRadius: BorderRadius.circular(100.0),
           ),

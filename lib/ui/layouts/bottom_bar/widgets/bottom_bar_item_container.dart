@@ -31,7 +31,6 @@ class BottomBarItemContainer extends ThemeStatelessWidget {
           color: isSelected ? theme.colors.accentColor : theme.colors.primaryColor,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
-            width: 1.0,
             color: isSelected ? selectedColor ?? theme.colors.iconColor : theme.colors.primaryColor,
           ),
           boxShadow: isSelected ? AppShadows.bottomBarItemShadow(selectedColor ?? theme.colors.iconColor) : [],

@@ -11,14 +11,6 @@ import 'package:pictures_view/store/application/app_state.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.dark,
-    ),
-  );
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);

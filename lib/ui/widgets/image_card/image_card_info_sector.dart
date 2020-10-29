@@ -15,7 +15,6 @@ class ImageCardInfoSector extends ThemeStatelessWidget {
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
     return Flexible(
-      fit: FlexFit.loose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
