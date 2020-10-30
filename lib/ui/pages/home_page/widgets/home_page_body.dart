@@ -74,7 +74,6 @@ class _HomePageBodyState extends ThemeState {
                     bgColor: theme.colors.accentColor,
                     strokeColor: theme.colors.iconColor,
                     strokeWidth: 2.0,
-                    // duration: const Duration(milliseconds: 400),
                   ),
                 ],
               ),

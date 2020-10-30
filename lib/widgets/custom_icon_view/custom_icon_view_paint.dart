@@ -71,10 +71,6 @@ class CustomIconViewPaint extends CustomPainter {
     canvas.drawPath(_path, paint);
   }
 
-  void createPolygon(List<Offset> offsets) {
-    _path.addPolygon(offsets, true);
-  }
-
   void createCube({
     double x = 0,
     double y = 0,

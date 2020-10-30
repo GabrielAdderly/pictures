@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:pictures_view/res/const.dart';
 
+
+
 mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements TickerProvider {
   bool isOpened = false;
 

@@ -1,8 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pictures_view/pic_main_lib.dart';
+
 import 'package:pictures_view/widgets/custom_icon_view/custom_icon_view_paint.dart';
+
+enum IconViewLook {
+  Grid,
+  List,
+}
 
 class IconViewWidget extends StatefulWidget {
   final double size;
@@ -13,6 +20,7 @@ class IconViewWidget extends StatefulWidget {
   final Duration reverseDuration;
   final double strokeWidth;
   final BorderRadius borderRadius;
+  final IconViewLook iconViewLook;
   final void Function() onTap;
 
   IconViewWidget({
@@ -23,6 +31,7 @@ class IconViewWidget extends StatefulWidget {
     this.strokeColor,
     this.strokeWidth,
     this.borderRadius,
+    this.iconViewLook = IconViewLook.List,
     this.duration = const Duration(milliseconds: 600),
     this.reverseDuration = const Duration(milliseconds: 800),
     Key key,
@@ -39,11 +48,21 @@ class _IconViewWidgetState extends State<IconViewWidget> with TickerProviderStat
   AnimationController cubeController;
   AnimationController rectController;
 
+  double get getLook {
+    switch(widget.iconViewLook) {
+      case IconViewLook.Grid:
+        return 0.0;
+      case IconViewLook.List:
+        return 1.0;
+    }
+    return 0;
+  }
+
   @override
   void initState() {
-    reverseController = AnimationController(duration: widget.duration, vsync: this, value: 0.0);
-    cubeController = AnimationController(duration: widget.duration, vsync: this, value: 0.0);
-    rectController = AnimationController(duration: widget.reverseDuration, vsync: this, value: 0.0);
+    reverseController = AnimationController(duration: widget.duration, vsync: this, value: getLook);
+    cubeController = AnimationController(duration: widget.duration, vsync: this, value: getLook);
+    rectController = AnimationController(duration: widget.reverseDuration, vsync: this, value: getLook);
 
     reverseController.addListener(() => setState(() {}));
     cubeController.addListener(_cubeListener);
@@ -80,7 +99,6 @@ class _IconViewWidgetState extends State<IconViewWidget> with TickerProviderStat
           child: Container(
             width: widget.size,
             height: widget.size,
-            // color: AppColors.kTransparent,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.kTransparent,
