@@ -49,7 +49,6 @@ class TransParentAppBar extends ThemeStatelessWidget implements PreferredSizeWid
                   size: 26.0,
                   isLiked: isFavorite,
                   likeCallback: (bool isLiked) {},
-                  padding: const EdgeInsets.all(4.0),
                   inactiveColor: theme.colors.inActiveColor,
                 ),
               ],

@@ -8,7 +8,7 @@ final List<CardDTO> dummyImageList = [
   CardDTO(
     id: UniqueKey().toString(),
     title: 'Lonely girl',
-    content: '   He knows he\'s innocent. She knows he\'s a killer. Who do you believe?\n\n   In the shadow of a mountain in small-town Tasmania, a woman named Ana is watching the clock, marking the days until she ends her life. \n\n   The strange, reclusive daughter of the local pariah, that\'s how people will remember her, when they remember her at all. No one will mourn her, she reasons, not really. Not ...more',
+    content: 'He knows he\'s innocent. She knows he\'s a killer. Who do you believe?\n\n   In the shadow of a mountain in small-town Tasmania, a woman named Ana is watching the clock, marking the days until she ends her life. \n\n   The strange, reclusive daughter of the local pariah, that\'s how people will remember her, when they remember her at all. No one will mourn her, she reasons, not really. Not ...more',
     imageUrl: 'https://www.freedigitalphotos.net/images/img/homepage/394230.jpg',
     likesCount: Random().nextInt(1000),
   ),

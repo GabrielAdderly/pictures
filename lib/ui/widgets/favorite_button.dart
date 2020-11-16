@@ -11,7 +11,6 @@ class FavoriteButton extends StatefulWidget {
   final bool isLiked;
   final Color activeColor;
   final Color inactiveColor;
-  final EdgeInsets padding;
   final BooleanCallback likeCallback;
 
   const FavoriteButton({
@@ -20,7 +19,6 @@ class FavoriteButton extends StatefulWidget {
     this.size = 12.0,
     this.inactiveColor = AppColors.kGrey,
     this.activeColor = AppColors.kLikeColor,
-    this.padding = const EdgeInsets.all(3.0),
     Key key,
   }) : super(key: key);
 

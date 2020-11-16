@@ -25,7 +25,7 @@ class ImageCardInfoSector extends ThemeStatelessWidget {
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 2.0),
+          const SizedBox(height: 0.85),
           Text(
             content,
             style: theme.textStyles.w400TextStyle(size: 12.0, height: 1.2),
