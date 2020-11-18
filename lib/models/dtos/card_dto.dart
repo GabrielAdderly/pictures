@@ -38,6 +38,7 @@ class CardDTO implements ICard {
   int likesCount;
 
   void updateLikes() {
+    isLiked = !isLiked;
     if (isLiked) {
       incrementLikes();
     } else {

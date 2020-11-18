@@ -37,6 +37,7 @@ class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProvid
 
   @override
   void togglePlay() {
+    print('LIKE');
     isLiked = !isLiked;
     if (widget.likeCallback != null) widget.likeCallback(isLiked);
     super.togglePlay();

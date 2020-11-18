@@ -81,7 +81,7 @@ class _ImageCardState extends ThemeState<ImageCard> {
                 duration: const Duration(milliseconds: 600),
                 opacity: widget.isBigLikeVisible ? 1.0 : 0.0,
                 child: IgnorePointer(
-                  ignoring: widget.isBigLikeVisible,
+                  ignoring: !widget.isBigLikeVisible,
                   child: FavoriteButton(
                     size: 25.0,
                     isLiked: widget.card.isLiked,

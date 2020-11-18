@@ -1,5 +1,6 @@
 library pikcha_main_lib;
 
+export 'package:pictures_view/res/const.dart';
 export 'package:pictures_view/res/app_styles/app_colors.dart';
 
 export 'package:pictures_view/theme/theme_service.dart';
