@@ -160,34 +160,39 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
 
   void _toggleAnimation() {
     if (!_isOpened) {
-      //250ms. Adds vertical space between cards
+      //250ms duration. Adds vertical space between cards
       _isOpened = true;
 
-      //50ms pause + 250ms previous animation
-      //200ms duration. Moves cars horizontally
+      //50ms pause + 250ms previous animations
+      //250ms duration. Moves cars horizontally
       Future.delayed(const Duration(milliseconds: 300), () {
         _areCardsMoved = !_areCardsMoved;
         setState(() {});
       });
-      //100ms pause + 500ms previous animations&pauses
-      //650ms duration. Expands cards and pictures
+      //100ms pause + 600ms previous animations&pauses
+      //550ms duration. Expands cards and pictures
       Future.delayed(const Duration(milliseconds: 650), () {
         _areCardsExpanded = !_areCardsExpanded;
         setState(() {});
       });
-
+      //1500ms previous animations. Stats before previous animation ends
+      //400ms duration. Opaques in the like button
       Future.delayed(const Duration(milliseconds: 1400), () {
         _isBigLikeVisible = !_isBigLikeVisible;
         setState(() {});
       });
     } else {
+      //550ms duration. Shrinks cards, like buttons and pictures
       _areCardsExpanded = !_areCardsExpanded;
       _isBigLikeVisible = !_isBigLikeVisible;
-
+      //150ms pause + 550ms previous animations
+      //250ms duration. Moves cars horizontally
       Future.delayed(const Duration(milliseconds: 700), () {
         _areCardsMoved = !_areCardsMoved;
         setState(() {});
       });
+      //50ms pause + 950ms previous animations
+      //250ms duration. Shrinks adds vertical space between cards
       Future.delayed(const Duration(milliseconds: 1000), () {
         _isOpened = false;
         setState(() {});
