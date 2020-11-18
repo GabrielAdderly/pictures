@@ -27,6 +27,7 @@ class _HomePageBodyState extends ThemeState {
   final List<CategoryDTO> _categories = dummyCategories;
   final List<CardDTO> imageCards = [...dummyImageList];
   Function _toggleAnimation = () {};
+  bool wasButtonTapped = false;
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -61,13 +62,24 @@ class _HomePageBodyState extends ThemeState {
                       child: const SizedBox(),
                     ),
                   ),
-                  IconViewWidget(
-                    onTap: () => _toggleAnimation(),
-                    size: 44.0,
-                    color: theme.colors.accentColor.withOpacity(0.2),
-                    bgColor: theme.colors.accentColor,
-                    strokeColor: theme.colors.iconColor,
-                    strokeWidth: 2.0,
+                  IgnorePointer(
+                    ignoring: wasButtonTapped,
+                    child: IconViewWidget(
+                      onTap: () {
+                        wasButtonTapped = true;
+                        _toggleAnimation();
+                        Future.delayed(const Duration(milliseconds: 1400), () {
+                          wasButtonTapped = false;
+                          setState(() {});
+                        });
+                        setState(() {});
+                      },
+                      size: 44.0,
+                      color: theme.colors.accentColor.withOpacity(0.2),
+                      bgColor: theme.colors.accentColor,
+                      strokeColor: theme.colors.iconColor,
+                      strokeWidth: 2.0,
+                    ),
                   ),
                 ],
               ),
