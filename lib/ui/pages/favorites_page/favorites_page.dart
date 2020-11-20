@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pictures_view/pic_main_lib.dart';
+import 'package:pictures_view/theme/models/custom_theme_colors.dart';
 import 'package:pictures_view/ui/layouts/appbars/empty_appbar.dart';
+import 'package:pictures_view/widgets/table/table.dart';
 
 class FavoritesPage extends PageWidget {
   FavoritesPage({Key key}) : super(key: key);
@@ -12,45 +14,36 @@ class FavoritesPage extends PageWidget {
 
   @override
   Widget buildBody(BuildContext context, CustomTheme theme, Dictionary dictionary) {
-    return Center(
-      child: CustomPaint(
-        child: SizedBox(
-          height: 200.0,
-          width: 200.0,
+
+    final CustomThemeColorsTableElement colorsTableElement = CustomThemeColorsTableElement(theme.colors);
+
+    final List<TableElement> list = [for(int i = 0; i < 100; i++)colorsTableElement];
+
+    print('id => ${list.first.getId}');
+
+    return Container(
+      color: theme.colors.accentColor,
+      padding: EdgeInsets.only(top: 50.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Center(
+        child: ClockingTable(
+          key: UniqueKey(),
+          elements: list,
         ),
-        painter: TearPainter(),
       ),
     );
   }
 }
 
-class TearPainter extends CustomPainter {
-  Path _path;
+class CustomThemeColorsTableElement extends TableElement<CustomThemeColors> {
+  CustomThemeColorsTableElement(CustomThemeColors element) : super(element);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.fill
-      ..color = Colors.black;
-
-    final Paint paintStroke = Paint()
-      ..strokeCap = StrokeCap.square
-      ..strokeJoin = StrokeJoin.round
-      ..strokeWidth = 10
-      ..style = PaintingStyle.stroke
-      ..color = AppColors.kBlue;
-    _path = Path();
-
-    _path.addOval(
-      Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
-        radius: 40.0,
-      ),
-    );
+  void createListOfElements(CustomThemeColors element) {
+    row.add(element.iconColor.toString());
+    row.add(element.accentColor.toString());
+    row.add(element.primaryColor.toString());
+    row.add(element.inActiveColor.toString());
   }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
 
 }

@@ -20,8 +20,8 @@ class SupportedLocales {
   static SupportedLocales instance = SupportedLocales._();
 
   void changeLocale(String languageCode) {
-    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.isSelected)?.discard();
-    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.languageCode == languageCode)?.choose();
+    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.isSelected,orElse: () => null)?.discard();
+    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.languageCode == languageCode, orElse: () => null)?.choose();
   }
 
   List<Locale> get getSupportedLocales {

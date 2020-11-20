@@ -5,6 +5,7 @@ import 'package:pictures_view/res/const.dart';
 import 'package:pictures_view/res/routes.dart';
 import 'package:pictures_view/ui/layouts/bottom_bar/bottom_bar.dart';
 import 'package:pictures_view/ui/pages/custom_color_picker_page/custom_color_picker_page.dart';
+import 'package:pictures_view/ui/pages/favorites_page/favorites_page.dart';
 
 import 'package:pictures_view/ui/pages/home_page/home_page.dart';
 import 'package:pictures_view/ui/pages/image_info_page/image_info_page.dart';
@@ -53,6 +54,12 @@ class RouteHelper {
         return _defaultRoute(
           settings: settings,
           page: SettingsPage(),
+        );
+
+      case Routes.favorites:
+        return _defaultRoute(
+          settings: settings,
+          page: FavoritesPage(),
         );
 
       case Routes.customColorPickerPage:
