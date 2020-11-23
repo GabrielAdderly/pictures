@@ -62,8 +62,8 @@ class _HomePageBodyState extends ThemeState {
                       child: const SizedBox(),
                     ),
                   ),
-                  IgnorePointer(
-                    ignoring: wasButtonTapped,
+                  AbsorbPointer(
+                    absorbing: wasButtonTapped,
                     child: IconViewWidget(
                       onTap: () {
                         wasButtonTapped = true;

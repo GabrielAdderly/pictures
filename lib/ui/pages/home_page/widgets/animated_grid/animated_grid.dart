@@ -27,17 +27,24 @@ class AnimatedGrid extends ThemeStatefulWidget {
   State<StatefulWidget> createState() => _AnimatedGridState();
 }
 
-class _AnimatedGridState extends ThemeState<AnimatedGrid> {
+class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderStateMixin {
   final List<CardDTO> imageCards = [...dummyImageList];
 
-  bool _isOpened = false;
   bool _areCardsExpanded = false;
-  bool _areCardsMoved = false;
   bool _isBigLikeVisible = false;
+  bool _isAnimatedForward = true;
   double cardHeight;
   double primaryHeight;
   double halfOfPrimaryWidth;
   double cardHeightWithPadding;
+  AnimationController topPaddingController;
+  AnimationController rightEvenPaddingController;
+  AnimationController leftUnevenPaddingController;
+  AnimationController rightUnevenPaddingController;
+  Animation animateTopPadding;
+  Animation animateEvenRightPadding;
+  Animation animateUnevenLeftPadding;
+  Animation animateUnevenRightPadding;
 
   @override
   void initState() {
@@ -46,10 +53,20 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     primaryHeight = WidgetsBinding.instance.window.physicalSize.height / pixelRatio;
     halfOfPrimaryWidth = WidgetsBinding.instance.window.physicalSize.width / pixelRatio * 0.5;
     //6/5 - aspectRatio analog, since aspectRatio can't be used with animation widgets
-    cardHeight = halfOfPrimaryWidth * 6/5;
+    cardHeight = halfOfPrimaryWidth * 6 / 5;
     cardHeightWithPadding = cardHeight + 16.0;
 
     widget.toggleAnimationCallback(_toggleAnimation);
+
+    topPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
+    rightEvenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
+    leftUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
+    rightUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
+
+    _initTopPaddingAnimation;
+    _initUnevenLeftPaddingAnimation;
+    _initUnevenRightPaddingAnimation;
+    _initEvenRightPaddingAnimation;
   }
 
   @override
@@ -68,15 +85,11 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
                     return _getEvenCard(index, viewModel);
                   },
                 ),
-                AnimatedPadding(
-                  duration: const Duration(milliseconds: 250),
-                  padding: _getUnevenListViewPadding,
-                  child: ListColumnBuilder(
-                    itemCount: imageCards.length,
-                    builder: (int index) {
-                      return _getUnevenCard(index, viewModel);
-                    },
-                  ),
+                ListColumnBuilder(
+                  itemCount: imageCards.length,
+                  builder: (int index) {
+                    return _getUnevenCard(index, viewModel);
+                  },
                 ),
               ],
             ),
@@ -90,7 +103,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     if (index == 0) {
       return _gridItemFacade(
         index: index,
-        padding: _areCardsExpanded ? EdgeInsets.zero : EdgeInsets.only(right: halfOfPrimaryWidth),
+        padding: EdgeInsets.only(right: animateEvenRightPadding.value),
         onTap: () {
           viewModel.selectImage(imageCards[index]);
           viewModel.navigateTo(kRouteInfoImageInfoPage);
@@ -100,7 +113,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     if (index % 2 == 0) {
       return _gridItemFacade(
         index: index,
-        padding: _getEvenCardPadding,
+        padding: EdgeInsets.only(top: animateTopPadding.value, right: animateEvenRightPadding.value),
         onTap: () {
           viewModel.selectImage(imageCards[index]);
           viewModel.navigateTo(kRouteInfoImageInfoPage);
@@ -114,7 +127,11 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     if (index % 2 != 0) {
       return _gridItemFacade(
         index: index,
-        padding: _getUnevenCardPadding,
+        padding: EdgeInsets.only(
+          top: animateTopPadding.value,
+          left: animateUnevenLeftPadding.value,
+          right: animateUnevenRightPadding.value,
+        ),
         onTap: () {
           viewModel.selectImage(imageCards[index]);
           viewModel.navigateTo(kRouteInfoImageInfoPage);
@@ -124,10 +141,9 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     return const SizedBox();
   }
 
-  Widget _gridItemFacade({int index, Function onTap, EdgeInsets padding}) {
-    return AnimatedPadding(
+  Widget _gridItemFacade({int index, Function onTap, EdgeInsets padding = EdgeInsets.zero}) {
+    return Padding(
       padding: padding,
-      duration: const Duration(milliseconds: 250),
       child: GridImageItem(
         height: cardHeight,
         onTap: onTap,
@@ -138,66 +154,52 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> {
     );
   }
 
-  EdgeInsets get _getEvenCardPadding {
-    if (_areCardsExpanded) return EdgeInsets.only(top: cardHeightWithPadding);
-    if (_isOpened) return EdgeInsets.only(top: cardHeightWithPadding, right: halfOfPrimaryWidth);
-    return EdgeInsets.only(right: halfOfPrimaryWidth);
-  }
-
-  EdgeInsets get _getUnevenCardPadding {
-    if (_areCardsExpanded) return EdgeInsets.only(top: cardHeightWithPadding);
-    if (_areCardsMoved) return EdgeInsets.only(top: cardHeightWithPadding);
-    if (_isOpened) return EdgeInsets.only(top: cardHeightWithPadding);
-    return EdgeInsets.zero;
-  }
-
-  EdgeInsets get _getUnevenListViewPadding {
-    if (_areCardsExpanded) return EdgeInsets.zero;
-    if (_areCardsMoved) return EdgeInsets.only(right: halfOfPrimaryWidth);
-    if (_isOpened) return EdgeInsets.only(left: halfOfPrimaryWidth);
-    return EdgeInsets.only(left: halfOfPrimaryWidth);
-  }
-
   void _toggleAnimation() {
-    if (!_isOpened) {
-      //250ms duration. Adds vertical space between cards
-      _isOpened = true;
-
-      //50ms pause + 250ms previous animations
-      //250ms duration. Moves cars horizontally
-      Future.delayed(const Duration(milliseconds: 300), () {
-        _areCardsMoved = !_areCardsMoved;
-        setState(() {});
-      });
-      //100ms pause + 600ms previous animations&pauses
-      //550ms duration. Expands cards and pictures
-      Future.delayed(const Duration(milliseconds: 650), () {
-        _areCardsExpanded = !_areCardsExpanded;
-        setState(() {});
-      });
-      //1500ms previous animations. Stats before previous animation ends
-      //400ms duration. Opaques in the like button
-      Future.delayed(const Duration(milliseconds: 1400), () {
-        _isBigLikeVisible = !_isBigLikeVisible;
-        setState(() {});
-      });
+    if (topPaddingController.value == 0.0) {
+      topPaddingController.forward();
     } else {
-      //550ms duration. Shrinks cards, like buttons and pictures
-      _areCardsExpanded = !_areCardsExpanded;
-      _isBigLikeVisible = !_isBigLikeVisible;
-      //150ms pause + 550ms previous animations
-      //250ms duration. Moves cars horizontally
-      Future.delayed(const Duration(milliseconds: 700), () {
-        _areCardsMoved = !_areCardsMoved;
-        setState(() {});
-      });
-      //50ms pause + 950ms previous animations
-      //250ms duration. Shrinks adds vertical space between cards
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        _isOpened = false;
-        setState(() {});
-      });
+      _isAnimatedForward = false;
+      rightEvenPaddingController.reverse();
+      rightUnevenPaddingController.forward();
     }
-    setState(() {});
+  }
+
+  void get _initTopPaddingAnimation {
+    animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
+      ..addListener(() => setState(() {}))
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          leftUnevenPaddingController.forward();
+          rightUnevenPaddingController.forward();
+        } else if (status == AnimationStatus.dismissed) {
+          _isAnimatedForward = true;
+        }
+      });
+  }
+
+  void get _initUnevenLeftPaddingAnimation {
+    animateUnevenLeftPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(leftUnevenPaddingController);
+  }
+
+  void get _initUnevenRightPaddingAnimation {
+    animateUnevenRightPadding = Tween<double>(begin: 0, end: halfOfPrimaryWidth).animate(rightUnevenPaddingController)
+      ..addListener(() => setState(() {}))
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed && _isAnimatedForward) {
+          rightEvenPaddingController.forward();
+          rightUnevenPaddingController.reverse();
+        } else if (status == AnimationStatus.dismissed && !_isAnimatedForward) topPaddingController.reverse();
+      });
+  }
+
+  void get _initEvenRightPaddingAnimation {
+    animateEvenRightPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(rightEvenPaddingController)
+      ..addListener(() => setState(() {}))
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.dismissed && !_isAnimatedForward) {
+          leftUnevenPaddingController.reverse();
+          rightUnevenPaddingController.reverse();
+        }
+      });
   }
 }
