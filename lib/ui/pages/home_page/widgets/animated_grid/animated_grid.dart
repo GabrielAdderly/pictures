@@ -193,10 +193,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           rightUnevenPaddingController.forward();
         } else if (status == AnimationStatus.dismissed) {
           _isAnimatedForward = true;
-          scrollMultiplier = 0;
-          listScrollMultiplier = 0;
-          savedStartOffset = 0.0;
-          savedFinalOffset = 0.0;
+          _initBufferVariables();
         }
       });
   }
@@ -222,8 +219,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           print('CLEARED');
-//          scrollMultiplier = 0;
-          savedStartOffset = 0.0;
+          _initBufferVariables();
         }
         if (status == AnimationStatus.dismissed && !_isAnimatedForward) {
           leftUnevenPaddingController.reverse();
@@ -248,5 +244,12 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           ? savedFinalOffset + animateTopPadding.value * listScrollMultiplier
           : savedStartOffset + animateTopPadding.value * scrollMultiplier,
     );
+  }
+
+  void _initBufferVariables() {
+    scrollMultiplier = 0;
+    savedStartOffset = 0.0;
+    savedFinalOffset = 0.0;
+    listScrollMultiplier = 0;
   }
 }
