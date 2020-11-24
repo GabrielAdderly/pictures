@@ -37,6 +37,9 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   double primaryHeight;
   double halfOfPrimaryWidth;
   double cardHeightWithPadding;
+  int scrollMultiplier = 0;
+  double savedOffset = 0.0;
+  final ScrollController _scrollController = ScrollController();
   AnimationController topPaddingController;
   AnimationController rightEvenPaddingController;
   AnimationController leftUnevenPaddingController;
@@ -77,6 +80,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
         return ScrollConfiguration(
           behavior: CleanBehavior(),
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Stack(
               children: [
                 ListColumnBuilder(
@@ -157,6 +161,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   void _toggleAnimation() {
     if (topPaddingController.value == 0.0) {
       topPaddingController.forward();
+      print('${_scrollController.offset}');
     } else {
       _isAnimatedForward = false;
       rightEvenPaddingController.reverse();
@@ -166,7 +171,10 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
   void get _initTopPaddingAnimation {
     animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
-      ..addListener(() => setState(() {}))
+      ..addListener(() {
+        _animateScrollController();
+        setState(() {});
+      })
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           leftUnevenPaddingController.forward();
@@ -201,5 +209,20 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           rightUnevenPaddingController.reverse();
         }
       });
+  }
+
+  void _animateScrollController({bool reversed = false}) {
+    if (scrollMultiplier == 0) scrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
+    if (savedOffset == 0.0) savedOffset = _scrollController.offset;
+
+//    if (imageCards.length % 2 != 0 && scrollMultiplier * 2 == imageCards.length) {
+//      scrollMultiplier -= 1;
+//    }
+      print('offset ${_scrollController.offset}');
+      print('tween ${animateTopPadding.value}');
+      print('scrollMultiplier $scrollMultiplier');
+      _scrollController.jumpTo(
+        savedOffset + animateTopPadding.value * scrollMultiplier
+      );
   }
 }
