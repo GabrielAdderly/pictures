@@ -38,7 +38,9 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   double halfOfPrimaryWidth;
   double cardHeightWithPadding;
   int scrollMultiplier = 0;
-  double savedOffset = 0.0;
+  int listScrollMultiplier = 0;
+  double savedStartOffset = 0.0;
+  double savedFinalOffset = 0.0;
   final ScrollController _scrollController = ScrollController();
   AnimationController topPaddingController;
   AnimationController rightEvenPaddingController;
@@ -170,17 +172,31 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   }
 
   void get _initTopPaddingAnimation {
+    AnimationStatus animationStatus;
     animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
       ..addListener(() {
-        _animateScrollController();
+        if (animationStatus == null) _animateScrollController();
+        if (animationStatus == AnimationStatus.forward) {
+          print('FORWARD');
+          _animateScrollController();
+        }
+        if (animationStatus == AnimationStatus.reverse) {
+          print('REVERSE');
+          _animateScrollController(reversed: true);
+        }
         setState(() {});
       })
       ..addStatusListener((AnimationStatus status) {
+        animationStatus = status;
         if (status == AnimationStatus.completed) {
           leftUnevenPaddingController.forward();
           rightUnevenPaddingController.forward();
         } else if (status == AnimationStatus.dismissed) {
           _isAnimatedForward = true;
+          scrollMultiplier = 0;
+          listScrollMultiplier = 0;
+          savedStartOffset = 0.0;
+          savedFinalOffset = 0.0;
         }
       });
   }
@@ -204,6 +220,11 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     animateEvenRightPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(rightEvenPaddingController)
       ..addListener(() => setState(() {}))
       ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          print('CLEARED');
+//          scrollMultiplier = 0;
+          savedStartOffset = 0.0;
+        }
         if (status == AnimationStatus.dismissed && !_isAnimatedForward) {
           leftUnevenPaddingController.reverse();
           rightUnevenPaddingController.reverse();
@@ -213,16 +234,19 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
   void _animateScrollController({bool reversed = false}) {
     if (scrollMultiplier == 0) scrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
-    if (savedOffset == 0.0) savedOffset = _scrollController.offset;
+    if (savedStartOffset == 0.0) savedStartOffset = _scrollController.offset;
+    if (reversed && savedFinalOffset == 0.0) savedFinalOffset = _scrollController.offset / 2;
+    if (reversed && listScrollMultiplier == 0) listScrollMultiplier = _scrollController.offset / 2 ~/ cardHeightWithPadding ;
 
-//    if (imageCards.length % 2 != 0 && scrollMultiplier * 2 == imageCards.length) {
-//      scrollMultiplier -= 1;
-//    }
-      print('offset ${_scrollController.offset}');
-      print('tween ${animateTopPadding.value}');
-      print('scrollMultiplier $scrollMultiplier');
-      _scrollController.jumpTo(
-        savedOffset + animateTopPadding.value * scrollMultiplier
-      );
+    print('savedOffset $savedStartOffset');
+    print('offset ${_scrollController.offset}');
+    print('tween ${animateTopPadding.value}');
+    print('scrollMultiplier $scrollMultiplier');
+
+    _scrollController.jumpTo(
+      reversed
+          ? savedFinalOffset + animateTopPadding.value * listScrollMultiplier
+          : savedStartOffset + animateTopPadding.value * scrollMultiplier,
+    );
   }
 }

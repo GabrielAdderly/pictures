@@ -16,7 +16,7 @@ class ListColumnBuilder extends ThemeStatelessWidget {
     return Column(
       children: [
         for (int i = 0; i < itemCount; i++) builder(i),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 14.0),
       ],
     );
   }
