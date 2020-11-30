@@ -41,7 +41,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   int listScrollMultiplier = 0;
   double savedStartOffset = 0.0;
   double savedFinalOffset = 0.0;
-  //double scrollDifference = 0.0;
+  double scrollDifference = 0.0;
   final ScrollController _scrollController = ScrollController();
   AnimationController topPaddingController;
   AnimationController rightEvenPaddingController;
@@ -64,7 +64,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
     widget.toggleAnimationCallback(_toggleAnimation);
 
-    topPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
+    topPaddingController = AnimationController(duration: const Duration(milliseconds: 10250), vsync: this);
     rightEvenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
     leftUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
     rightUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
@@ -197,6 +197,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           print('jump offset ${savedFinalOffset + animateTopPadding.value * listScrollMultiplier}');
           _isAnimatedForward = true;
           _initBufferVariables();
+          scrollDifference = 0.0;
         }
       });
   }
@@ -239,9 +240,14 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   void _animateScrollController({bool reversed = false}) {
     if (scrollMultiplier == 0) scrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
     if (savedStartOffset == 0.0) savedStartOffset = _scrollController.offset;
-    //if (scrollDifference == 0.0) scrollDifference = savedStartOffset % cardHeightWithPadding;
-    if (reversed && savedFinalOffset == 0.0) savedFinalOffset = _scrollController.offset / 2;
-    if (reversed && listScrollMultiplier == 0) listScrollMultiplier = _scrollController.offset / 2 ~/ cardHeightWithPadding;
+    if (scrollDifference == 0.0) {
+      scrollDifference = savedStartOffset % cardHeightWithPadding;
+      print('scrollDifference $scrollDifference');
+    }
+    if (reversed && savedFinalOffset == 0.0) {
+      savedFinalOffset = (_scrollController.offset - 50) / 2 + scrollDifference;
+    }
+    if (reversed && listScrollMultiplier == 0) listScrollMultiplier = scrollDifference ~/ cardHeightWithPadding;
 
     //print('savedOffset $savedStartOffset');
     print('saved list offset $savedFinalOffset');
