@@ -64,7 +64,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
     widget.toggleAnimationCallback(_toggleAnimation);
 
-    topPaddingController = AnimationController(duration: const Duration(milliseconds: 10250), vsync: this);
+    topPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
     rightEvenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
     leftUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
     rightUnevenPaddingController = AnimationController(duration: const Duration(milliseconds: 250), vsync: this);
@@ -181,8 +181,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           print('FORWARD');
           _animateScrollController();
         }
-        if (animationStatus == AnimationStatus.reverse) {
-          print('REVERSE');
+        if (animationStatus == AnimationStatus.reverse && !_isAnimatedForward) {
           _animateScrollController(reversed: true);
         }
         setState(() {});
@@ -213,7 +212,10 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
         if (status == AnimationStatus.completed && _isAnimatedForward) {
           rightEvenPaddingController.forward();
           rightUnevenPaddingController.reverse();
-        } else if (status == AnimationStatus.dismissed && !_isAnimatedForward) topPaddingController.reverse();
+        } else if (status == AnimationStatus.dismissed && !_isAnimatedForward) {
+          print('REVERSE');
+          topPaddingController.reverse();
+        }
       });
   }
 
@@ -242,19 +244,27 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     if (savedStartOffset == 0.0) savedStartOffset = _scrollController.offset;
     if (scrollDifference == 0.0) {
       scrollDifference = savedStartOffset % cardHeightWithPadding;
+      if (reversed) _scrollController.offset % cardHeightWithPadding;
       print('scrollDifference $scrollDifference');
     }
+
     if (reversed && savedFinalOffset == 0.0) {
-      savedFinalOffset = (_scrollController.offset - 50) / 2 + scrollDifference;
+      savedFinalOffset = (_scrollController.offset - scrollDifference) / 2 + scrollDifference;
     }
-    if (reversed && listScrollMultiplier == 0) listScrollMultiplier = scrollDifference ~/ cardHeightWithPadding;
+
+    if (reversed && listScrollMultiplier == 0) {
+      print('LIST SCROLL CHANGED');
+      listScrollMultiplier = _scrollController.offset ~/ (2 * cardHeightWithPadding);
+    }
 
     //print('savedOffset $savedStartOffset');
     print('saved list offset $savedFinalOffset');
     print('offset ${_scrollController.offset}');
     print('jump offset ${savedFinalOffset + animateTopPadding.value * listScrollMultiplier}');
     print('tween ${animateTopPadding.value}');
-    print('scrollMultiplier $scrollMultiplier');
+    print('listScrollMultiplier $listScrollMultiplier');
+
+    if (reversed) print('123');
 
     _scrollController.jumpTo(
       reversed
@@ -263,10 +273,12 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     );
   }
 
+
   void _initBufferVariables() {
     scrollMultiplier = 0;
     savedStartOffset = 0.0;
     savedFinalOffset = 0.0;
     listScrollMultiplier = 0;
+    scrollDifference = 0.0;
   }
 }
