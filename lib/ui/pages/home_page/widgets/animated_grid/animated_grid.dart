@@ -197,7 +197,6 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
           rightUnevenPaddingController.forward();
         } else if (status == AnimationStatus.dismissed) {
           print('DONE');
-          print('offset ${_scrollController.offset}');
           _isAnimatedForward = true;
           wasChecked = false;
           _initBufferVariables();
@@ -229,8 +228,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
       ..addListener(() => setState(() {}))
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
-          print('CLEARED');
-          print('offset ${_scrollController.offset}');
+          print('DONE');
           _initBufferVariables();
         }
         if (status == AnimationStatus.dismissed && !_isAnimatedForward) {
@@ -241,39 +239,27 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   }
 
   void _animateScrollController({bool reversed = false}) {
-
-    if (gridScrollMultiplier == 0) gridScrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
     if (savedGridOffset == 0.0) savedGridOffset = _scrollController.offset;
+    if (scrollDifference == 0.0) scrollDifference = savedGridOffset % cardHeightWithPadding;
+    if (gridScrollMultiplier == 0) gridScrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
 
-    if (scrollDifference == 0.0) {
-      scrollDifference = savedGridOffset % cardHeightWithPadding;
+    if (reversed) {
+      if (savedListOffset == 0.0) {
+        savedListOffset = (_scrollController.offset - scrollDifference) / 2 + scrollDifference;
+      }
+      if (listScrollMultiplier == 0) listScrollMultiplier = _scrollController.offset ~/ (2 * cardHeightWithPadding);
+      _printDebug();
+      _jumpTo(savedListOffset, listScrollMultiplier);
+    } else {
+      _printDebug();
+      _jumpTo(savedGridOffset, gridScrollMultiplier);
     }
-
-    print('scrollDifference $scrollDifference');
-
-    if (reversed && savedListOffset == 0.0) {
-      savedListOffset = (_scrollController.offset - scrollDifference) / 2 + scrollDifference;
-    }
-
-    if (reversed && listScrollMultiplier == 0) {
-      print('LIST SCROLL REVERSE MULTIPLIER CHANGED');
-      listScrollMultiplier = _scrollController.offset ~/ (2 * cardHeightWithPadding);
-    }
-
-    //print('savedOffset $savedStartOffset');
-    print('saved list offset $savedListOffset');
-    print('offset ${_scrollController.offset}');
-    print('jump offset ${savedListOffset + animateTopPadding.value * listScrollMultiplier}');
-    print('tween ${animateTopPadding.value}');
-    print('listScrollMultiplier $listScrollMultiplier');
-
-      reversed ? _jumpTo(savedListOffset, listScrollMultiplier) : _jumpTo(savedGridOffset, gridScrollMultiplier);
   }
 
   void _unevenScroll(Function triggerTween) {
     if (savedOffset == 0.0) savedOffset = _scrollController.offset;
     if (savedOffset ~/ cardHeightWithPadding % 2 != 0 && !wasChecked) {
-      const Duration duration = Duration(milliseconds: 500);
+      const Duration duration = Duration(milliseconds: 350);
       print('UNEVEN');
       wasChecked = true;
       _scrollController.animateTo(
@@ -298,5 +284,14 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     savedListOffset = 0.0;
     listScrollMultiplier = 0;
     scrollDifference = 0.0;
+  }
+
+  void _printDebug() {
+    print('scrollDifference $scrollDifference');
+    print('saved list offset $savedListOffset');
+    print('offset ${_scrollController.offset}');
+    print('jump offset ${savedListOffset + animateTopPadding.value * listScrollMultiplier}');
+    print('tween ${animateTopPadding.value}');
+    print('listScrollMultiplier $listScrollMultiplier');
   }
 }
