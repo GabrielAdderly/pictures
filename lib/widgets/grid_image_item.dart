@@ -12,6 +12,7 @@ class GridImageItem extends StatelessWidget {
   final double height;
   final bool isExpanded;
   final bool isBigLikeVisible;
+  final EdgeInsets padding;
 
   const GridImageItem({
     @required this.card,
@@ -20,13 +21,14 @@ class GridImageItem extends StatelessWidget {
     this.height,
     this.isExpanded,
     this.isBigLikeVisible,
+    this.padding = const EdgeInsets.all(8.0),
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: padding,
       child: ImageCard(
         key: Key('image_card_${card.id}'),
         card: card,

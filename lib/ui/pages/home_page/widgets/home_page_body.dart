@@ -15,6 +15,7 @@ import 'package:pictures_view/ui/pages/home_page/home_page_view_model.dart';
 import 'package:pictures_view/widgets/custom_icon_view/icon_view_widget.dart';
 
 import 'package:pictures_view/ui/widgets/categories_list.dart';
+import 'package:pictures_view/widgets/grid_image_item.dart';
 
 class HomePageBody extends ThemeStatefulWidget {
   HomePageBody({Key key}) : super(key: key);
@@ -28,6 +29,8 @@ class _HomePageBodyState extends ThemeState {
   final List<CardDTO> imageCards = [...dummyImageList];
   Function _toggleAnimation = () {};
   bool wasButtonTapped = false;
+  bool _areCardsExpanded = false;
+  bool _isBigLikeVisible = false;
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -89,8 +92,20 @@ class _HomePageBodyState extends ThemeState {
                 width: double.infinity,
                 padding: EdgeInsets.only(bottom: 90.0),
                 child: AnimatedGrid(
-                  toggleAnimationCallback: (Function toggleAnimation) {
-                    _toggleAnimation = toggleAnimation;
+                  gridRowsCount: imageCards.length,
+                  duration: const Duration(milliseconds: 300),
+                  toggleAnimationCallback: (Function toggleAnimation) => _toggleAnimation = toggleAnimation,
+                  autoDimensionsBuilder: (double height, double width, int index) {
+                    return GridImageItem(
+                      height: height,
+                      onTap: () {
+                        viewModel.selectImage(imageCards[index]);
+                        viewModel.navigateTo(kRouteInfoImageInfoPage);
+                      },
+                      card: imageCards[index],
+                      isExpanded: _areCardsExpanded,
+                      isBigLikeVisible: _isBigLikeVisible,
+                    );
                   },
                 ),
               ),

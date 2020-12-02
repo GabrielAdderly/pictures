@@ -6,8 +6,8 @@ class ListColumnBuilder extends ThemeStatelessWidget {
   final Widget Function(int index) builder;
 
   ListColumnBuilder({
-    this.builder,
-    this.itemCount,
+    @required this.builder,
+    @required this.itemCount,
     Key key,
   }) : super(key: key);
 
