@@ -21,7 +21,7 @@ class GridImageItem extends StatelessWidget {
     this.height,
     this.isExpanded,
     this.isBigLikeVisible,
-    this.padding = const EdgeInsets.all(8.0),
+    this.padding = EdgeInsets.zero,
     Key key,
   }) : super(key: key);
 

@@ -9,6 +9,7 @@ import 'package:pictures_view/ui/pages/home_page/widgets/animated_grid/widgets/l
 class AnimatedGrid extends ThemeStatefulWidget {
   final Duration duration;
   final int gridRowsCount;
+  final double childrenAspectRatio;
   final double allSideChildrenPadding;
   final Function(Function toggleAnimation) toggleAnimationCallback;
   final Widget Function(double height, double width, int index) autoDimensionsBuilder;
@@ -16,9 +17,10 @@ class AnimatedGrid extends ThemeStatefulWidget {
   AnimatedGrid({
     @required this.duration,
     @required this.gridRowsCount,
+    @required this.childrenAspectRatio,
     @required this.autoDimensionsBuilder,
     @required this.toggleAnimationCallback,
-    this.allSideChildrenPadding,
+    @required this.allSideChildrenPadding,
     Key key,
   }) : super(key: key);
 
@@ -51,8 +53,9 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     super.initState();
     final double pixelRatio = WidgetsBinding.instance.window.devicePixelRatio;
     halfOfPrimaryWidth = WidgetsBinding.instance.window.physicalSize.width / pixelRatio * 0.5;
-    //6/5 - aspectRatio analog, since aspectRatio can't be used with animation widgets
-    cardHeightWithPadding = halfOfPrimaryWidth * 6/5 + 16.0;
+
+    cardHeightWithPadding = halfOfPrimaryWidth * widget.childrenAspectRatio + widget.allSideChildrenPadding * 2;
+    print('CARD $cardHeightWithPadding');
 
     widget.toggleAnimationCallback(_toggleAnimation);
 
@@ -69,27 +72,27 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
-        return CleanedScrollView(
-          controller: _scrollController,
+    return CleanedScrollView(
+      controller: _scrollController,
+      children: [
+        Stack(
           children: [
-            Stack(
-              children: [
-                ListColumnBuilder(
-                  itemCount: widget.gridRowsCount,
-                  builder: (int index) {
-                    return _getEvenWidget(index);
-                  },
-                ),
-                ListColumnBuilder(
-                  itemCount: widget.gridRowsCount,
-                  builder: (int index) {
-                    return _getUnevenWidget(index);
-                  },
-                ),
-              ],
+            ListColumnBuilder(
+              itemCount: widget.gridRowsCount,
+              builder: (int index) {
+                return _getEvenWidget(index);
+              },
+            ),
+            ListColumnBuilder(
+              itemCount: widget.gridRowsCount,
+              builder: (int index) {
+                return _getUnevenWidget(index);
+              },
             ),
           ],
-        );
+        ),
+      ],
+    );
   }
 
   Widget _getEvenWidget(int index) {
@@ -123,9 +126,14 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   }
 
   Widget _gridItemFacade({int index, EdgeInsets padding = EdgeInsets.zero}) {
-    return Padding(
-      padding: padding,
-      child: widget.autoDimensionsBuilder(cardHeightWithPadding - 16.0, halfOfPrimaryWidth, index),
+    return Container(
+      margin: padding,
+      padding: EdgeInsets.all(widget.allSideChildrenPadding),
+      child: widget.autoDimensionsBuilder(
+        cardHeightWithPadding - widget.allSideChildrenPadding * 2,
+        double.infinity,
+        index,
+      ),
     );
   }
 

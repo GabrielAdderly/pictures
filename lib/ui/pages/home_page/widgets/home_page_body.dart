@@ -29,8 +29,7 @@ class _HomePageBodyState extends ThemeState {
   final List<CardDTO> imageCards = [...dummyImageList];
   Function _toggleAnimation = () {};
   bool wasButtonTapped = false;
-  bool _areCardsExpanded = false;
-  bool _isBigLikeVisible = false;
+
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -92,6 +91,8 @@ class _HomePageBodyState extends ThemeState {
                 width: double.infinity,
                 padding: EdgeInsets.only(bottom: 90.0),
                 child: AnimatedGrid(
+                  childrenAspectRatio: 6/5,
+                  allSideChildrenPadding: 8.0,
                   gridRowsCount: imageCards.length,
                   duration: const Duration(milliseconds: 300),
                   toggleAnimationCallback: (Function toggleAnimation) => _toggleAnimation = toggleAnimation,
@@ -103,9 +104,8 @@ class _HomePageBodyState extends ThemeState {
                         viewModel.navigateTo(kRouteInfoImageInfoPage);
                       },
                       card: imageCards[index],
-                      isExpanded: _areCardsExpanded,
-                      isBigLikeVisible: _isBigLikeVisible,
                     );
+                      //return Container(color: Colors.red, height: height, width: width,);
                   },
                 ),
               ),

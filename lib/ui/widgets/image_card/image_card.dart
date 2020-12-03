@@ -39,6 +39,9 @@ class ImageCard extends ThemeStatefulWidget {
 }
 
 class _ImageCardState extends ThemeState<ImageCard> {
+  bool _areCardsExpanded = false;
+  bool _isBigLikeVisible = false;
+
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
     return AnimatedContainer(
@@ -49,12 +52,12 @@ class _ImageCardState extends ThemeState<ImageCard> {
         color: theme.colors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      padding: widget.isExpanded ? EdgeInsets.zero : const EdgeInsets.all(12.0),
+      padding: _areCardsExpanded ? EdgeInsets.zero : const EdgeInsets.all(12.0),
       child: Stack(
         children: [
           AnimatedOpacity(
             duration: const Duration(milliseconds: 100),
-            opacity: widget.isExpanded ? 0.0 : 1.0,
+            opacity: _areCardsExpanded ? 0.0 : 1.0,
             child: Column(
               children: <Widget>[
                 const Spacer(flex: 2),
@@ -79,9 +82,9 @@ class _ImageCardState extends ThemeState<ImageCard> {
               padding: const EdgeInsets.all(15.0),
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 600),
-                opacity: widget.isBigLikeVisible ? 1.0 : 0.0,
+                opacity: _isBigLikeVisible ? 1.0 : 0.0,
                 child: IgnorePointer(
-                  ignoring: !widget.isBigLikeVisible,
+                  ignoring: !_isBigLikeVisible,
                   child: FavoriteButton(
                     size: 25.0,
                     isLiked: widget.card.isLiked,
