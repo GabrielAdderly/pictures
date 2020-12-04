@@ -9,6 +9,7 @@ import 'package:pictures_view/ui/pages/home_page/widgets/animated_grid/widgets/l
 class AnimatedGrid extends ThemeStatefulWidget {
   final Duration duration;
   final int gridRowsCount;
+  final bool showDebugPrints;
   final double childrenAspectRatio;
   final double allSideChildrenPadding;
   final Function(Function toggleAnimation) toggleAnimationCallback;
@@ -21,6 +22,7 @@ class AnimatedGrid extends ThemeStatefulWidget {
     @required this.autoDimensionsBuilder,
     @required this.toggleAnimationCallback,
     @required this.allSideChildrenPadding,
+    this.showDebugPrints = false,
     Key key,
   }) : super(key: key);
 
@@ -37,7 +39,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   int listScrollMultiplier = 0;
   double savedGridOffset = 0.0;
   double savedListOffset = 0.0;
-  double scrollDifference = 0.0;
+  double viewsScrollDifference = 0.0;
   Animation animateTopPadding;
   Animation animateEvenRightPadding;
   Animation animateUnevenLeftPadding;
@@ -55,14 +57,15 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     halfOfPrimaryWidth = WidgetsBinding.instance.window.physicalSize.width / pixelRatio * 0.5;
 
     cardHeightWithPadding = halfOfPrimaryWidth * widget.childrenAspectRatio + widget.allSideChildrenPadding * 2;
-    print('CARD $cardHeightWithPadding');
 
     widget.toggleAnimationCallback(_toggleAnimation);
 
-    topPaddingController = AnimationController(duration: widget.duration, vsync: this);
-    rightEvenPaddingController = AnimationController(duration: widget.duration, vsync: this);
-    leftUnevenPaddingController = AnimationController(duration: widget.duration, vsync: this);
-    rightUnevenPaddingController = AnimationController(duration: widget.duration, vsync: this);
+    final Duration stepDuration = Duration(milliseconds: (widget.duration.inMilliseconds / 4).round());
+
+    topPaddingController = AnimationController(duration: stepDuration, vsync: this);
+    rightEvenPaddingController = AnimationController(duration: stepDuration, vsync: this);
+    leftUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
+    rightUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
 
     _initTopPaddingAnimation;
     _initUnevenLeftPaddingAnimation;
@@ -99,13 +102,13 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     if (index == 0) {
       return _gridItemFacade(
         index: index,
-        padding: EdgeInsets.only(right: animateEvenRightPadding.value),
+        margin: EdgeInsets.only(right: animateEvenRightPadding.value),
       );
     }
     if (index % 2 == 0) {
       return _gridItemFacade(
         index: index,
-        padding: EdgeInsets.only(top: animateTopPadding.value, right: animateEvenRightPadding.value),
+        margin: EdgeInsets.only(top: animateTopPadding.value, right: animateEvenRightPadding.value),
       );
     }
     return const SizedBox();
@@ -115,7 +118,7 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     if (index % 2 != 0) {
       return _gridItemFacade(
         index: index,
-        padding: EdgeInsets.only(
+        margin: EdgeInsets.only(
           top: animateTopPadding.value,
           left: animateUnevenLeftPadding.value,
           right: animateUnevenRightPadding.value,
@@ -125,9 +128,9 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     return const SizedBox();
   }
 
-  Widget _gridItemFacade({int index, EdgeInsets padding = EdgeInsets.zero}) {
+  Widget _gridItemFacade({int index, EdgeInsets margin = EdgeInsets.zero}) {
     return Container(
-      margin: padding,
+      margin: margin,
       padding: EdgeInsets.all(widget.allSideChildrenPadding),
       child: widget.autoDimensionsBuilder(
         cardHeightWithPadding - widget.allSideChildrenPadding * 2,
@@ -154,13 +157,13 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     AnimationStatus animationStatus;
     animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
       ..addListener(() {
-        if (animationStatus == null) _animateScrollController();
+        if (animationStatus == null) _compensateViewScrollChange();
         if (animationStatus == AnimationStatus.forward) {
           print('FORWARD');
-          _animateScrollController();
+          _compensateViewScrollChange();
         }
         if (animationStatus == AnimationStatus.reverse && !_isAnimatedForward) {
-          _animateScrollController(reversed: true);
+          _compensateViewScrollChange(reversed: true);
         }
         setState(() {});
       })
@@ -211,14 +214,14 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
       });
   }
 
-  void _animateScrollController({bool reversed = false}) {
+  void _compensateViewScrollChange({bool reversed = false}) {
     if (savedGridOffset == 0.0) savedGridOffset = _scrollController.offset;
-    if (scrollDifference == 0.0) scrollDifference = savedGridOffset % cardHeightWithPadding;
+    if (viewsScrollDifference == 0.0) viewsScrollDifference = savedGridOffset % cardHeightWithPadding;
     if (gridScrollMultiplier == 0) gridScrollMultiplier = _scrollController.offset ~/ cardHeightWithPadding;
 
     if (reversed) {
       if (savedListOffset == 0.0) {
-        savedListOffset = (_scrollController.offset - scrollDifference) / 2 + scrollDifference;
+        savedListOffset = (_scrollController.offset - viewsScrollDifference) / 2 + viewsScrollDifference;
       }
       if (listScrollMultiplier == 0) listScrollMultiplier = _scrollController.offset ~/ (2 * cardHeightWithPadding);
 
@@ -233,14 +236,17 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   void _unevenScroll(Function triggerTween) {
     if (savedGridOffset == 0.0) savedGridOffset = _scrollController.offset;
     if (savedGridOffset ~/ cardHeightWithPadding % 2 != 0 && !wasChecked) {
-      print('UNEVEN');
       wasChecked = true;
+
+      final Duration scrollToRowDuration = Duration(milliseconds: (widget.duration.inMilliseconds / 4).round());
+
       _scrollController.animateTo(
         savedGridOffset - cardHeightWithPadding,
-        duration: widget.duration,
-        curve: Curves.linear,
+        duration: scrollToRowDuration,
+        curve: Curves.decelerate,
       );
-      Future.delayed(widget.duration, () => triggerTween());
+
+      Future.delayed(scrollToRowDuration, () => triggerTween());
     } else {
       triggerTween();
     }
@@ -251,19 +257,24 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
   }
 
   void _initBufferVariables() {
-    gridScrollMultiplier = 0;
     savedGridOffset = 0.0;
     savedListOffset = 0.0;
+    gridScrollMultiplier = 0;
     listScrollMultiplier = 0;
-    scrollDifference = 0.0;
+    viewsScrollDifference = 0.0;
   }
 
   void _printDebug() {
-    print('scrollDifference $scrollDifference');
-    print('saved list offset $savedListOffset');
-    print('offset ${_scrollController.offset}');
-    print('jump offset ${savedListOffset + animateTopPadding.value * listScrollMultiplier}');
-    print('tween ${animateTopPadding.value}');
-    print('listScrollMultiplier $listScrollMultiplier');
+    if (widget.showDebugPrints) {
+      print('Current offset ${_scrollController.offset}');
+      print('Tween value ${animateTopPadding.value}');
+      print('Views scroll difference $viewsScrollDifference');
+      print('Saved list offset $savedListOffset');
+      print('Saved grid offset $savedGridOffset');
+      print('Current compensating jump offset ${savedListOffset + animateTopPadding.value * listScrollMultiplier}');
+      print('Card height + padding $cardHeightWithPadding');
+      print('List\'s compensating scroll multiplier $listScrollMultiplier');
+      print('Grid\'s compensating scroll multiplier $gridScrollMultiplier');
+    }
   }
 }

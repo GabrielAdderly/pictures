@@ -14,12 +14,13 @@ class ImageCard extends ThemeStatefulWidget {
   ImageCard({
     @required Key key,
     @required this.card,
-    this.onTap,
-    this.likeCallback,
-    this.height,
-    this.width,
-    this.isExpanded = false,
+    this.isCardExpanded = false,
     this.isBigLikeVisible = false,
+    this.onTap,
+    this.width,
+    this.height,
+    this.padding,
+    this.likeCallback,
   })  : assert(key != null, 'Key must be not null'),
         assert(card != null, 'Card (key: $key) must be not null'),
         assert(card.imageUrl != null && card.imageUrl.startsWith('http'),
@@ -29,9 +30,10 @@ class ImageCard extends ThemeStatefulWidget {
   final CardDTO card;
   final double width;
   final double height;
-  final bool isExpanded;
-  final bool isBigLikeVisible;
+  final EdgeInsets padding;
   final OnTapFunction onTap;
+  final bool isCardExpanded;
+  final bool isBigLikeVisible;
   final BooleanCallback likeCallback;
 
   @override
@@ -39,8 +41,6 @@ class ImageCard extends ThemeStatefulWidget {
 }
 
 class _ImageCardState extends ThemeState<ImageCard> {
-  bool _areCardsExpanded = false;
-  bool _isBigLikeVisible = false;
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -52,12 +52,12 @@ class _ImageCardState extends ThemeState<ImageCard> {
         color: theme.colors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      padding: _areCardsExpanded ? EdgeInsets.zero : const EdgeInsets.all(12.0),
+      padding: widget.isCardExpanded ? EdgeInsets.zero : widget.padding,
       child: Stack(
         children: [
           AnimatedOpacity(
             duration: const Duration(milliseconds: 100),
-            opacity: _areCardsExpanded ? 0.0 : 1.0,
+            opacity: widget.isCardExpanded ? 0.0 : 1.0,
             child: Column(
               children: <Widget>[
                 const Spacer(flex: 2),
@@ -81,10 +81,10 @@ class _ImageCardState extends ThemeState<ImageCard> {
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 600),
-                opacity: _isBigLikeVisible ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 400),
+                opacity: widget.isBigLikeVisible ? 1.0 : 0.0,
                 child: IgnorePointer(
-                  ignoring: !_isBigLikeVisible,
+                  ignoring: !widget.isBigLikeVisible,
                   child: FavoriteButton(
                     size: 25.0,
                     isLiked: widget.card.isLiked,
@@ -119,8 +119,8 @@ class _ImageCardState extends ThemeState<ImageCard> {
   }
 
   double _getHeight(double widgetHeight) {
-    if (widget.isExpanded == null) return widgetHeight * 0.57;
-    if (widget.isExpanded) return widgetHeight;
+    if (!widget.isCardExpanded) return widgetHeight * 0.57;
+    if (widget.isCardExpanded) return widgetHeight;
     return widgetHeight * 0.57;
   }
 }

@@ -27,18 +27,16 @@ class GridImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return ImageCard(
+      key: Key('image_card_${card.id}'),
+      card: card,
+      onTap: onTap,
+      width: width,
+      height: height,
       padding: padding,
-      child: ImageCard(
-        key: Key('image_card_${card.id}'),
-        card: card,
-        onTap: onTap,
-        width: width,
-        height: height,
-        isExpanded: isExpanded,
-        isBigLikeVisible: isBigLikeVisible,
-        likeCallback: (bool isLiked) => card.updateLikes(),
-      ),
+      isCardExpanded: isExpanded,
+      isBigLikeVisible: isBigLikeVisible,
+      likeCallback: (bool isLiked) => card.updateLikes(),
     );
   }
 }

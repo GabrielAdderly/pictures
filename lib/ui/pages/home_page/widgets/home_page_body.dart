@@ -27,9 +27,10 @@ class HomePageBody extends ThemeStatefulWidget {
 class _HomePageBodyState extends ThemeState {
   final List<CategoryDTO> _categories = dummyCategories;
   final List<CardDTO> imageCards = [...dummyImageList];
-  Function _toggleAnimation = () {};
+  Function _toggleGridAnimation = () {};
   bool wasButtonTapped = false;
-
+  bool areCardsExpanded = false;
+  bool areBigLikesVisible = false;
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -67,15 +68,7 @@ class _HomePageBodyState extends ThemeState {
                   AbsorbPointer(
                     absorbing: wasButtonTapped,
                     child: IconViewWidget(
-                      onTap: () {
-                        wasButtonTapped = true;
-                        _toggleAnimation();
-                        Future.delayed(const Duration(milliseconds: 1400), () {
-                          wasButtonTapped = false;
-                          setState(() {});
-                        });
-                        setState(() {});
-                      },
+                      onTap: _changeView,
                       size: 44.0,
                       color: theme.colors.accentColor.withOpacity(0.2),
                       bgColor: theme.colors.accentColor,
@@ -91,21 +84,24 @@ class _HomePageBodyState extends ThemeState {
                 width: double.infinity,
                 padding: EdgeInsets.only(bottom: 90.0),
                 child: AnimatedGrid(
-                  childrenAspectRatio: 6/5,
+                  childrenAspectRatio: 6 / 5,
                   allSideChildrenPadding: 8.0,
                   gridRowsCount: imageCards.length,
-                  duration: const Duration(milliseconds: 300),
-                  toggleAnimationCallback: (Function toggleAnimation) => _toggleAnimation = toggleAnimation,
+                  duration: const Duration(milliseconds: 1200),
+                  toggleAnimationCallback: (Function toggleAnimation) => _toggleGridAnimation = toggleAnimation,
                   autoDimensionsBuilder: (double height, double width, int index) {
                     return GridImageItem(
                       height: height,
+                      padding: const EdgeInsets.all(12.0),
                       onTap: () {
                         viewModel.selectImage(imageCards[index]);
                         viewModel.navigateTo(kRouteInfoImageInfoPage);
                       },
                       card: imageCards[index],
+                      isExpanded: areCardsExpanded,
+                      isBigLikeVisible: areBigLikesVisible,
                     );
-                      //return Container(color: Colors.red, height: height, width: width,);
+                    //return Container(color: Colors.red, height: height, width: width,);
                   },
                 ),
               ),
@@ -114,5 +110,33 @@ class _HomePageBodyState extends ThemeState {
         );
       },
     );
+  }
+
+  void _changeView() {
+    wasButtonTapped = true;
+
+    if (!areCardsExpanded) {
+      _toggleGridAnimation();
+      _delay(milliseconds: 700, function: _swapCardBool);
+
+    } else {
+      _swapCardBool();
+      _delay(milliseconds: 100, function: _toggleGridAnimation);
+    }
+
+    _delay(milliseconds: 1400, function: () => wasButtonTapped = false);
+    setState(() {});
+  }
+
+  void _swapCardBool() {
+    areCardsExpanded = !areCardsExpanded;
+    areBigLikesVisible = !areBigLikesVisible;
+  }
+
+  void _delay({Function function, int milliseconds}) {
+    Future.delayed(Duration(milliseconds: milliseconds), () {
+      function();
+      setState(() {});
+    });
   }
 }
