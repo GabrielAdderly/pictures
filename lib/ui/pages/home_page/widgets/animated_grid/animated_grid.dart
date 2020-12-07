@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pictures_view/pic_main_lib.dart';
+import 'package:pictures_view/ui/pages/home_page/mixins/init_animations_mixin.dart';
 
 import 'package:pictures_view/widgets/cleaned_scroll_view.dart';
 
@@ -30,24 +31,24 @@ class AnimatedGrid extends ThemeStatefulWidget {
   State<StatefulWidget> createState() => _AnimatedGridState();
 }
 
-class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderStateMixin {
-  bool _isAnimatedForward = true;
-  bool wasChecked = false;
-  double halfOfPrimaryWidth;
+class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderStateMixin, InitAnimationMixin {
+  //bool _isAnimatedForward = true;
+  //bool wasChecked = false;
+  //double halfOfPrimaryWidth;
   double cardHeightWithPadding;
   int gridScrollMultiplier = 0;
   int listScrollMultiplier = 0;
   double savedGridOffset = 0.0;
   double savedListOffset = 0.0;
   double viewsScrollDifference = 0.0;
-  Animation animateTopPadding;
-  Animation animateEvenRightPadding;
-  Animation animateUnevenLeftPadding;
-  Animation animateUnevenRightPadding;
-  AnimationController topPaddingController;
-  AnimationController rightEvenPaddingController;
-  AnimationController leftUnevenPaddingController;
-  AnimationController rightUnevenPaddingController;
+//  Animation animateTopPadding;
+//  Animation animateEvenRightPadding;
+//  Animation animateUnevenLeftPadding;
+//  Animation animateUnevenRightPadding;
+//  AnimationController topPaddingController;
+//  AnimationController rightEvenPaddingController;
+//  AnimationController leftUnevenPaddingController;
+//  AnimationController rightUnevenPaddingController;
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -62,16 +63,18 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
 
     final Duration stepDuration = Duration(milliseconds: (widget.duration.inMilliseconds / 4).round());
 
-    topPaddingController = AnimationController(duration: stepDuration, vsync: this);
-    rightEvenPaddingController = AnimationController(duration: stepDuration, vsync: this);
-    leftUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
-    rightUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
-
-    _initTopPaddingAnimation;
+//    topPaddingController = AnimationController(duration: stepDuration, vsync: this);
+//    rightEvenPaddingController = AnimationController(duration: stepDuration, vsync: this);
+//    leftUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
+//    rightUnevenPaddingController = AnimationController(duration: stepDuration, vsync: this);
+//
+    initTopPaddingAnimation();
     _initUnevenLeftPaddingAnimation;
     _initUnevenRightPaddingAnimation;
     _initEvenRightPaddingAnimation;
   }
+
+
 
   @override
   Widget buildWidget(BuildContext context, CustomTheme theme) {
@@ -153,33 +156,33 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
     }
   }
 
-  void get _initTopPaddingAnimation {
-    AnimationStatus animationStatus;
-    animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
-      ..addListener(() {
-        if (animationStatus == null) _compensateViewScrollChange();
-        if (animationStatus == AnimationStatus.forward) {
-          print('FORWARD');
-          _compensateViewScrollChange();
-        }
-        if (animationStatus == AnimationStatus.reverse && !_isAnimatedForward) {
-          _compensateViewScrollChange(reversed: true);
-        }
-        setState(() {});
-      })
-      ..addStatusListener((AnimationStatus status) {
-        animationStatus = status;
-        if (status == AnimationStatus.completed) {
-          leftUnevenPaddingController.forward();
-          rightUnevenPaddingController.forward();
-        } else if (status == AnimationStatus.dismissed) {
-          print('DONE');
-          wasChecked = false;
-          _isAnimatedForward = true;
-          _initBufferVariables();
-        }
-      });
-  }
+//  void get _initTopPaddingAnimation {
+//    AnimationStatus animationStatus;
+//    animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
+//      ..addListener(() {
+//        if (animationStatus == null) _compensateViewScrollChange();
+//        if (animationStatus == AnimationStatus.forward) {
+//          print('FORWARD');
+//          _compensateViewScrollChange();
+//        }
+//        if (animationStatus == AnimationStatus.reverse && !_isAnimatedForward) {
+//          _compensateViewScrollChange(reversed: true);
+//        }
+//        setState(() {});
+//      })
+//      ..addStatusListener((AnimationStatus status) {
+//        animationStatus = status;
+//        if (status == AnimationStatus.completed) {
+//          leftUnevenPaddingController.forward();
+//          rightUnevenPaddingController.forward();
+//        } else if (status == AnimationStatus.dismissed) {
+//          print('DONE');
+//          wasChecked = false;
+//          _isAnimatedForward = true;
+//          _initBufferVariables();
+//        }
+//      });
+//  }
 
   void get _initUnevenLeftPaddingAnimation {
     animateUnevenLeftPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(leftUnevenPaddingController);
@@ -276,5 +279,11 @@ class _AnimatedGridState extends ThemeState<AnimatedGrid> with TickerProviderSta
       print('List\'s compensating scroll multiplier $listScrollMultiplier');
       print('Grid\'s compensating scroll multiplier $gridScrollMultiplier');
     }
+  }
+
+  @override
+  void updatePage() {
+    setState(() {});
+    super.updatePage();
   }
 }
