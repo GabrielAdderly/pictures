@@ -85,8 +85,8 @@ class _HomePageBodyState extends ThemeState {
                 padding: EdgeInsets.only(bottom: 90.0),
                 child: AnimatedGrid(
                   childrenAspectRatio: 6 / 5,
-                  allSideChildrenPadding: 8.0,
-                  gridRowsCount: imageCards.length,
+                  allAxisChildrenPadding: 8.0,
+                  crossAxisCount: imageCards.length,
                   duration: const Duration(milliseconds: 1200),
                   toggleAnimationCallback: (Function toggleAnimation) => _toggleGridAnimation = toggleAnimation,
                   autoDimensionsBuilder: (double height, double width, int index) {
