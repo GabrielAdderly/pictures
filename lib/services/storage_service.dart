@@ -44,4 +44,8 @@ class StorageService {
     logger.i('$TAG => getElementByKey() => key = $key => return $text');
     return text;
   }
+
+  Future<void> clearStorage() async {
+    await storage.deleteAll();
+  }
 }

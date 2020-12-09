@@ -11,7 +11,6 @@ import 'package:pictures_view/ui/layouts/bottom_bar/widgets/bottom_bar_builder.d
 
 class BottomBar extends ThemeStatelessWidget {
   static const String tag = 'BottomBar';
-  static final GlobalKey bottomBarKey = GlobalKey(debugLabel: 'Global' + tag);
   static const double _kBorderRadius = 15.0;
 
   final double height;
@@ -27,7 +26,6 @@ class BottomBar extends ThemeStatelessWidget {
       builder: (BuildContext context, BottomBarViewModel viewModel) {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 1000),
-          key: bottomBarKey,
           height: height,
           padding: const EdgeInsets.symmetric(horizontal: 60.0),
           decoration: BoxDecoration(

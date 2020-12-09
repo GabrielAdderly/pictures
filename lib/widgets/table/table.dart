@@ -1,79 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:pictures_view/pic_main_lib.dart';
-import 'package:pictures_view/widgets/clean_behavior.dart';
+import 'package:flutter/rendering.dart';
 
-abstract class IndexedTableElement {
-  static int idCounter = 0;
+import 'package:pictures_view/widgets/table/model/table_data.dart';
+import 'package:pictures_view/widgets/table/widgets/cell_block.dart';
+import 'package:pictures_view/widgets/table/model/cell_builder.dart';
+import 'package:pictures_view/widgets/table/widgets/table_wrapper.dart';
+import 'package:pictures_view/widgets/table/model/table_row_element.dart';
 
-  int _id;
-
-  String get getId => _id.toString();
-
-  IndexedTableElement() {
-    _id = ++idCounter;
-  }
-}
-
-abstract class TableElement<T> extends IndexedTableElement {
-  final T element;
-  final List<String> row = <String>[];
-
-  @mustCallSuper
-  TableElement(this.element) {
-    createListOfElements(element);
-  }
-
-  @protected
-  void createListOfElements(T element);
-}
-
-class ClockingTable<T extends TableElement> extends StatelessWidget {
-  final List<TableElement> elements;
+class ClockingTable extends StatefulWidget {
+  final List<Cell> elements;
+  final TableData tableData;
 
   ClockingTable({
-    @required Key key,
     @required this.elements,
-  }) : super(key: key);
+    Key key,
+    TableData tableData,
+  })  : assert(elements != null, throw ('Elements can\'t be null!')),
+        tableData = tableData ?? TableData.general(),
+        super(key: key);
 
-  ScrollController controller = ScrollController();
+  @override
+  _ClockingTableState createState() => _ClockingTableState();
+}
+
+class _ClockingTableState extends State<ClockingTable> {
+  int _selectedIndex = -1;
+
+  void selectIndex(int index) {
+    if (_selectedIndex == index) {
+      _selectedIndex = -1;
+    } else {
+      _selectedIndex = index;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: CleanBehavior(),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Column(
-                    children: elements.map((TableElement element) {
-                      return Row(
-                        children: element.row.map((String rowElement) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 2.0),
-                            child: Container(
-                              width: 160.0,
-                              constraints: BoxConstraints(
-                                minHeight: 40.0,
-                              ),
-                              alignment: Alignment.center,
-                              color: AppColors.kWhite,
-                              child: Text(rowElement),
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    }).toList(),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+    return TableWrapper(
+      elements: widget.elements,
+      tableData: widget.tableData,
+      builder: (BuildContext context, int index) {
+        return InkWell(
+          onTap: () {
+            selectIndex(index);
+            if (widget.tableData.chosenRowCallback != null && _selectedIndex != -1) widget.tableData.chosenRowCallback(index);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: widget.elements[index].row.map((CellBuilder cellBuilder) {
+              return CellBlock(
+                color: _selectedIndex == index ? widget.tableData.chosenRowColor : null,
+                tableData: widget.tableData,
+                cellBuilder: cellBuilder,
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }

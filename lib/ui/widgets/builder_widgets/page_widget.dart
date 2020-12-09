@@ -39,6 +39,7 @@ abstract class PageWidget extends StatelessWidget {
           resizeToAvoidBottomPadding: resizeToAvoidBottomBarPadding,
           appBar: buildAppBar(viewModel.dictionary),
           bgColor: backgroundColor(viewModel.theme.colors),
+
           child: buildBody(context, viewModel.theme, viewModel.dictionary),
         );
       },

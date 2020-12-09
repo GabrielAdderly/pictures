@@ -4,8 +4,6 @@ import 'package:flutter/foundation.dart';
 
 import 'package:pictures_view/res/const.dart';
 
-
-
 mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements TickerProvider {
   bool isOpened = false;
 
@@ -16,7 +14,9 @@ mixin AnimatedImageInfoMixin<T extends StatefulWidget> on State<T> implements Ti
   Animation<double> _containerSizeAnimation;
 
   double get getAnimatedPadding => _paddingAnimation?.value ?? 0;
-  double get getAnimatedImageSize=> _imageSizeAnimation?.value ?? 0;
+
+  double get getAnimatedImageSize => _imageSizeAnimation?.value ?? 0;
+
   double get getAnimatedContainerSize => _containerSizeAnimation?.value ?? 0;
 
   @protected

@@ -52,6 +52,7 @@ class ImageInfoBodyState extends ThemeState<ImageInfoBody> with SingleTickerProv
         SizedBox(
           height: getAnimatedImageSize,
           child: PhotoView(
+            key: UniqueKey(),
             imageProvider: NetworkImage(widget.image.imageUrl),
             basePosition: Alignment.topCenter,
             minScale: PhotoViewComputedScale.covered,

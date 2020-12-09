@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictures_view/services/storage_service.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -32,7 +33,7 @@ class Application extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: SplashScreen(),
             locale: Locale(kBaseLocale),
-            builder: RouteHelper.pageBuilder,
+            // builder: RouteHelper.pageBuilder,
             navigatorKey: NavigatorHolder.navigatorKey,
             onGenerateRoute: RouteHelper.onGenerateRoute,
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,

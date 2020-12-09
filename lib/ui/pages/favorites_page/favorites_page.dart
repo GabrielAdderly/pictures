@@ -1,49 +1,76 @@
 import 'package:flutter/material.dart';
+
 import 'package:pictures_view/pic_main_lib.dart';
-import 'package:pictures_view/theme/models/custom_theme_colors.dart';
-import 'package:pictures_view/ui/layouts/appbars/empty_appbar.dart';
+
 import 'package:pictures_view/widgets/table/table.dart';
+import 'package:pictures_view/widgets/table/dummy/dummy_obj.dart';
+import 'package:pictures_view/widgets/table/model/table_data.dart';
+
+import 'package:pictures_view/ui/layouts/appbars/main_appbar.dart';
 
 class FavoritesPage extends PageWidget {
   FavoritesPage({Key key}) : super(key: key);
 
   @override
   PreferredSizeWidget buildAppBar(Dictionary dictionary) {
-    return EmptyAppbar();
+    return MainAppBar(title: 'TABLE');
   }
 
   @override
   Widget buildBody(BuildContext context, CustomTheme theme, Dictionary dictionary) {
-
-    final CustomThemeColorsTableElement colorsTableElement = CustomThemeColorsTableElement(theme.colors);
-
-    final List<TableElement> list = [for(int i = 0; i < 100; i++)colorsTableElement];
-
-    print('id => ${list.first.getId}');
+    final List<ParrotCell> list = [
+      for (int i = 0; i < 100; i++) ParrotCell(Parrot.generalByIndex(i)),
+    ];
 
     return Container(
       color: theme.colors.accentColor,
-      padding: EdgeInsets.only(top: 50.0),
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
-      child: Center(
-        child: ClockingTable(
-          key: UniqueKey(),
-          elements: list,
+      child: ClockingTable(
+        key: UniqueKey(),
+        elements: list,
+        tableData: TableData(
+          width: 400.0,
+          height: 50.0,
+          chosenRowCallback: (int index) {
+            showDialog(
+              context: context,
+              child: Material(
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Spacer(),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 200.0,
+                      color: Colors.white,
+                      margin: EdgeInsets.symmetric(horizontal: 40.0),
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Spacer(),
+                          Text('Selected index: $index'),
+                          SizedBox(height: 20.0),
+                          InkWell(
+                            onTap: Navigator.of(context).pop,
+                            child: Container(
+                              height: 50.0,
+                              color: Colors.red,
+                              margin: EdgeInsets.symmetric(horizontal: 40.0),
+                              alignment: Alignment.center,
+                              child: Text('Close'),
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
-}
-
-class CustomThemeColorsTableElement extends TableElement<CustomThemeColors> {
-  CustomThemeColorsTableElement(CustomThemeColors element) : super(element);
-
-  @override
-  void createListOfElements(CustomThemeColors element) {
-    row.add(element.iconColor.toString());
-    row.add(element.accentColor.toString());
-    row.add(element.primaryColor.toString());
-    row.add(element.inActiveColor.toString());
-  }
-
 }

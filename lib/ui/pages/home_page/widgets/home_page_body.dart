@@ -55,7 +55,7 @@ class _HomePageBodyState extends ThemeState {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            theme.colors.accentColor.withOpacity(0),
+                            theme.colors.accentColor.withOpacity(0.0),
                             theme.colors.accentColor,
                           ],
                           stops: [0.0, 0.6],
@@ -79,31 +79,27 @@ class _HomePageBodyState extends ThemeState {
               ),
             ),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.only(bottom: 90.0),
-                child: ScrollConfiguration(
-                  behavior: CleanBehavior(),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    key: Key('Grid'),
-                    itemCount: imageCards.length,
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isOpened ? 1 : 2,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GridImageItem(
-                        aspectRatio: 1,
-                        onTap: () {
-                          viewModel.selectImage(imageCards[index]);
-                          viewModel.navigateTo(kRouteInfoImageInfoPage);
-                        },
-                        card: imageCards[index],
-                      );
-                    },
+              child: ScrollConfiguration(
+                behavior: CleanBehavior(),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  key: Key('Grid'),
+                  itemCount: imageCards.length,
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: isOpened ? 1 : 2,
+                    childAspectRatio: 0.75,
                   ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GridImageItem(
+                      aspectRatio: 1,
+                      onTap: () {
+                        viewModel.selectImage(imageCards[index]);
+                        viewModel.navigateTo(kRouteInfoImageInfoPage);
+                      },
+                      card: imageCards[index],
+                    );
+                  },
                 ),
               ),
             ),

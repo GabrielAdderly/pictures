@@ -18,15 +18,17 @@ class BottomBarBuilder {
   }) {
     switch (type) {
       case BottomBarType.general:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: RouteHandler.instance.barItems.map((BottomBarItemModel bottomBarItemModel) {
-            return BottomBarItem(
-              onTap: () => navigateFunc(bottomBarItemModel.route),
-              iconData: bottomBarItemModel.iconData,
-              isSelected: bottomBarItemModel.isSelected,
-            );
-          }).toList(),
+        return SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: RouteHandler.instance.barItems.map((BottomBarItemModel bottomBarItemModel) {
+              return BottomBarItem(
+                onTap: () => navigateFunc(bottomBarItemModel.route),
+                iconData: bottomBarItemModel.iconData,
+                isSelected: bottomBarItemModel.isSelected,
+              );
+            }).toList(),
+          ),
         );
       case BottomBarType.example:
         return Row(
