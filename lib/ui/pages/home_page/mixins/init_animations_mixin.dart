@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
 
+/// [gridScrollMultiplier] All the cards are getting top padding during the animation
+/// Thus [_compensateViewScrollChange] needs a multiplier to scroll properly
+/// [listScrollMultiplier] Grid and List have different vertical sizes because of top padding
+/// So there are two different multipliers for two different states
+/// [savedGridOffset] saves the scroll position of the Grid to convert it to the corresponding List position
+/// Saves the scroll position of the List to convert it to the corresponding Grid position
+/// [cardInternalPosition] is needed to calculate proper in-card offset position
+///
+/// [duration] Full animation sequence duration
+/// [halfOfPrimaryWidth] Half of the screen width
+/// [cardHeightWithPadding] The height of the card with top padding
+/// [wasChecked] is needed to check only once what kind of card is being viewed currently
+/// [wasChecked] is being used in the [unevenScroll] Function
+/// [showDebugPrints] shows all the debug info using prints
+/// [isAnimatedForward] Additional check for the reverse animation
 mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
+  //region [Scroll Variables]
+  int gridScrollMultiplier = 0;
+  int listScrollMultiplier = 0;
+  double savedGridOffset = 0.0;
+  double savedListOffset = 0.0;
+  double cardInternalPosition = 0.0;
+  //endregion
+
   //region [Animations & Controllers]
   Animation animateTopPadding;
   Animation animateEvenRightPadding;
@@ -13,41 +36,25 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
   final ScrollController scrollController = ScrollController();
   //endregion
 
-  //region [Scroll Variables]
-  ///End top [Tween] value equals to one [cardHeightWithPadding]
-  ///Thus [_compensateViewScrollChange] needs a multiplier to scroll properly
-  int gridScrollMultiplier = 0;
-  int listScrollMultiplier = 0;
-  ///Both of the offsets starting values need to be saved so Scroll could be calculated
-  double savedGridOffset = 0.0;
-  double savedListOffset = 0.0;
-  ///[cardInternalPosition] is needed to calculate proper in-card offset position
-  double cardInternalPosition = 0.0;
-  //endregion
-
   //region [Other Variables]
-  ///The main animation sequence duration
   Duration duration;
-  ///Half of the screen width
   double halfOfPrimaryWidth;
   double cardHeightWithPadding;
-  ///[wasChecked] is needed to check only once what kind of card is being viewed currently
-  ///Used in [unevenScroll] Function
   bool wasChecked = false;
   bool showDebugPrints = false;
-  ///Additional check for reverse animation
   bool isAnimatedForward = true;
   //endregion
 
-  ///The Function that animates top padding of the Grid's child widgets
+  /// [animateTopPadding] animates top padding of the Grid's child widgets
+  /// Starts in parallel with [_compensateViewScrollChange]
+  /// [animationStatus] is needed to check status in a decent listener so Scroll could work in a proper direction
   void initTopPaddingAnimation() {
-    ///Additional check variable so Scroll could work in a proper direction
     AnimationStatus animationStatus;
     animateTopPadding = Tween<double>(begin: 0, end: cardHeightWithPadding).animate(topPaddingController)
-      ///_compensateViewScrollChange starts in parallel with top padding animation
+
       ..addListener(() {
         if (animationStatus == AnimationStatus.forward) {
-          ///Forward animation sequence entry point
+          /// Forward animation sequence entry point
           if (showDebugPrints) print('FORWARD');
           _compensateViewScrollChange();
         }
@@ -66,7 +73,7 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
           rightUnevenPaddingController.forward();
 
         } else if (status == AnimationStatus.dismissed) {
-          ///The end of the reverse animation sequence
+          /// The end of the reverse animation sequence
           if (showDebugPrints) print('DONE');
 
           wasChecked = false;
@@ -77,12 +84,12 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
       });
   }
 
-  ///This one does not need a [Listener] since it paralleled with UnevenRightPadding animation
+  /// [animateUnevenLeftPadding] does not need a [Listener] since it's paralleled with [animateUnevenRightPadding]
   void initUnevenLeftPaddingAnimation() {
     animateUnevenLeftPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(leftUnevenPaddingController);
   }
 
-  ///The Function that animates right padding of the Grid's uneven child widgets
+  /// [animateUnevenRightPadding] animates the right padding of the Grid's uneven child widgets
   void initUnevenRightPaddingAnimation() {
     animateUnevenRightPadding = Tween<double>(begin: 0, end: halfOfPrimaryWidth).animate(rightUnevenPaddingController)
       ..addListener(() => setState(() {}))
@@ -94,7 +101,7 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
           rightUnevenPaddingController.reverse();
 
         } else if (status == AnimationStatus.dismissed && !isAnimatedForward) {
-          ///Reversed animation entry point
+          /// Reversed animation entry point
           if (showDebugPrints) print('REVERSE');
           topPaddingController.reverse();
         }
@@ -102,13 +109,13 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
       });
   }
 
-  ///The Function that animates right padding of the Grid's even child widgets
+  /// [animateEvenRightPadding] animates right padding of the Grid's even child widgets
   void initEvenRightPaddingAnimation() {
     animateEvenRightPadding = Tween<double>(begin: halfOfPrimaryWidth, end: 0).animate(rightEvenPaddingController)
       ..addListener(() => setState(() {}))
 
       ..addStatusListener((AnimationStatus status) {
-        ///The end of the forward animation sequence
+        /// The end of the forward animation sequence
         if (status == AnimationStatus.completed) {
           if (showDebugPrints) print('DONE');
           initBufferVariables();
@@ -122,7 +129,7 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
       });
   }
 
-  ///Function to reset the scroll values
+  /// [initBufferVariables] resets the scroll variables
   void initBufferVariables() {
     savedGridOffset = 0.0;
     savedListOffset = 0.0;
@@ -131,19 +138,18 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
     cardInternalPosition = 0.0;
   }
 
-  ///Function that compensates size change of the grid/list appearances by it's own scroll
+  /// [_compensateViewScrollChange] compensates size change of the grid/list appearances using the [_jumpTo]
+  /// [reversed] divides reverse and forward animation sequences
+  /// [savedListOffset] is being calculated from current scroll position in List state
+  /// [savedListOffset] and [listScrollMultiplier] are being used in the reverse animation sequence
+  /// [savedGridOffset] and [gridScrollMultiplier] are being used in the forward animation sequence
   void _compensateViewScrollChange({bool reversed = false}) {
-    ///Checking zeros is needed to save values for one time, not every time when setState is called
     if (savedGridOffset == 0.0) savedGridOffset = scrollController.offset;
     if (cardInternalPosition == 0.0) cardInternalPosition = savedGridOffset % cardHeightWithPadding;
     if (gridScrollMultiplier == 0) gridScrollMultiplier = scrollController.offset ~/ cardHeightWithPadding;
 
-    ///Reverse and forward sequences are different
-    ///The appearance of the grid could be changed, scrolled and changed again
-    ///Thus both animation sequences can't be same
     if (reversed) {
       if (savedListOffset == 0.0) {
-        ///Expression that converts list offset to grid offset
         savedListOffset = (scrollController.offset - cardInternalPosition) / 2 + cardInternalPosition;
       }
       if (listScrollMultiplier == 0) listScrollMultiplier = scrollController.offset ~/ (2 * cardHeightWithPadding);
@@ -157,13 +163,13 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
 
   }
 
-  ///Function that checks if widget is uneven and animates it in a different way
-  ///The even and uneven cards in the grid are placed in one horizontal line
-  ///Thus an uneven card in the list form must be scrolled first before running the main animation sequence
-  ///If card is even, when scroll animation goes straight to the main animation sequence
+  /// [unevenScroll] checks if widget is uneven and animates it in a different ways corresponding to the card type
+  /// The even and uneven cards in the grid are placed in one horizontal line
+  /// Thus an uneven card in the list form must be scrolled first before running the main animation sequence
+  /// If card is even, when scroll animation goes straight to the main animation sequence
   void unevenScroll(Function triggerTween) {
     if (savedGridOffset == 0.0) savedGridOffset = scrollController.offset;
-    ///Checks if card is uneven
+
     if (savedGridOffset ~/ cardHeightWithPadding % 2 != 0 && !wasChecked) {
       wasChecked = true;
 
@@ -174,15 +180,15 @@ mixin InitAnimationMixin<T extends StatefulWidget> on State<T> {
         duration: scrollToRowDuration,
         curve: Curves.decelerate,
       );
-      ///Delay before the main animation sequence starts
+
       Future.delayed(scrollToRowDuration, () => triggerTween());
     } else {
       triggerTween();
     }
   }
 
-  ///The core function of the [_compensateViewScrollChange]
-  ///Uses tween value to compensate difference between grid/list appearances
+  /// [_jumpTo] is the core function of the [_compensateViewScrollChange]
+  /// Uses tween value to compensate difference between grid/list appearances
   void _jumpTo(double offset, int offsetMultiplier) {
     scrollController.jumpTo(offset + animateTopPadding.value * offsetMultiplier);
   }
